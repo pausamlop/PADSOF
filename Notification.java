@@ -9,9 +9,11 @@ import java.util.*;
  *
  */
 
-public abstract class Notification{
+public class Notification{
 
     private String message;
+    private Project project;
+    private ArrayList<User> receivers = new ArrayList<User>();
 
 
 	/**
@@ -19,15 +21,36 @@ public abstract class Notification{
 	 * 
 	 * @param password contraseña del objeto
      */
-    public Notification(String message) { this.message = message; }
+    public Notification(String message, Project project, ArrayList<User> receivers) { 
+        this.message = message; 
+        this.project = project;
+        this.receivers = receivers;
+    }
+
 
 
     /* GETTERS */
     public String getMessage() { return message; }
+    public Project getProject() { return project; }
+    public ArrayList<User> getReceivers() { return receivers; }
 
 
     /* SETTERS */
 	public void setMessage(String message) { this.message = message; }
+    public void setProject(Project project) { this.project = project; }
+    public void setReceivers(ArrayList<User> receivers) { this.receivers = receivers; }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " message='" + getMessage() + "'" +
+            ", project='" + getProject() + "'" +
+            ", receivers='" + getReceivers() + "'" +
+            "}";
+    }
+
+
 
 
 
@@ -38,6 +61,18 @@ public abstract class Notification{
      */
     public void notify(projectState ps){
         // NO SEEEEEE
+    }
+
+
+    /************* MAIN DE PRUEBA **************/
+
+    public static void main(String[] args) {
+
+        Notification n = new Notification("Hola");
+
+        System.out.println(n);
+
+
     }
 
 
