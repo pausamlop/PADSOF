@@ -9,7 +9,7 @@ import java.util.*;
  *
  */
 
-public abstract class Admin{
+public class Admin{
 
     private String password;
 

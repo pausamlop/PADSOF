@@ -9,16 +9,17 @@ import java.util.*;
  *
  */
 
-public abstract class User extends UserCollective{
+public class User extends UserCollective{
 
     private String username;
     private String NIF;
     private String password;
     private boolean blocked;
-    private Collective createdCollectives[];
-    private Collective memberCollectives[];
-    private Notification notifications[];
-    private Project followedProjects[];
+    private ArrayList<Collective> createdCollectives = new ArrayList<Collective>();
+    private ArrayList<Collective> memberCollectives = new ArrayList<Collective>();
+    private ArrayList<Notification> notifications = new ArrayList<Notification>();
+    private ArrayList<Project> followedProjects = new ArrayList<Project>();
+
 
 
 	/**
@@ -28,11 +29,14 @@ public abstract class User extends UserCollective{
 	 * @param NIF NIF del objeto
 	 * @param password contraseña del objeto
 	 * @param blocked si el objeto esta o no bloqueado
+     * @param createdCollectives colectivos creados por el usuario
+	 * @param memberCollectives colectivos de los que el usuario es miembro
+	 * @param notifications notificaciones del usuario
+	 * @param followedProjects proyectos seguidos por el usuario
      */
 
-    public User(String username, String NIF, String password, boolean blocked,
-                Collective createdCollectives[], Collective memberCollectives[], 
-                Notification notifications[], Project followedProjects[]) {
+
+    public User(String username, String NIF, String password, boolean blocked, ArrayList<Collective> createdCollectives, ArrayList<Collective> memberCollectives, ArrayList<Notification> notifications, ArrayList<Project> followedProjects) {
         this.username = username;
         this.NIF = NIF;
         this.password = password;
@@ -41,29 +45,44 @@ public abstract class User extends UserCollective{
         this.memberCollectives = memberCollectives;
         this.notifications = notifications;
         this.followedProjects = followedProjects;
-	}
+    }
 
 
-    /* GETTERS */
-	public String getUsername() { return username; }
-	public String getNIF() { return NIF; }
-	public String getPassword() { return password; }
-    public boolean getBlocked() { return blocked; }
-    public Collective[] getCreatedCollectives() { return createdCollectives; }
-    public Collective[] getMemberCollectives() { return memberCollectives; }
-    public Notification[] getNotifications() { return notifications; }
-    public Project[] getFollowedProjects() { return followedProjects; }
+    /* GETTERS Y SETTERS */
 
+    public String getUsername() { return this.username; }
 
-    /* SETTERS */
     public void setUsername(String username) { this.username = username; }
-	public void setNIF(String NIF) { this.NIF = NIF; }
-	public void setPassword(String password) { this.password = password; }
+
+    public String getNIF() { return this.NIF; }
+
+    public void setNIF(String NIF) { this.NIF = NIF; }
+
+    public String getPassword() { return this.password; }
+
+    public void setPassword(String password) { this.password = password; }
+
+    public boolean isBlocked() { return this.blocked; }
+
+    public boolean getBlocked() { return this.blocked; }
+
     public void setBlocked(boolean blocked) { this.blocked = blocked; }
-    public void setCreatedCollectives(Collective createdCollectives[]) { this.createdCollectives = createdCollectives; }
-    public void setMemberCollectives(Collective memberCollectives[]) { this.memberCollectives = memberCollectives; }
-    public void setNotifications(Notification notifications[]) { this.notifications = notifications; }
-    public void setFollowedProjects(Project followedProjects[]) { this.followedProjects = followedProjects; }
+
+    public ArrayList<Collective> getCreatedCollectives() { return this.createdCollectives;}
+
+    public void setCreatedCollectives(ArrayList<Collective> createdCollectives) { this.createdCollectives = createdCollectives; }
+
+    public ArrayList<Collective> getMemberCollectives() { return this.memberCollectives;}
+
+    public void setMemberCollectives(ArrayList<Collective> memberCollectives) { this.memberCollectives = memberCollectives; }
+
+    public ArrayList<Notification> getNotifications() { return this.notifications; }
+
+    public void setNotifications(ArrayList<Notification> notifications) { this.notifications = notifications; }
+
+    public ArrayList<Project> getFollowedProjects() { return this.followedProjects; }
+
+    public void setFollowedProjects(ArrayList<Project> followedProjects) { this.followedProjects = followedProjects; }
 
 
 
@@ -108,6 +127,19 @@ public abstract class User extends UserCollective{
      * Desbloquea a un usuario
      */
     public void unblock(){ blocked = false; }
+
+    
+    /************* MAIN DE PRUEBA **************/
+
+    public static void main(String[] args) {
+
+        User u = new User("Hola");
+
+        System.out.println(u);
+
+
+    }
+
 
 
 
