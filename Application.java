@@ -1,14 +1,5 @@
-/**
- * ...
- *
- * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
- * @author Laura de Paz laura.pazc@estudiante.uam.es
- * @author Paula Samlop paula.samper@estudiante.uam.es
- *
-*/
-
-
-// package ;
+//package
+import java.util.*;
 
 
 /**
@@ -24,11 +15,11 @@ public class Application {
     private int daysExpiration;
     private int minVotes;
 
-    // ADMIN
+    private Admin admin;
     // PROJECT[]
-    // COLLECTIVES[]
-    // USERS[]
-    // NOTVALIDATEDUSERS[]
+    private ArrayList<Collective> collectives;
+    private ArrayList<User> users;
+    private ArrayList<User> nonValidatedUsers;
     
 
     /**
@@ -39,6 +30,9 @@ public class Application {
     public Application(int daysExp, int minV){
         daysExpiration = daysExp;
         minVotes = minV;
+        collectives = new ArrayList<Collective>();
+        users = new ArrayList<User>();
+        nonValidatedUsers = new ArrayList<User>();
     }
 
 
@@ -47,15 +41,16 @@ public class Application {
      * Devuelve el numero de dias sin votos nuevos para que un proyecto caduque
      * @return daysExpiration
      */
-    public String getDaysExpiration(){ return daysExpiration; }
+    public int getDaysExpiration(){ return daysExpiration; }
 
     /**
      * Devuelve el minimo numero de votos en un proyecto para poder financiar
      * @return minVotes
      */
-    public String getMinVotes(){ return minVotes; }
+    public int getMinVotes(){ return minVotes; }
 
 
+    
     // SETTERS
     /**
      * Actualiza el numero de dias sin votos nuevos para que un proyecto caduque
@@ -80,7 +75,9 @@ public class Application {
      * @return false si ...
      */
     public boolean register(String username, String NIF, String password){
-        // crea un usuario no validado y se lo envia al admin pa validar
+        User u = new User(username, NIF, password, false);
+        nonValidatedUsers.add(u);
+        // mandar al admin a validar
         return true;
     }
 
@@ -92,8 +89,13 @@ public class Application {
      * @return false si ...
      */
     public boolean login(String username, String password){
-        //llama a login de user o algo asi(creo)
-        return true;
+        for (User u: users){
+            if (username.equals(u.getUsername()) && password.equals(u.getPassword()))
+                return true;
+        }
+
+        // no sabemos muy bien como funciona esto
+        return false;
     }
 
     
