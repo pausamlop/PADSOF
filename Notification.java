@@ -41,19 +41,6 @@ public class Notification{
     public void setReceivers(ArrayList<User> receivers) { this.receivers = receivers; }
 
 
-    @Override
-    public String toString() {
-        return "{" +
-            " message='" + getMessage() + "'" +
-            ", project='" + getProject() + "'" +
-            ", receivers='" + getReceivers() + "'" +
-            "}";
-    }
-
-
-
-
-
 	/**
      * NO SE QUE HACE
 	 * 
@@ -61,18 +48,6 @@ public class Notification{
      */
     public void notify(projectState ps){
         // NO SEEEEEE
-    }
-
-
-    /************* MAIN DE PRUEBA **************/
-
-    public static void main(String[] args) {
-
-        Notification n = new Notification("Hola");
-
-        System.out.println(n);
-
-
     }
 
 
