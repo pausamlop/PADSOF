@@ -1,9 +1,13 @@
 import java.util.*;
 
-enum typeSocial{
-    Nacional, International 
-}
-
+/**
+ * Clase abstracta UserCollective
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@estudiante.uam.es
+ * @author Paula Samlop paula.samper@estudiante.uam.es
+ *
+ */
 public class SocialProject extends Project {
     private String group;
     private typeSocial type;

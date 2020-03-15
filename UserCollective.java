@@ -1,14 +1,4 @@
-/**
- * ...
- *
- * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
- * @author Laura de Paz laura.pazc@estudiante.uam.es
- * @author Paula Samlop paula.samper@estudiante.uam.es
- *
-*/
-
 import java.util.*;
-// package ;
 
 
 /**
@@ -25,19 +15,13 @@ public abstract class UserCollective {
      * ...
      * @return set de objetos UserCollective ...
      */
-    public Set<UserCollective> makeSet(){
+    public int makeSet(List<User> users, Collective c){
+        Set<User> set = new Set<User>();
 
-        return null;
+        for (User u:c.getMembers()) set.add(u);
+        for (User u:users) set.add(u);
+        return set.size();
     }
 
-    /**
-     * ...
-     * @param s set de objectos UserCollective
-     * @return true si ...
-     * @return false si ...
-     */
-    public boolean noDuplicates(Set<UserCollective> s){
-    
-        return true;
-    }
+
 }

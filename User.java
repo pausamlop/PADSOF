@@ -1,3 +1,5 @@
+
+
 import java.util.*;
 
 /**
@@ -36,15 +38,11 @@ public class User extends UserCollective{
      */
 
 
-    public User(String username, String NIF, String password, boolean blocked, ArrayList<Collective> createdCollectives, ArrayList<Collective> memberCollectives, ArrayList<Notification> notifications, ArrayList<Project> followedProjects) {
+    public User(String username, String NIF, String password, boolean blocked) {
         this.username = username;
         this.NIF = NIF;
         this.password = password;
         this.blocked = blocked;
-        this.createdCollectives = createdCollectives;
-        this.memberCollectives = memberCollectives;
-        this.notifications = notifications;
-        this.followedProjects = followedProjects;
     }
 
 
@@ -96,6 +94,7 @@ public class User extends UserCollective{
 	 * @param pass password del objeto
      * @return true si coinciden, false si no coinciden
      */
+   //@Override
     public boolean login(String name, String pass){
         if (username.equals(name) && password.equals(pass)) return true;
         else return false;
