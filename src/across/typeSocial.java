@@ -1,3 +1,4 @@
+package across;
 
 /**
  * Clase abstracta UserCollective

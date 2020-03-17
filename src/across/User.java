@@ -1,5 +1,4 @@
-
-
+package across;
 import java.util.*;
 
 /**
@@ -117,7 +116,7 @@ public class User extends UserCollective{
 
     public static void main(String[] args) {
 
-        User u = new User("Hola");
+        User u = new User("laura", "23685412D", "hola22", false);
 
         System.out.println(u);
 
