@@ -72,7 +72,8 @@ public class User extends UserCollective{
      * Valida un usuario
      */
     public void validate(){
-
+        setUsers(getUsers().add(this));
+        setNonValidatedUsers(getNonValidatedUsers().remove(this));
     }
 
 
@@ -82,7 +83,7 @@ public class User extends UserCollective{
      * @return boolean para comprobar errores
      */
     public void reject(){
-
+        setNonValidatedUsers(getNonValidatedUsers().remove(this));
     }
 
 
