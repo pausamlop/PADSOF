@@ -1,4 +1,6 @@
-package across.user;
+package across.admin;
+
+import java.io.*;
 
 /**
  * Clase Administrador
@@ -9,19 +11,9 @@ package across.user;
  *
  */
 
-public class Admin{
+public class Admin implements Serializable {
 
-    private String password;
-
-
-	/**
-     * Constructor de un objeto de la clase Admin
-	 * 
-	 * @param password contraseña del objeto
-     */
-    public Admin(String password) {
-        this.password = password;
-	}
+    private String passwor = "soyadmin";
 
 
     /* GETTERS */
@@ -34,7 +26,7 @@ public class Admin{
 
 
 	/**
-     * Comprueba que el username y el password coinciden con los del objeto
+     * Comprueba que la contrasena coincida con la del administrador
 	 * 
 	 * @param pass password del objeto
      * @return true si coinciden, false si no coinciden

@@ -4,7 +4,10 @@ import across.collective.*;
 import across.enumerations.*;
 import across.project.*;
 import across.user.*;
+import jdk.internal.jline.internal.InputStreamReader;
+
 import java.util.*;
+import java.io.*;
 import java.lang.Integer;
 
 
@@ -16,91 +19,187 @@ import java.lang.Integer;
  * @author Paula Samlop paula.samper@estudiante.uam.es
  *
 */
-public class Application {
+public class Application implements Serializable{
 
-    private int daysExpiration;
-    private int minVotes;
+    private static Application application;
+    private User currentUser = null;
+    private boolean currentAdmin = false;
 
-    private Admin admin;
-    private ArrayList<Project> projects;
-    private ArrayList<Collective> collectives;
-    private ArrayList<User> users;
-    private ArrayList<User> nonValidatedUsers;
-    
+    private int daysExpiration = 30;
+    private int minVotes = 1000; /* hay que preguntar al profe */
+
+    private Admin admin = new Admin();
+    private ArrayList<Project> projects = new ArrayList<Project>();
+    private ArrayList<Collective> collectives = new ArrayList<Collective>();
+    private ArrayList<User> users = new ArrayList<User>();
+    private ArrayList<User> nonValidatedUsers = new ArrayList<User>();
+
 
     /**
-     * Constructor
-     * @param daysExp numeros de dias sin votos para que caduque un proyecto
-     * @param minV minimo numero de votos en un proyecto para poder financiar
+     * Crea un nuevo objeto Application ni no ha sido creado con anterioridad o,
+     * sino, devuelve la aplicacion ya creada
+     * 
+     * @return objeto aplicacion unico
      */
-    public Application(int daysExp, int minV){
-        daysExpiration = daysExp;
-        minVotes = minV;
-        projects = new ArrayList<Project>();
-        collectives = new ArrayList<Collective>();
-        users = new ArrayList<User>();
-        nonValidatedUsers = new ArrayList<User>();
+    public static Application getApplication(){
+        if (application == null){
+            application = new Application();
+        }
+        return application;
     }
 
+    /**
+     * Actualiza el objeto aplicacion al parametro de entrada
+     * 
+     * @param app aplicacion
+     */
+    public static void setApplication(Applicacion app){
+        application = app;
+    }
 
-    // GETTERS
+    /**
+     * Devuelve el usuario logueado en la aplicacion en el momento en el que se llama a esta funcion
+     * 
+     * @return usuario conectado actualmente
+     */
+    public User getCurrentUser(){
+        return currentUser;
+    }
+
+    /**
+     * Actualiza el usuario logueado en la aplicacion
+     * 
+     * @param current usuario conectado
+     */
+    public void setCurrentUser(User current){
+        currentUser = user;
+    }
+
+    /**
+     * Devuelve si el usuario logueado es el administrador o no
+     * 
+     * @return true, si el administrador esta conectado
+     * @return false, en otro caso 
+     */
+    public boolean getCurrentAdmin(){
+        return currentAdmin;
+    }
+
+    /**
+     * Modifica si el administrador esta logueado o no
+     * 
+     * @param is_admin administrador conectado o no
+     */
+    public void setCurrentAdmin(boolean is_admin){
+        currentAdmin = is_admin;
+    }
+
     /**
      * Devuelve el numero de dias sin votos nuevos para que un proyecto caduque
      * @return daysExpiration
      */
-    public int getDaysExpiration(){ return daysExpiration; }
+    public int getDaysExpiration(){ 
+        return daysExpiration; 
+    }
+
+    /**
+     * Actualiza el numero de dias sin votos nuevos para que un proyecto caduque
+     * @param daysExp numero de dias
+     */
+    public void setDaysExpiration(int daysExp){
+        daysExpiration = daysExp;
+    }
 
     /**
      * Devuelve el minimo numero de votos en un proyecto para poder financiar
      * @return minVotes
      */
-    public int getMinVotes(){ return minVotes; }
+    public int getMinVotes(){ 
+        return minVotes; 
+    }
+
+    /**
+     * Actualiza el minimo numero de votos en un proyecto para poder financiar
+     * @param minV numero de votos
+     */
+    public void setMinVotes(int minV){ 
+        minVotes = minV; 
+    }
 
 
     public ArrayList<User> getUsers() {
         return this.users;
     }
+    
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
+
 
     public ArrayList<User> getNonValidatedUsers() {
         return this.nonValidatedUsers;
     }
 
 
-    
-    // SETTERS
-    /**
-     * Actualiza el numero de dias sin votos nuevos para que un proyecto caduque
-     * @param daysExp numero de dias
-     */
-    public void setDaysExpiration(int daysExp){ daysExpiration = daysExp; }
-
-    /**
-     * Actualiza el minimo numero de votos en un proyecto para poder financiar
-     * @param minV numero de votos
-     */
-    public void setMinVotes(int minV){ minVotes = minV; }
-
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
-    }
-
     public void setNonValidatedUsers(ArrayList<User> nonValidatedUsers) {
         this.nonValidatedUsers = nonValidatedUsers;
     }
-   
 
+    
 
+    /**
+     * Pantalla de inicio de la aplicacion.
+     * Da opcion de registrarse como nuevo usario o iniciar sesion como usuario o administrador
+     * 
+     * @return true, si la accion se ejecuto con exito
+     * @return false, si no se ha podido realizar la accion
+     */
+    public boolean inicio(){
+        try{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("1. Registro\n2. Login\n3. Login como administrador");
+            String opc = reader.readLine();
+            if (opc == "1") {
+                System.out.println("Nombre de usuario:");
+                String username = reader.readLine();
+                System.out.println("NIF:");
+                String NIF = reader.readLine();
+                System.out.println("Contrasena:");
+                String password = reader.readLine();
+                return register(username, NIF, password);
+            }
+            else if(opc == "2") {
+                System.out.println("Nombre de usuario:");
+                String username = reader.readLine();
+                System.out.println("Contrasena:");
+                String password = reader.readLine();
+                return login(username, password);
+            }
+            else {
+                System.out.println("Contrasena de administrador:");
+                String password = reader.readLine();
+                if (admin.login(password)){
+                    currentAdmin = true;
+                    return true;
+                }
+                return false;
+            }
+        }catch(IOException exception){
+            exception.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * Permite a un usuario registrarse en la aplicacion
      * @param username nombre de usuario
      * @param NIF NIF del usuario a registrar
      * @param password contrasena del usuario
-     * @return true si ...
-     * @return false si ...
+     * @return true, si ...
+     * @return false, si ...
      */
     public boolean register(String username, String NIF, String password){
-
         //comprobar que el username no existe
         for (User u: users) {
             if (username.equals(u.getUsername())) return false;
@@ -112,33 +211,30 @@ public class Application {
         return true;
     }
 
-
-
     /**
      * Permite a un usuario loguearse en la aplicacion
      * @param username nombre de usuario
      * @param password contrasena del usuario
-     * @return el usuario
+     * @return true, si la contrasena coincide con la del nombre de usuario
+     * @return false, en otro caso
      */
-    public User login(String username, String password){
-        //public Boolean login(String username, String password){
-        // for (User u: users){
-        //     if (username.equals(u.getUsername()) && password.equals(u.getPassword()))
-        //         return true;
-        // }
-
-        for (User u: users) {
-            if (u.login(username, password)) return u;
+    public boolean login(String username, String password){
+        for (User u: users){
+            if (username.equals(u.getUsername()) && password.equals(u.getPassword())){
+                activeUser = u;
+                return true;
+            }
         }
-
-        return null;
+        return false;
     }
 
     
+
+
     
     // METODOS DE PROJECT Y COLECTIVOS
 
-    /*
+    /**
      * Filtra un proyecto social por el tipo y el grupo
      * 
      * @param type tipo de proyecto social
@@ -157,7 +253,7 @@ public class Application {
         return output;
     }
 
-    /*
+    /**
      * Filtra un proyecto de infraestructira por distrito y su estado
      * 
      * @param d distrito
@@ -179,8 +275,7 @@ public class Application {
 
     }
 
-
-    /*
+    /**
      * Busca un proyecto segun si el input esta contenido en el nombre
      * o en la descripcion del proyecti
      * 
@@ -196,8 +291,7 @@ public class Application {
         return output;
     }
 
-
-    /*
+    /**
      * Busca un colectivo segun si el input esta contenido en el nombre
      * o en la descripcion del proyecti
      * 
@@ -212,7 +306,6 @@ public class Application {
         
         return output;
     }
-
 
     // no se como arreglar este
     public ArrayList<Project> popularityReport(){
@@ -236,23 +329,13 @@ public class Application {
 
     }
 
-
-
+    /**
+     * 
+     * @param c
+     * @return
+     */
     public ArrayList<Collective> affinityReport(Collective c){
 
     }
 
-    // DATA
-
-    public boolean saveData(){
-        return false;
-    }
-
-    public boolean loadData(){
-        return false;
-    }
-
-
-
-   
 }

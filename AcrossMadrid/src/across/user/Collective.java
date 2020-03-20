@@ -1,4 +1,4 @@
-package across.collective;
+package across.user;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  */
 
-public class Collective { // add extedns UserCollective
+public class Collective implements Serializable { // add extedns UserCollective
 
     private String name;
     private String description;

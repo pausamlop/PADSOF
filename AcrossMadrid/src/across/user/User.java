@@ -15,7 +15,7 @@ import java.util.*;
  *
  */
 
-public class User extends UserCollective{
+public class User extends UserCollective implements Serializable {
 
     private String username;
     private String NIF;

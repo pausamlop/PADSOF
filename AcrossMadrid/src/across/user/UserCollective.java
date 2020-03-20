@@ -12,7 +12,7 @@ import java.util.*;
  * @author Paula Samlop paula.samper@estudiante.uam.es
  *
 */
-public abstract class UserCollective {
+public abstract class UserCollective implements Serializable {
    
     /**
      * ...
