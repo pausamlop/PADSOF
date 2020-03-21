@@ -70,5 +70,18 @@ public class Main{
             System.exit(1);
         }
 
+        User user = app.getCurrentUser();
+        if (user){
+            if (user.getBlocked()){
+                // pantalla de bloqueado 
+                // solo puede cerrar sesion
+            }
+            else{
+                // elegir entre: MiPerfil, SolicitarInforme, CrearColectivo, CrearProyecto, Buscar, Notificaciones
+            }
+        }
+        else{ /* admin */
+            // elegir entre: Ver proyectos (pa validar y demas), ver usuarios (igual), configuracion
+        }
     }
 }

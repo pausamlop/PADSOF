@@ -28,11 +28,25 @@ public class Application implements Serializable{
     private int daysExpiration = 30;
     private int minVotes = 1000; /* hay que preguntar al profe */
 
-    private Admin admin = new Admin();
-    private ArrayList<Project> projects = new ArrayList<Project>();
-    private ArrayList<Collective> collectives = new ArrayList<Collective>();
-    private ArrayList<User> users = new ArrayList<User>();
-    private ArrayList<User> nonValidatedUsers = new ArrayList<User>();
+    private Admin admin;
+    private ArrayList<Project> projects;
+    private ArrayList<Collective> collectives;
+    private ArrayList<User> users;
+    private ArrayList<User> nonValidatedUsers;
+
+
+    /**
+     * Constructor
+    * @param daysExp numeros de dias sin votos para que caduque un proyecto
+    * @param minV minimo numero de votos en un proyecto para poder financiar
+    */
+    public Application(){
+        admin = new Admin();
+        projects = new ArrayList<Project>();
+        collectives = new ArrayList<Collective>();
+        users = new ArrayList<User>();
+        nonValidatedUsers = new ArrayList<User>();
+    }
 
 
     /**
