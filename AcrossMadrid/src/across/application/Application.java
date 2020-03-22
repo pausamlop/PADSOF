@@ -19,7 +19,7 @@ import java.lang.Integer;
  * @author Paula Samlop paula.samper@estudiante.uam.es
  *
 */
-public class Application implements Serializable{
+public class Application implements Serializable, Comparable<Project>{
 
     private static Application application;
     private User currentUser = null;
@@ -30,6 +30,7 @@ public class Application implements Serializable{
 
     private Admin admin;
     private ArrayList<Project> projects;
+    private ArrayList<Project> nonValidatedProjects;
     private ArrayList<Collective> collectives;
     private ArrayList<User> users;
     private ArrayList<User> nonValidatedUsers;
@@ -43,6 +44,7 @@ public class Application implements Serializable{
     public Application(){
         admin = new Admin();
         projects = new ArrayList<Project>();
+        nonValidatedProjects = new ArrayList<Project>();
         collectives = new ArrayList<Collective>();
         users = new ArrayList<User>();
         nonValidatedUsers = new ArrayList<User>();
@@ -160,6 +162,22 @@ public class Application implements Serializable{
         this.nonValidatedUsers = nonValidatedUsers;
     }
 
+
+    public ArrayList<Project> getProjects() {
+        return this.projects;
+    }
+
+    public void setProjects(ArrayList<Project> projects) {
+        this.projects = projects;
+    }
+
+    public ArrayList<Project> getNonValidatedProjects() {
+        return this.nonValidatedProjects;
+    }
+
+    public void setNonValidatedProjects(ArrayList<Project> nonValidatedProjects) {
+        this.nonValidatedProjects = nonValidatedProjects;
+    }
     
 
     /**
@@ -321,35 +339,66 @@ public class Application implements Serializable{
         return output;
     }
 
-    // no se como arreglar este
-    public ArrayList<Project> popularityReport(){
 
 
-        ArrayList<Project> output = new ArrayList<Project>();
-        for(Project p: projects) output.add(p);
-
-        Collections.sort(output, new Comparator(){
-            @Override
-            public int compare(Project p1, Project p2) {
-                //NO ENTIENDO PQ COMPARETO NO FUNCIONA
-                int result = (p2.getVotes()).compareTo((p1.getVotes()));
-                return result;
-            }
-
-        });
-
-        return output;
-
-
+   /**
+     * Sobreescribe el metodo compareTo (proyectos)
+     * 
+     * @param p
+     * @return entero dependiendo de si es mayor menor o igual
+     */
+    @Override
+    public int compareTo(Project p){
+        if (this.getVotes() > p.getVotes()) return -1;
+        else if(this.getVotes() < p.getVotes()) return 1;
+        else return 0;
     }
+
 
     /**
+     * Ordena los proyectos en base a su numero de votos
      * 
-     * @param c
-     * @return
+     * @return ArrayList proyectos
      */
-    public ArrayList<Collective> affinityReport(Collective c){
+    public ArrayList<Project> popularityReport(){
 
+        ArrayList<Project> output = new ArrayList<Project>();
+        output.addAll(projects);
+        Array.sort(output);
+
+        return output;
     }
+
+
+    // /**
+    //  * Sobreescribe el metodo compareTo (colectivos)
+    //  * 
+    //  * @param c
+    //  * @return entero dependiendo de si es mayor menor o igual
+    //  */
+    // @Override
+    // public int compareTo(Collective c){
+    //     a = 
+    //     if (this.getVotes() > p.getVotes()) return -1;
+    //     else if(this.getVotes() < p.getVotes()) return 1;
+    //     else return 0;
+    // }
+
+    // /**
+    //  * Devuelve un reporte de afinidad de un colectivo
+    //  * 
+    //  * @param c colectivo sobre el que se hace el reporte
+    //  * @return ArrayList de los colectivos ordenados segun afinidad
+    //  */
+    // public ArrayList<Collective> affinityReport(Collective c){
+    //     if (currentUser.getMemberCollectives().contains(c) == false){
+    //         return null;
+    //     }
+    //     ArrayList<Collectives> output = new ArrayList<Collectives>();
+    //     output.addAll(collectives);
+    //     Array.sort(output);
+
+    //     return output;
+    // }
 
 }

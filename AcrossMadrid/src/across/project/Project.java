@@ -25,6 +25,7 @@ public class Project{
         this.votes = votes;
         this.lastVote = lastVote;
         this.state = state;
+        nonValidatedProjects.add(this);
     }
 
     public void setName(  String name) {
@@ -106,5 +107,89 @@ public class Project{
 
         System.out.println(checkExpire(ejemplo));
     }
+
+
+
+
+
+    /************** METODOS SIN PROBAR ***************/
+
+
+
+    /**
+     * Valida un proyecto
+     */
+    public void validateProject(){
+        setProjects(getProjects().add(this));
+        setNonValidatedProjects(getNonValidatedProjects().remove(this));
+    }
+
+
+	/**
+     * Rechaza un proyecto
+     */
+    public void rejectProject(){
+        setNonValidatedProjects(getNonValidatedProjects().remove(this));
+    }
+
+
+    /**
+     * Comprueba si un usuario sigue a un proyecto
+	 * 
+     * @return boolean 
+     */
+    public boolean checkFollow(User u){
+        if (u.getFollowedProjects().contains(this)) return true;
+        return false;
+
+    }
+
+
+    /**
+     * Un usuario empieza a seguir a un proyecto
+	 * 
+     * @return boolean 
+     */
+    public void follow(User u){
+        if (checkFollow(u)) return;
+
+        ArrayList<Projects> newArray= u.getFollowedProjects();
+        newArray.add(this);
+        u.setFollowedProjects(newArray);
+    }
+
+
+    /**
+     * Un usuario deja de seguir a un proyecto
+	 * 
+     * @return boolean 
+     */
+    public void unfollow (User u){
+        if (checkFollow(u)){
+            ArrayList<Projects> newArray= u.getFollowedProjects();
+            newArray.remove(this);
+            u.setFollowedProjects(newArray);
+        }
+
+    }
+
+    public void vote (UserCollective uc){
+
+    }
+    
+    public boolean checkVote(UserCollective uc){
+        
+    }
+    public int countNotVoted(Collective c){
+
+    }
+
+    
+    Double sendToFinance(){
+
+    }
+
+
+    //checkName(name: String): Status ??
 
 }
