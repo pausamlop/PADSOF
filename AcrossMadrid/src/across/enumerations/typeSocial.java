@@ -1,7 +1,7 @@
 package across.enumerations;
 
 /**
- * Clase abstracta UserCollective
+ * Enumeracion de tipo de proyecto social
  *
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@estudiante.uam.es
@@ -10,5 +10,5 @@ package across.enumerations;
  */
 
 public enum typeSocial{
-    Nacional, International 
+    NACIONAL, INTERNACIONAL 
 }

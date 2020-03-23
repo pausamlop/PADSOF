@@ -26,7 +26,7 @@ public class Application implements Serializable, Comparable<Project>{
     private boolean currentAdmin = false;
 
     private int daysExpiration = 30;
-    private int minVotes = 1000; /* hay que preguntar al profe */
+    private static int minVotes = 1000; /* hay que preguntar al profe */
 
     private Admin admin;
     private ArrayList<Project> projects;
@@ -187,7 +187,7 @@ public class Application implements Serializable, Comparable<Project>{
      * @return true, si la accion se ejecuto con exito
      * @return false, si no se ha podido realizar la accion
      */
-    public boolean inicio(){
+    public boolean pantallaLogin(){
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("1. Registro\n2. Login\n3. Login como administrador");
@@ -258,6 +258,14 @@ public class Application implements Serializable, Comparable<Project>{
             }
         }
         return false;
+    }
+
+    
+    public void pantallaPrincipal(){
+        if (currentUser)
+            currentUser.PrincipalUser();
+        else
+            Admin.PrincipalAdmin();
     }
 
     

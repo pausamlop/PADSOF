@@ -27,4 +27,14 @@ public class SocialProject extends Project {
     public String getGroup() { return group; }
     public typeSocial gettypeSocial() { return type; }
 
+
+    @Override
+    public String toString(){
+        String resumen = super.toString();
+        resumen += "\nPROYECTO TIPO SOCIAL";
+        resumen += "\nAmbito: " + type.name();
+        resumen += "\nDirigido a: " + group;
+        return resumen;
+    }
+
 }

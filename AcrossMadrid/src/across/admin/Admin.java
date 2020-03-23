@@ -24,6 +24,7 @@ public class Admin implements Serializable {
 	public void setPassword(String password) { this.password = password; }
 
 
+    
 
 	/**
      * Comprueba que la contrasena coincida con la del administrador
@@ -37,4 +38,7 @@ public class Admin implements Serializable {
     }
 
 
+    public static void PantallaAdmin(){
+        // elegir entre: Ver proyectos (pa validar y demas), ver usuarios (igual), configuracion
+    }
 }

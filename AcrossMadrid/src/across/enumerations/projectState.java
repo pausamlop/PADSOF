@@ -10,5 +10,5 @@ package across.enumerations;
  */
 
 public enum projectState{
-    InValidation, Accepted, Rejected, VotesReached, Sent, Financed, NotFinanced, Expired
+    ENVALIDACION, ACEPTADO, RECHAZADO, VOTOSALZANCADO, ENVIADO, FINANCIADO, NOFINANCIADO, CADUCADO
 }

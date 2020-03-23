@@ -117,19 +117,73 @@ public class User extends UserCollective implements Serializable {
      */
     public void unblock(){ blocked = false; }
 
-    
-    /************* MAIN DE PRUEBA **************/
 
-    public static void main(String[] args) {
-
-        User u = new User("laura", "23685412D", "hola22", false);
-
-        System.out.println(u);
-
-
+    public void PrincipalUser(){
+        if (blocked){
+                System.out.println("Ha sido bloqueado por el administrador");
+                // mensaje de Admin
+                // solo puede cerrar sesion
+        }
+        else{
+            System.out.println("Ver mi perfil (yo)"); // hecho
+            System.out.println("Solicitar informe popularidad (ip)");
+            System.out.println("Solicitar informe afinidad (ia)"); // listado de sus colectivos
+            System.out.println("Crear colectivo (c)");
+            System.out.println("Buscar colectivos (bc)");
+            System.out.println("Crear proyecto (p)");
+            System.out.println("Buscar proyectos (bp)");
+            System.out.println("Notificaciones (n)"); 
+            try{
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                String opc = reader.readLine();
+                switch (opc) {
+                    case "yo":
+                        toString();
+                        break;
+                    case "ip":
+                        // informe pop
+                        break;
+                    case "ia":
+                        // informe afinidad
+                        break;
+                    case "c":
+                        // crear colectivo
+                        break;
+                    case "bc":
+                        // buscar colectivo
+                        break;
+                    case "p":
+                        // crear proyecto
+                        break;
+                    case "bp":
+                        // buscar proyecto
+                        break;
+                    case "n":
+                        // ver notificaciones
+                        break;
+                }
+            }catch(IOException exception){
+                exception.printStackTrace();
+            }
+        }
     }
 
+    public String toString(){
+        String perfil = "";
+        perfil += "Nombre de usuario: " + username;
+        perfil += "\nNIF: " + NIF;
+        perfil += "\nProyectos creados:";
+        for (Project p: getCreatedProjects()) resumen += "\n" + p.toString();
+        perfil += "\n\nProyectos votados:";
+        for (Project p: getVotedProjects()) resumen += "\n" + p.toString();
+        perfil += "\n\nProyectos seguidos:";
+        for (Project p: followedProjects) resumen += "\n" + p.toString();
+        perfil += "\n\nColectivos creados: ";
+        for (Collective c: createdCollectives) resumen += "\n" + c.toString();
+        perfil += "\n\nColectivos a los que pertenezco: ";
+        for (Collective c: memberCollectives) resumen += "\n" + c.toString();
+        return perfil;
 
-
+    }
 
 }

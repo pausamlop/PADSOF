@@ -19,11 +19,25 @@ public class Collective implements Serializable { // add extedns UserCollective
 
     private ArrayList<Collective> children = new ArrayList<Collective>();
     private Collective parent;
-    // private User manager;
-    // private ArrayList<User> members = new ArrayList<>();
+    private User manager;
+    private ArrayList<User> members = new ArrayList<>();
+
 
     /**
-     * Constructor
+     * Constructor de un objeto Collective sin padre
+     * 
+     * @param name       nombre del colectivo
+     * @param decription descripcion del colectivo
+     */
+    public Collective(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.parent = null;        
+    }
+
+
+    /**
+     * Constructor de un objeto Collective hijo
      * 
      * @param name       nombre del colectivo
      * @param decription descripcion del colectivo
@@ -32,9 +46,7 @@ public class Collective implements Serializable { // add extedns UserCollective
         this.name = name;
         this.description = description;
         this.parent = parent;
-        if (parent != null) {
-            parent.addChild(this);
-        }
+        parent.addChild(this);
     }
 
 
@@ -194,15 +206,19 @@ public class Collective implements Serializable { // add extedns UserCollective
     // }
 
 
-    @Override
     public String toString() {
-        return "{" +
-            " name='" + name + "'" +
-            ", description='" + description + "'" +
-            "}";
+        String resumen = "";
+        resumen += "Nombre: "+ name;
+        resumen += "\nDescipcion"+ description;
+        if (padre){
+            resumen += "\n  Padre:\n" + padre.toString();
+        }
+        resumen += "\n  Hijos:";
+        for (Collective c: children) resumen += "\n" + c.toString();
     }
     
 
+    // para probar si funcionaba lo de padres e hijos
     public static void main(String[] args) {
         Collective a = new Collective("Padre", "soy el papi", null);
         Collective b = new Collective("Hijo 1", "holiiiii", a);

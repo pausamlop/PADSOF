@@ -65,18 +65,23 @@ public class Main{
         Application app = Application.getApplication();
 
         System.out.println(" ----- BIENVENIDO A ACROSS MADRID -----");
-        if (!app.inicio()){
-            System.out.println("No se ha podido iniciar la app"); // hay que añadir lo de worng password
+        if (!app.pantallaLogin()){
+            System.out.println("No se ha podido iniciar la app"); // hay que añadir lo de wrong password
             System.exit(1);
         }
 
-        User user = app.getCurrentUser();
+        pantallaPrincipal();
+
+        User user = 
         if (user){
             if (user.getBlocked()){
-                // pantalla de bloqueado 
+                System.out.println("Ha sido bloqueado por el administrador");
+                // mensaje de Admin
                 // solo puede cerrar sesion
             }
             else{
+                System.out.println();
+                pantallaPpalUser
                 // elegir entre: MiPerfil, SolicitarInforme, CrearColectivo, CrearProyecto, Buscar, Notificaciones
             }
         }

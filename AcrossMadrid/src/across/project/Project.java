@@ -18,7 +18,7 @@ public class Project{
     private List<User> followers = new ArrayList<>();
     private List<Notification> notification = new ArrayList<>();
 
-    public Project(  String name,   String dcp,   double cost,   int votes,   Date lastVote,  projectState state) {
+    public Project(String name, String dcp, double cost, int votes, Date lastVote, projectState state) {
         this.name = name;
         this.dcp = dcp;
         this.cost = cost;
@@ -178,18 +178,29 @@ public class Project{
     }
     
     public boolean checkVote(UserCollective uc){
-        
+        return false;
     }
     public int countNotVoted(Collective c){
-
+        return 0;
     }
 
     
-    Double sendToFinance(){
+    // Double sendToFinance(){
 
-    }
+    // }
 
 
     //checkName(name: String): Status ??
+
+    public String toString(){
+        String resumen = "";
+        resumen += "Nombre: " + name;
+        resumen += "\nDescripcion: " + dcp;
+        resumen += "\nEstado: " + state.name();
+        resumen += "\nVotos: %d/%d", votes, Application.minVotes;
+        resumen += "\nCoste: " + coste;
+        resumen += "\nUltimo voto (fecha): " + lastVote;
+        return resumen;
+    }
 
 }
