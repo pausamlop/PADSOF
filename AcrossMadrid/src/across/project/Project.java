@@ -256,7 +256,7 @@ public class Project{
                 Set<User> allVoters = makeSet();
 
                 // Añadir todos los votantes del colectivo al numero de votos
-                allVoters.addAll((Collective) uc).getAllMembers());
+                allVoters.addAll(((Collective) uc).getAllMembers());
 
                 // Actualizar el numero de votos del proyectos y la fecha del ultimo voto
                 votes = allVoters.size();
@@ -290,6 +290,12 @@ public class Project{
                 if(!project.checkVote((UserCollective) user)){
                     project.vote(user);
                 }
+            
+            // Volver a votar
+
+            // Hacer makeset otra vez para actualizar el num de votos
+            Set<User> allVoters = makeSet();
+            votes = allVoters.size();
             }
         }
 
