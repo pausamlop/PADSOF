@@ -180,7 +180,7 @@ public class Application implements Serializable, Comparable<Project>{
         this.collectives = collectives;
     }
 
-    public void addCollectives(Collectivesc) {
+    public void addCollectives(Collective c) {
         this.collectives.add(c);
     }
 
@@ -228,6 +228,7 @@ public class Application implements Serializable, Comparable<Project>{
                 String NIF = reader.readLine();
                 System.out.println("Contrasena:");
                 String password = reader.readLine();
+                reader.close();
                 return register(username, NIF, password);
             }
             else if(opc == "2") {
@@ -235,6 +236,7 @@ public class Application implements Serializable, Comparable<Project>{
                 String username = reader.readLine();
                 System.out.println("Contrasena:");
                 String password = reader.readLine();
+                reader.close();
                 return login(username, password);
             }
             else {
@@ -244,6 +246,7 @@ public class Application implements Serializable, Comparable<Project>{
                     currentAdmin = true;
                     return true;
                 }
+                reader.close();
                 return false;
             }
         }catch(IOException exception){
@@ -304,18 +307,55 @@ public class Application implements Serializable, Comparable<Project>{
     // METODOS DE PROJECT Y COLECTIVOS
 
     /**
-     * Filtra un proyecto social por el tipo y el grupo
+     * Filtra un proyecto social por su estado
      * 
      * @param type tipo de proyecto social
      * @param group Grupo social al que va dirigido
      * @return ArrayList de proyectos qye cumplen las condiciones
      */
-    public ArrayList<Project> filterSocialProject(typeSocial type, String group){
+    public ArrayList<Project> filterProject(projectState state){
+        ArrayList<Project> output = new ArrayList<Project>();
+
+        for (Project p: projects){
+            if (p.getState().equals(state))
+                output.add(p);
+        }
+
+        return output;
+    }
+
+
+    /**
+     * Filtra un proyecto social por el tipo
+     * 
+     * @param type tipo de proyecto social
+     * @return ArrayList de proyectos que cumplen las condiciones
+     */
+    public ArrayList<Project> filterSocialProject(typeSocial type){
+        ArrayList<Project> output = new ArrayList<Project>();
+
+        for (Project p: projects){
+            if (p.getClass().equals(SocialProject.class))
+                output.add(p);
+        }
+
+        return output;
+    }
+
+
+    /**
+     * Filtra un proyecto social por el grupo social al que va dirigido
+     * 
+     * @param group Grupo social al que va dirigido
+     * @return ArrayList de proyectos que cumplen las condiciones
+     */
+    public ArrayList<Project> filterSocialProject(String group){
         ArrayList<Project> output = new ArrayList<Project>();
 
         for (Project p: projects){
             if (p.getClass().equals(SocialProject.class)){
-                if (p.getGroup().equals(group) && p.gettypeSocial().equals(type)) output.add(p);
+                if (p.getGroup().equals(group))
+                    output.add(p);
             }
         }
 
@@ -323,22 +363,21 @@ public class Application implements Serializable, Comparable<Project>{
     }
 
     /**
-     * Filtra un proyecto de infraestructira por distrito y su estado
+     * Filtra un proyecto de infraestructura por distrito
      * 
      * @param d distrito
-     * @param state estado del proyecto
-     * @return ArrayList de proyectos qye cumplen las condiciones
+     * @return ArrayList de proyectos que cumplen las condiciones
      */
-    public ArrayList<Project> filterInfrProject(nameDistrict d, projectState state){
+    public ArrayList<Project> filterInfrProject(String d){
         ArrayList<Project> output = new ArrayList<Project>();
 
         for (Project p: projects){
             if (p.getClass().equals(InfraestructureProject.class)){ 
-                if (p.getDistrict().equals(d) && p.getProjectState().equals(state)) output.add(p);
+                if (p.getDistrict().equals(d) || d == "") 
+                    output.add(p);
+
             }
         }
-
-        // NO SE SI LO DE DISTRICT ESTA BIEN PQ NOS LO HA PUESTO MAL EN EL DIAGRAMA
 
         return output;
 
@@ -349,7 +388,7 @@ public class Application implements Serializable, Comparable<Project>{
      * o en la descripcion del proyecti
      * 
      * @param subj
-     * @return ArrayList de proyectos qye cumplen las condiciones
+     * @return ArrayList de proyectos que cumplen las condiciones
      */
     public ArrayList<Project> searchProject(String subj){
         ArrayList<Project> output = new ArrayList<Project>();
@@ -362,10 +401,10 @@ public class Application implements Serializable, Comparable<Project>{
 
     /**
      * Busca un colectivo segun si el input esta contenido en el nombre
-     * o en la descripcion del proyecti
+     * o en la descripcion del proyecto
      * 
      * @param subj
-     * @return ArrayList de colectivos qye cumplen las condiciones
+     * @return ArrayList de colectivos que cumplen las condiciones
      */
     public ArrayList<Collective> searchCollective(String subj){
         ArrayList<Collective> output = new ArrayList<Collective>();

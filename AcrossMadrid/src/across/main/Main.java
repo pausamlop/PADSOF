@@ -72,7 +72,7 @@ public class Main{
 
         pantallaPrincipal();
 
-        User user = 
+        User user = app.getCurrentUser();
         if (user){
             if (user.getBlocked()){
                 System.out.println("Ha sido bloqueado por el administrador");
@@ -81,7 +81,7 @@ public class Main{
             }
             else{
                 System.out.println();
-                pantallaPpalUser
+                PantallaUser();
                 // elegir entre: MiPerfil, SolicitarInforme, CrearColectivo, CrearProyecto, Buscar, Notificaciones
             }
         }

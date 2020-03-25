@@ -160,58 +160,60 @@ public class User extends UserCollective implements Serializable {
                 // solo puede cerrar sesion
         }
         else{
-            System.out.println("Ver mi perfil (yo)"); // hecho
+            System.out.println("Ver mi perfil (yo)"); 
             System.out.println("Solicitar informe popularidad (ip)");
-            System.out.println("Solicitar informe afinidad (ia)"); // listado de sus colectivos
+            System.out.println("Solicitar informe afinidad (ia)"); 
             System.out.println("Crear colectivo (c)");
             System.out.println("Buscar colectivos (bc)");
-            System.out.println("Filtrar colectivos(fc)");
             System.out.println("Crear proyecto (p)");
             System.out.println("Buscar proyectos (bp)");
             System.out.println("Filtrar proyectos (fp)");
-            System.out.println("Notificaciones (n)"); 
+
             try{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 String opc = reader.readLine();
+
                 switch (opc) {
-                    case "yo":
+                    case "yo": //perfil
                         toString();
-                        break;
+
                     case "ip": // popularidad
                         System.out.println(app.popularityReport()); 
-                        break;
+
                     case "ia": // informe afinidad
                         System.out.println("Selecciones colectivo a anlizar: ");
+                        if (memberCollectives.size() == 0){
+                            System.out.println("Todavia no perteneces a ningun colectivo");
+                            PrincipalUser();
+                        }
                         for (int i = 0; i < memberCollectives.size(); i++)
                             System.out.println("%d. %s", i+1, memberCollectives.get(i).getName());
-                        opc = reader.readLine();
+                        String num_col = reader.readLine();
                         try{
-                            System.out.println(app.affinityReport(memberCollectives.get(Integer.parseInt(opc)-1))); 
+                            System.out.println(app.affinityReport(memberCollectives.get(Integer.parseInt(num_col)-1))); 
                         }
                         catch(NumberFormatException excep){
                             System.out.println(app.affinityReport(memberCollectives.get(0))); 
                         }
-                        break;
+
                     case "c": // crear colectivo
                         System.out.println("Nombre del colectivo, descripcion, padre:");
                         String name = reader.readLine();
                         String dcp = reader.readLine();
                         for (int i = 0; i < app.getCollectives().size(); i++) 
                             System.out.println("%d. %s", i+1, app.getCollectives().get(i).getName());
-                        opc = reader.readLine();
+                        String parent_str = reader.readLine();
                         Collective parent;
-                        if (opc == "") parent = null;
-                        else parent = app.getCollectives().get(Integer.parseInt(opc)-1);
+                        if (parent_str == "") parent = null;
+                        else parent = app.getCollectives().get(Integer.parseInt(parent_str)-1);
                         ArrayList<Collective> aux = app.getCollectives();
                         aux.add(new Collective(name, dcp, parent));
                         app.setCollectives(aux);
-                        break;
-                    case "bc":
-                        // buscar colectivo
-                        break;
-                    case "fc":
-                        // buscar colectivo
-                        break; 
+
+                    case "bc": // buscar colectivo
+                        System.out.println("Buscar proyecto: ");
+                        displayCollectives(app.searchProject(reader.readLine()));
+
                     case "p": // crear proyecto
                         System.out.println("Nombre del proyecto, descripcion, coste, tipo (S/I):");
                         String name2 = reader.readLine();
@@ -223,51 +225,93 @@ public class User extends UserCollective implements Serializable {
                         catch(NumberFormatException excep){
                             cost = 5000;
                         }
-                        if (reader.readLine() == "I"){
+                        String tipo = reader.readLine();
+                        if (tipo == "I"){
                             System.out.println("Imagen: ");
                             String image = reader.readLine();
-                            District d = new District("Retiro");
+                            String d = new District("Retiro");
                             app.addNewProject(new InfraestructureProject(name2, dcp2, cost, image,d));
                         }
-                        else{
+                        else if (tipo == "S"){
                             System.out.println("Grupo social y ambito (N/I):");
                             String group = reader.readLine();
                             typeSocial type = (reader.readLine() == "N")?typeSocial.NACIONAL:typeSocial.INTERNACIONAL;
                             app.addNewProject(new SocialProject(name2, dcp2, cost, group, type));
                         }
-                        break;
+                        else{
+                            reader.close();
+                            PrincipalUser();
+                        }
+
                     case "bp": // buscar proyecto
                         System.out.println("Buscar proyecto: ");
-                        // app.searchProject(reader.readLine());
-                        break;
-                    case "fp":
-                        // buscar proyecto
-                        break;
-                    case "n":
-                        // ver notificaciones
-                        break;
+                        displayProjects(app.searchProject(reader.readLine()));
+
+                    case "fp": // filtrar proyecto
+                        System.out.println("Filtrar proyecto por estado (e), tipo social (ts) o infraestructura (ti)");
+                        String filtro = reader.readLine();
+                        if (filtro == "e"){
+                            System.out.println("Escriba estado a buscar: ACEPTADO(1), VOTOSALCANZADOS(3), ENVIADO(4), FINANCIADO(5), CADUCADO(7):");
+                            int state;
+                            try{
+                                state = Integer.parseInt(reader.readLine());
+                            }catch(NumberFormatException ex){
+                                state = 1;
+                            }
+                            displayProjects(app.filterProject(state));
+                        }
+                        else if (filtro == "ts"){
+                            System.out.println("Buscar por ambito (N/I), por grupo (escribir grupo) o nada (enter):");
+                            String opc2 = reader.readLine();
+                            if (opc2 == "N")
+                                displayProjects(app.filterSocialProject(typeSocial.NACIONAL));
+                            else if(opc2 == "I")
+                                displayProjects(app.filterSocialProject(typeSocial.INNACIONAL));
+                            else 
+                                displayProjects(app.filterSocialProject(opc2));   
+                        }
+                        else if (filtro == "ti"){
+                            System.out.println("Esciba distriro a buscar o pulse enter ");
+                            displayProjects(app.filterSocialProject(reader.readLine()));
+                        }
+                        else{
+                            reader.close();
+                            PrincipalUser();
+                        }
+
+                    case "q": //cerrar sesion
+                        /*****************************/
+                    default: // otro
+                        PrincipalUser();
+                    reader.close();
                 }
             }catch(IOException exception){
                 exception.printStackTrace();
             }
+            PrincipalUser();
         }
     }
 
 
-    public String displayProjects(ArrayList<Project> projects){
-        String out = "";
+    private void displayProjects(ArrayList<Project> projects){
+        if (projects.size()){
+            System.out.println("No hay proyectos");
+            PrincipalUser();
+        }
         for (int i = 0; i < projects.size(); i++){
             System.out.println("%d. %s", i+1, projects.get(i).getName());
         }
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             int opc = Integer.parseInt(reader.readLine());
+            if (opc >= projects.size() || opc < 0)
+                displayProjects(projects);
         }catch(IOException exc){
             exc.printStackTrace();
         }catch(NumberFormatException exc){
-            opc = 1;
+            displayProjects(projects);
         }
-        Project p = project.get(i+1);
+        Project p = project.get(opc);
         System.out.println(p);
         if (getVotedProjects().contains(p))
             System.out.println("Has votado este proyecto");
@@ -275,20 +319,85 @@ public class User extends UserCollective implements Serializable {
             System.out.println("Sigues a este proyecto");
         
         System.out.println("\nElige una opcion: votar (v), votar como colectivo(vc), seguir (s) o dejar de seguir (d)");
-        String opc = reader.readLine();
-        switch (opc) {
-            case "v": //vote
-                p.vote(this);
-            case "vc": //votar como colectivo
+        
+        try{
+            String opc = reader.readLine();
 
-            case "s": //seguir
-                p.follow(this);
-            case "ds": //dejar de seguir
-                p.unfollow(this);
-            case "q":
-                PrincipalUser();
+            switch (opc) {
+                case "v": //vote
+                    p.vote(this);
+
+                case "vc": //votar como colectivo
+                    if (createdCollectives.size() == 0){
+                        System.out.println("No has creado ningun colectivo todavia");
+                        displayProjects(projects);
+                    }
+                    for (int i = 0; i < createdCollectives.size(); i++)
+                        System.out.println("%d. %s", i+1, createdCollectives.get(i).getName());
+                    
+                    int num_col;
+                    try{
+                        num_col = Integer.pargeInteger(reader.readLine()) - 1;
+                    }catch(NumberFormatException ex){
+                        num_col = 0;
+                    } finally{
+                        p.vote(createdCollectives.get(num_col));
+                    }
+
+                case "s": //seguir
+                    p.follow(this);
+
+                case "ds": //dejar de seguir
+                    p.unfollow(this);
+
+                case "q": //cerrar sesion
+                    /**************************/
+
+                default: // otro
+                    displayProjects();
+            }
+            reader.close();
         }
-        close(reader);
+        catch(IOException exc){
+            exc.printStackTrace();
+        }
+    }
+
+
+    private void displayCollectives(ArrayList<Collective> collectives){
+        if (collectives.size()){
+            System.out.println("No hay colectivos");
+            PrincipalUser();
+        }
+        for (int i = 0; i < collectives.size(); i++){
+            System.out.println("%d. %s", i+1, collectives.get(i).getName());
+        }
+        try{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            int opc = Integer.parseInt(reader.readLine()) - 1;
+            if (opc >= collectives.size() || opc < 0)
+                displayCollectives(collectives);
+
+            Collective c = collectives.get(opc);
+            System.out.println(c);
+            if (memberCollectives.contains(c)){
+                System.out.println("Pertecences a este colectivo");
+                System.out.println("Escribir 'b' para borrarse");
+                if (reader.readLine() == "b")
+                    c.disjoin(this);
+            }
+            else{
+                System.out.println("Escribir 'u' para unirse");
+                if (reader.readLine() == "u")
+                    c.disjoin(this);
+            }
+            reader.close();
+        }catch(IOException exc){
+            exc.printStackTrace();
+        }catch(NumberFormatException exc){
+            displayCollectives(collectives);
+        }
+        PantallaUser();
     }
 
 
