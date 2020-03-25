@@ -3,6 +3,7 @@ package across.notification;
 import across.project.*;
 import across.user.*;
 import across.enumerations.*;
+import java.lang.*;
 import java.util.*;
 
 /**
@@ -26,10 +27,8 @@ public class Notification{
 	 * 
 	 * @param password contraseña del objeto
      */
-    public Notification(String message, Project project, ArrayList<User> receivers) { 
-        this.message = message; 
+    public Notification(Project project) { 
         this.project = project;
-        this.receivers = receivers;
     }
 
 
@@ -46,14 +45,65 @@ public class Notification{
     public void setReceivers(ArrayList<User> receivers) { this.receivers = receivers; }
 
 
+    private String messageByProjectState(projectState ps){
+        String message = " ";
+
+        switch (ps) {
+            case ENVALIDACION:
+                message = "El proyecto:" + this.project.getName() +  ", ha sido enviado a nuestro servicio de validación, pronto será notificado acerca del nuevo estado del mismo";
+            case ACEPTADO:
+                message = "El proyecto:" + this.project.getName() + ", ha sido aceptado, la comunidad podrá acceder a el y darle su apoyo";
+            case RECHAZADO:
+                message = "El proyecto:" + this.project.getName() +  ", ha sido rechazado";
+            case VOTOSALCANZADOS:
+                message = "El proyecto:" + this.project.getName() +  ", ha alcanzdo el numero minimo de votos, podra proceder a enviarlo para su financiación cuando vea oportuno";
+            case ENVIADO:
+                message = "El proyecto:" + this.project.getName() +  ", ha sido enviado a financiación";
+            case FINANCIADO:
+                message = "El proyecto:" + this.project.getName() +  ", va a recivir financiacion";
+            case NOFINANCIADO:
+                message = "El proyecto:" + this.project.getName() +  ", no va a recibir financiacion";
+            case CADUCADO:
+                message = "El proyecto:" + this.project.getName() +  ", a caducado, demasiado tiempo sin recibir apoyos de la comunidad";
+        }
+
+        return message;
+    }
+
+    private ArrayList<User> receiversByProjectState(projectState ps){
+        ArrayList<User> receivers = new ArrayList<>();
+
+        if(User.class == this.project.getCreator().getClass()){
+            receivers.add((User)this.project.getCreator());
+        } else{
+            Collective collective = (Collective) this.project.getCreator();
+
+            receivers.add(collective.getManager());
+        }
+        
+        if (ps == projectState.VOTOSALCANZADOS || ps == projectState.ENVIADO || ps==projectState.FINANCIADO || ps==projectState.NOFINANCIADO || ps==projectState.CADUCADO){
+           
+            for(User user : this.project.getFollowers()){
+                receivers.add(user);
+            }
+        }
+
+        return receivers;
+    }
+
 	/**
-     * NO SE QUE HACE
+     * Notifica a los usuarios en cuestion el mensaje en cuestion, todo esto, en funcion del
+     * estado del proceso
 	 * 
 	 * @param projectState
      */
     public void notify(projectState ps){
-        // NO SEEEEEE
+
+        this.setMessage(messageByProjectState(ps));
+        this.setReceivers(receiversByProjectState(ps));
+
+        for(User user : this.receivers){
+            user.addNotification(this);
+        }
     }
-
-
 }

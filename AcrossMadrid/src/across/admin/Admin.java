@@ -13,7 +13,7 @@ import java.io.*;
 
 public class Admin implements Serializable {
 
-    private String passwor = "soyadmin";
+    private String password = "soyadmin";
 
 
     /* GETTERS */
@@ -38,7 +38,7 @@ public class Admin implements Serializable {
     }
 
 
-    public static void PantallaAdmin(){
+    public void PantallaAdmin(){
         // elegir entre: Ver proyectos (pa validar y demas), ver usuarios (igual), configuracion
     }
 }

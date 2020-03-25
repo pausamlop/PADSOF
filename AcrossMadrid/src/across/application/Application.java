@@ -26,7 +26,7 @@ public class Application implements Serializable, Comparable<Project>{
     private boolean currentAdmin = false;
 
     private int daysExpiration = 30;
-    private static int minVotes = 1000; /* hay que preguntar al profe */
+    private int minVotes = 1000; /* hay que preguntar al profe */
 
     private Admin admin;
     private ArrayList<Project> projects;
@@ -153,6 +153,11 @@ public class Application implements Serializable, Comparable<Project>{
     }
 
 
+    public void addUsers(User u) {
+        this.users.add(u);
+    }
+
+
     public ArrayList<User> getNonValidatedUsers() {
         return this.nonValidatedUsers;
     }
@@ -163,6 +168,22 @@ public class Application implements Serializable, Comparable<Project>{
     }
 
 
+    public void addNewUsers(User u) {
+        this.nonValidatedUsers.add(u);
+    }
+
+    public ArrayList<Collective> getCollectives() {
+        return this.collectives;
+    }
+
+    public void setCollectives(ArrayList<Collective> collectives) {
+        this.collectives = collectives;
+    }
+
+    public void addCollectives(Collectivesc) {
+        this.collectives.add(c);
+    }
+
     public ArrayList<Project> getProjects() {
         return this.projects;
     }
@@ -171,12 +192,20 @@ public class Application implements Serializable, Comparable<Project>{
         this.projects = projects;
     }
 
+    public void addProject(Project p) {
+        this.projects.add(p);
+    }
+
     public ArrayList<Project> getNonValidatedProjects() {
         return this.nonValidatedProjects;
     }
 
     public void setNonValidatedProjects(ArrayList<Project> nonValidatedProjects) {
         this.nonValidatedProjects = nonValidatedProjects;
+    }
+
+    public void addNewProject(Project p) {
+        this.nonValidatedProjects.add(p);
     }
     
 
@@ -265,7 +294,7 @@ public class Application implements Serializable, Comparable<Project>{
         if (currentUser)
             currentUser.PrincipalUser();
         else
-            Admin.PrincipalAdmin();
+            admin.PrincipalAdmin();
     }
 
     
@@ -374,39 +403,100 @@ public class Application implements Serializable, Comparable<Project>{
         output.addAll(projects);
         Array.sort(output);
 
+        String proy = "";
+        int count = 1;
+        for (Project p: output){
+            proy += count + ". " + p.getName() + "\n";
+            count++;
+        }
+
+        return proy;
+    }
+
+
+    /**
+     * Sobreescribe el metodo compareTo (colectivos)
+     * 
+     * @param c
+     * @return entero dependiendo de si es mayor menor o igual
+     */
+    @Override
+    public int compareTo(Collective c){
+        if (this.getVotes() > p.getVotes()) return -1;
+        else if(this.getVotes() < p.getVotes()) return 1;
+        else return 0;
+    }
+
+    /**
+     * Devuelve un reporte de afinidad de un colectivo
+     * 
+     * @param c colectivo sobre el que se hace el reporte
+     * @return ArrayList de los colectivos ordenados segun afinidad
+     */
+    public LinkedHashMap<Collective, Integer> affinityReport(Collective c){
+        if (currentUser.getMemberCollectives().contains(c) == false){
+            return null;
+        }
+
+        HashMap<Collective, Integer> notSorted= new HashMap<Collective, Integer>();
+
+        for (Collective col: collectives){
+            if (c.equals(col)) {
+            } else {
+                Set<Project> p1 = new HashSet<Project>();
+                Set<Project> p2 = new HashSet<Project>();
+                Set<Project> p3 = new HashSet<Project>(); 
+
+                p1.addAll(c.getCreatedProjects());
+                p1.addAll(col.getVotedProjects());
+
+                p2.addAll(col.getCreatedProjects());
+                p2.addAll(c.getVotedProjects());
+
+                p3.addAll(c.getVotedProjected());
+                p3.addAll(col.getVotedProjected());
+
+                int tasa = (p1.size() + p2.size())/p3.size();
+                notSorted.put(col, tasa);
+
+            }
+        }
+
+        LinkedHashMap<Collective, Integer> output = sortCollectives(notSorted);
         return output;
     }
 
 
-    // /**
-    //  * Sobreescribe el metodo compareTo (colectivos)
-    //  * 
-    //  * @param c
-    //  * @return entero dependiendo de si es mayor menor o igual
-    //  */
-    // @Override
-    // public int compareTo(Collective c){
-    //     a = 
-    //     if (this.getVotes() > p.getVotes()) return -1;
-    //     else if(this.getVotes() < p.getVotes()) return 1;
-    //     else return 0;
-    // }
+    private LinkedHashMap<Collective,Integer> sortCollectives (HashMap<Collective, Integer> input){
+        List<Collective> mapKeys = new ArrayList<>(input.keySet());
+        List<Integer> mapValues = new ArrayList<>(input.values());
+        Collection.sort(mapValues);
+        Collection.sort(mapKeys);
 
-    // /**
-    //  * Devuelve un reporte de afinidad de un colectivo
-    //  * 
-    //  * @param c colectivo sobre el que se hace el reporte
-    //  * @return ArrayList de los colectivos ordenados segun afinidad
-    //  */
-    // public ArrayList<Collective> affinityReport(Collective c){
-    //     if (currentUser.getMemberCollectives().contains(c) == false){
-    //         return null;
-    //     }
-    //     ArrayList<Collectives> output = new ArrayList<Collectives>();
-    //     output.addAll(collectives);
-    //     Array.sort(output);
+        LinkedHashMap<Collective, Integer> sortedMap = new LinkedHashMap<>();
 
-    //     return output;
-    // }
+        Iterator<Integer> valueIt = mapValues.iterator();
+        while (valueIt.hasNext()) {
+            Integer val = valueIt.next();
+            Iterator<Collective> keyIt = mapKeys.iterator();
+
+            while (keyIt.hasNext()) {
+                Collective key = keyIt.next();
+                Integer comp1 = input.get(key);
+                Integer comp2 = val;
+
+                if (comp1.equals(comp2)) {
+                    keyIt.remove();
+                    sortedMap.put(key, val);
+                    break;
+                }
+            }
+        }
+        return sortedMap;
+    }
+
+
+    
 
 }
+

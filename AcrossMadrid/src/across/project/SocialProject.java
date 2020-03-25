@@ -15,8 +15,8 @@ public class SocialProject extends Project {
     private String group;
     private typeSocial type;
 
-    public SocialProject(String name, String dcp, double cost, int votes, Date lastVote, projectState state, String group, typeSocial type){
-        super(name, dcp, cost, votes, lastVote, state);
+    public SocialProject(String name, String dcp, double cost, String group, typeSocial type){
+        super(name, dcp, cost, lastVote, state);
         this.group = group;
         this.type = type;
     }

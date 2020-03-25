@@ -1,6 +1,7 @@
 package across.user;
 
 import java.util.ArrayList;
+import java.io.*;
 
 
 /**
@@ -12,14 +13,14 @@ import java.util.ArrayList;
  *
  */
 
-public class Collective implements Serializable { // add extedns UserCollective
+public class Collective extends UserCollective implements Serializable { // add extedns UserCollective
 
     private String name;
     private String description;
 
     private ArrayList<Collective> children = new ArrayList<Collective>();
     private Collective parent;
-    private User manager;
+    private User manager; // DEBERIA SER UN FINAL ?????
     private ArrayList<User> members = new ArrayList<>();
 
 
@@ -47,6 +48,7 @@ public class Collective implements Serializable { // add extedns UserCollective
         this.description = description;
         this.parent = parent;
         parent.addChild(this);
+        // anadir a nonValidated
     }
 
 
@@ -93,14 +95,14 @@ public class Collective implements Serializable { // add extedns UserCollective
      * 
      * @return manager
      */
-    // public User getManager(){ return manager; }
+    public User getManager(){ return manager; }
 
     /**
      * Devuelve un array con los usuarios pertenecientes al colectivo
      * 
      * @return members[]
      */
-    // public User[] getMembers(){ return members; }
+    public ArrayList<User> getMembers(){ return members; }
 
 
 
@@ -141,11 +143,11 @@ public class Collective implements Serializable { // add extedns UserCollective
         this.parent = parent;
     }
 
-    /**
-     * Actualiza el representante del colectivo
-     * 
-     * @param manager Usuario que crea el colectivo
-     */
+    // /**
+    //  * Actualiza el representante del colectivo
+    //  * 
+    //  * @param manager Usuario que crea el colectivo
+    //  */
     // public void setManager(User manager){ this.manager = manager; }
 
     /**
@@ -153,7 +155,7 @@ public class Collective implements Serializable { // add extedns UserCollective
      * 
      * @param members arrays de los usuarios miembros
      */
-    // public void setMembers(User[] members){ this.members = members; }
+    public void setMembers(User[] members){ this.members = members; }
 
     // METODOS
 
@@ -162,60 +164,100 @@ public class Collective implements Serializable { // add extedns UserCollective
         children.add(c);
     }
 
-    // /**
-    // * Permite a un usuario unirse al colectivo
-    // * @param u usuario a unirse
-    // * @return true si el usuario se anade correctamente
-    // * @return false si el usuario no puede unirse al colectivo
-    // */
-    // public boolean join(User u){
-    // // checkar si usuario esta en colectivos padres o hijos
-    // // return false
+    public ArrayList<User> getAllMembers(){
+        ArrayList<User> members = new ArrayList<>();
 
-    // members.add(u);
-    // // actualizar en user los colectivos a los que pertenece
-    // return true;
-    // }
+        for(User user : this.getMembers()){
+            members.add(user);
+        }
 
-    // /**
-    // * Permite a un usuario borrarse del colectivo
-    // * @param u usuario a borrarse
-    // * @return true si el usuario es borrado correctamente
-    // * @return false si el usuario no puede borrarse al colectivo
-    // */
-    // public boolean disjoin(User u){
-    // // check u == manager: return false
-    // if (this.checkMember(u)){
-    // members.remove(u); //ask teacher pq no se si existe
-    // }
-    // return true;
-    // }
+        for(Collective auxCol : this.getChildren()){
+            for(User user: auxCol.getMembers()){
+                members.add(user);
+            }
+        }
 
-    // /**
-    // * Comprueba si un usuario pertenece al colectivo
-    // * @param u usuario
-    // * @return true si el usuario pertenece al colectivo
-    // * @return false si el usuario no pertenece al colectivo
-    // */
-    // public boolean checkMember(User u){
-    // for (User memb: members){
-    // if (u.equals(memb))
-    // return true;
-    // }
-    // return false;
-    // }
+        return members; 
+    }
+
+    /**
+    * Permite a un usuario unirse al colectivo
+    * @param u usuario a unirse
+    */
+    public void join(User u){
+
+        // checkear si usuario esta en colectivos padres o hijos
+        if (getAllMembers().contains(this)) return;
+
+        // añadirlo al array de members de collective
+        members.add(u);
+
+        //añadirlo al array de colectivos de u
+        ArrayList<Collectives> col = new ArrayList<Collectives>();
+        col.addAll(u.getMemberCollective())
+        col.add(this);
+        u.setMemberCollectives(col);
+
+        // votar todos los votados por el colectivo
+        for (Project p: getVotedProjects()){
+            p.vote(u);
+        }
+
+    }
+
+    /**
+    * Permite a un usuario borrarse del colectivo
+    * @param u usuario a borrarse
+    */
+    public void disjoin(User u){
+        if (getAllMembers().contains(this) == false) return;
+
+        //quitar de array de members de collective
+        members.remove(this);
+
+        //quitarlo del array de colectivos de u
+        ArrayList<Collectives> col = new ArrayList<Collectives>();
+        col.addAll(u.getMemberCollective())
+        col.remove(this);
+        u.setMemberCollectives(col);
+
+        // hacer update de los votos de los proyectos
+        for (Project p: getVotedProjects()){
+            p.updateVotes(u);
+        }
+
+    }
+
+    /**
+    * Comprueba si un usuario pertenece al colectivo
+    * @param u usuario
+    * @return true si el usuario pertenece al colectivo
+    * @return false si el usuario no pertenece al colectivo
+    */
+    public boolean checkMember(User u){
+    for (User memb: members){
+    if (u.equals(memb))
+    return true;
+    }
+    return false;
+    }
+
+    
 
 
     public String toString() {
         String resumen = "";
         resumen += "Nombre: "+ name;
         resumen += "\nDescipcion"+ description;
-        if (padre){
-            resumen += "\n  Padre:\n" + padre.toString();
+        if (parent != null){
+            resumen += "\n  Padre:\n" + parent.toString();
         }
         resumen += "\n  Hijos:";
         for (Collective c: children) resumen += "\n" + c.toString();
+
+        return resumen;
     }
+
     
 
     // para probar si funcionaba lo de padres e hijos

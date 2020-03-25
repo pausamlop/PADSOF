@@ -1,7 +1,9 @@
 package across.user;
 
-import across.collective.*;
+import across.user.*;
+import across.project.*;
 import java.util.*;
+import java.io.*;
 
 
 /**
@@ -16,6 +18,14 @@ public abstract class UserCollective implements Serializable {
 
     private ArrayList<Project> createdProjects = new ArrayList<Project>();
     private ArrayList<Project> votedProjects = new ArrayList<Project>();
+
+	public void setCreatedProjects(ArrayList<Project> createdProjects) {
+        this.createdProjects = createdProjects;
+    }
+    public void setVotedProjects(ArrayList<Project> votedProjects) {
+        this.votedProjects = votedProjects;
+    }
+
    
     
     /**
@@ -36,17 +46,6 @@ public abstract class UserCollective implements Serializable {
         return this.votedProjects;
     }
 
-    /**
-     * ...
-     * @return set de objetos UserCollective ...
-     */
-    public int makeSet(List<User> users, Collective c){
-        Set<User> set = new TreeSet<>();
-
-        for (User u:c.getMembers()) set.add(u);
-        for (User u:users) set.add(u);
-        return set.size();
-    }
 
 
 }
