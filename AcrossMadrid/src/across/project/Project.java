@@ -3,14 +3,19 @@ import across.application.*;
 import across.enumerations.*;
 import across.notification.*;
 import across.user.*;
+
 import java.util.*;
+
+import com.apple.eawt.Application;
+
+import java.time.*;
 
 public class Project{
     private String name;
     private String dcp;
     private double cost;
     private int votes;
-    private Date lastVote;
+    private LocalDate lastVote;
     private projectState state;
 
     private UserCollective creator;
@@ -22,7 +27,7 @@ public class Project{
         this.dcp = dcp;
         this.cost = cost;
         this.votes = 0;
-        this.lastVote = new Date();
+        this.lastVote = LocalDate.now();
         this.state = projectState.ENVALIDACION;
 
         ArrayList<Project> p1 = new ArrayList<Project>();
@@ -47,12 +52,13 @@ public class Project{
         this.votes = votes;
     }
 
-    public void setLastVote(  Date lastVote) {
+    public void setLastVote(  LocalDate lastVote) {
         this.lastVote = lastVote;
     }
 
     public void setprojectState(  projectState state) {
         this.state = state;
+        new Notification(this);
     }
 
     public String getName() {
@@ -71,7 +77,7 @@ public class Project{
         return votes;
     }
 
-    public Date getLastVote() {
+    public LocalDate getLastVote() {
         return lastVote;
     }
 
@@ -92,64 +98,16 @@ public class Project{
         return this.followers;
     }
 
-    public static boolean checkExpire(/*Application app*/Project project){ 
-        int maxDays= 0; //app.getDaysExpiration();
-        Date actualDate = new Date(); 
-        Date lastVote = project.getLastVote();
-        int diff = getDifferenceDays(actualDate, lastVote);
+    public boolean checkExpire(){ 
+        int maxDays = Application.getApplication().getDaysExpiration();
+        int diff = DAYS.between(LocalDate.now(), lastVote);
 
         if(maxDays <= diff){ return true; }
 
         else{ return false; }
     }
 
-    private static int getDifferenceDays(Date date1, Date date2){
-        int day1 = date1.getDate();
-        int day2 = date2.getDate();
 
-        return Math.abs(day1-day2);
-    }
-
-    public static boolean checkVote(UserCollective newVoters[]){
-
-        return true;
-    }
-     
-
-    public static void main(  String[] args) {
-          Date creationDate = new Date();
-
-          Project ejemplo = new Project("Ejemplo", "DCP", 10049, 0, creationDate, projectState.InValidation());
-
-        System.out.println(checkExpire(ejemplo));
-    }
-
-
-
-
-
-    /************** METODOS SIN PROBAR ***************/
-
-    /**
-     * Devuelve un set con todos los usuarios que han votado el proyecto
-     * @return set de objetos UserCollective ...
-     */
-    private Set<User> makeSet(){
-        Set<User> set = new HashSet<>();
-        for (UserCollective uc: voters){
-
-            // Usuarios individuales
-            if (uc.getClass().equals(User.class)){
-                set.add((User)uc);
-
-            // Usuarios que forman parte de colectivos
-            } else {
-                set.add(((Collective) uc).getAllMembers());
-            }
-
-        }
-        return set;
-    }
 
     /**
      * Valida un proyecto
@@ -232,6 +190,32 @@ public class Project{
 
     }
 
+    /**
+     * Devuelve un set con todos los usuarios que han votado el proyecto
+     * 
+     * @return set de objetos UserCollective ...
+     */
+    private Set<User> makeSet(){
+        Set<User> set = new HashSet<>();
+        for (UserCollective uc: voters){
+
+            // Usuarios individuales
+            if (uc.getClass().equals(User.class)){
+                set.add(uc);
+
+            // Usuarios que forman parte de colectivos
+            } else {
+                set.add(uc.getChildrenMembers());
+            }
+        }
+
+        for(User u: set){
+            if(u.getBlocked())
+                set.remove(u);
+        }
+        return set;
+    }
+
 
     /**
      * Un usercollective vota a un proyecto
@@ -245,27 +229,26 @@ public class Project{
 
         // Si vota como usuario
         if (uc.getClass().equals(User.class)) {
+
+            // Añadir el usuario a voters
             voters.add(uc);
         }
 
         // Si vota como colectivo
-        if (uc.getClass().equals(Collective.class)) {
-            if ((Application.getApplication().getCurrentUser()).equals( ((Collective)uc).getManager() )){
-
-                // Make Set con los votes
-                Set<User> allVoters = makeSet();
-
-                // Añadir todos los votantes del colectivo al numero de votos
-                allVoters.addAll(((Collective) uc).getAllMembers());
-
-                // Actualizar el numero de votos del proyectos y la fecha del ultimo voto
-                votes = allVoters.size();
-                lastVote = new Date();
+        else {
+            if ((Application.getApplication().getCurrentUser()).equals( uc.getManager() )){
 
                 // Añadir el colectivo a voters
                 voters.add(uc);
             }
         }
+
+        // Make Set con los votes
+        Set<User> allVoters = makeSet();
+
+        // Actualizar el numero de votos del proyectos y la fecha del ultimo voto
+        votes = allVoters.size();
+        lastVote = LocalDate.now();
 
         // Actualizar los proyectos votados en usercollective
         ArrayList<Project> p1 = new ArrayList<Project>();
@@ -282,54 +265,27 @@ public class Project{
 	 * 
      * @param c usercollective
      */
-    public void updateVotes(Collective c){
-        UserCollective collective = (UserCollective) c;
+    public void updateVotes(){
 
-        for(User user : c.getMembers()){
-            for(Project project : collective.getVotedProjects()){
-                if(!project.checkVote((UserCollective) user)){
-                    project.vote(user);
-                }
-            
-            // Volver a votar
+        Set<User> allVoters = makeSet();
 
-            // Hacer makeset otra vez para actualizar el num de votos
-            Set<User> allVoters = makeSet();
-            votes = allVoters.size();
-            }
+        // Quitar usuarios bloqueados
+        for(User u: allVoters){
+            if(u.getBlocked())
+            allVoters.remove(u);
         }
 
+        votes = allVoters.size();
         
     }
     
-    
 
+    // send to Finance
 
-    /**
-     * Funcion para revisar si un colectivo o un usuario concreto han votado un proyecto en cuestion
-     * 
-     * @param uc
-     * @return true en caso de que haya votado al proyecto, false en caso contrario
-     */
-    public boolean checkVote(UserCollective uc){
-        
-        return false;
+    public void sendToFinance(){
+        // ESTO ES CON EL JAR NO???
     }
 
-    public int countNotVoted(Collective c){
-        
-        return 0;
-    }
-
-    
-    // Double sendToFinance(){
-
-    // }
-
-
-    /*public boolean checkName(name: String){
-        
-    }*/
 
     public String toString(){
         String resumen = "";

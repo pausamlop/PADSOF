@@ -1,6 +1,9 @@
 package across.user;
 
 import java.util.ArrayList;
+
+import com.apple.eawt.Application;
+
 import java.io.*;
 
 
@@ -20,7 +23,7 @@ public class Collective extends UserCollective implements Serializable { // add 
 
     private ArrayList<Collective> children = new ArrayList<Collective>();
     private Collective parent;
-    private User manager; // DEBERIA SER UN FINAL ?????
+    private final User manager; 
     private ArrayList<User> members = new ArrayList<>();
 
 
@@ -31,6 +34,7 @@ public class Collective extends UserCollective implements Serializable { // add 
      * @param decription descripcion del colectivo
      */
     public Collective(String name, String description) {
+        this.manager = Application.getApplication().getCurrentUser();
         this.name = name;
         this.description = description;
         this.parent = null;        
@@ -44,11 +48,11 @@ public class Collective extends UserCollective implements Serializable { // add 
      * @param decription descripcion del colectivo
      */
     public Collective(String name, String description, Collective parent) {
+        this.manager = Application.getApplication().getCurrentUser();
         this.name = name;
         this.description = description;
         this.parent = parent;
         parent.addChild(this);
-        // anadir a nonValidated
     }
 
 
@@ -164,21 +168,54 @@ public class Collective extends UserCollective implements Serializable { // add 
         children.add(c);
     }
 
-    public ArrayList<User> getAllMembers(){
-        ArrayList<User> members = new ArrayList<>();
-
-        for(User user : this.getMembers()){
-            members.add(user);
-        }
+    public ArrayList<User> getChildrenMembers(){
+        ArrayList<User> all = new ArrayList<>();
+        all.addAll(members);
 
         for(Collective auxCol : this.getChildren()){
-            for(User user: auxCol.getMembers()){
-                members.add(user);
-            }
+            all.addAll(auxCol.members);
+            all.addAll(aunxCol.getChildrenMembers());
         }
 
-        return members; 
+        return all; 
     }
+
+    public ArrayList<User> getAllFamilyMembers(){
+        ArrayList<User> all = getChildrenMembers();
+        Collective par = parent;
+
+        while (par != null){
+            all.addAll(par.members);
+            par = par.parent;
+        }
+
+        return all;
+    }
+
+
+    /**
+     * Constructor de un objeto Collective hijo
+     * 
+     * @param name       nombre del colectivo
+     * @param decription descripcion del colectivo
+     */
+    public void updateFamilyVotes() {
+        Collective par = parent;
+
+        // bucle actualizando votos de proyectos del colectivo
+        for (Project p: getVotedProjects()) p.updateVotes();
+
+        // Update de los proyectos apoyados por padres, abuelos, ...
+        while (par != null){
+            for (Project p: par.getVotedProjects()) p.updateVotes();
+            par = par.parent;
+        }
+
+    }
+
+
+
+
 
     /**
     * Permite a un usuario unirse al colectivo
@@ -187,7 +224,7 @@ public class Collective extends UserCollective implements Serializable { // add 
     public void join(User u){
 
         // checkear si usuario esta en colectivos padres o hijos
-        if (getAllMembers().contains(this)) return;
+        if (getAllFamilyMembers().contains(this)) return;
 
         // añadirlo al array de members de collective
         members.add(u);
@@ -198,10 +235,8 @@ public class Collective extends UserCollective implements Serializable { // add 
         col.add(this);
         u.setMemberCollectives(col);
 
-        // votar todos los votados por el colectivo
-        for (Project p: getVotedProjects()){
-            p.vote(u);
-        }
+        // actualizar votos
+        updateFamilyVotes();
 
     }
 
@@ -210,7 +245,7 @@ public class Collective extends UserCollective implements Serializable { // add 
     * @param u usuario a borrarse
     */
     public void disjoin(User u){
-        if (getAllMembers().contains(this) == false) return;
+        if (members.contains(this) == false) return;
 
         //quitar de array de members de collective
         members.remove(this);
@@ -221,11 +256,8 @@ public class Collective extends UserCollective implements Serializable { // add 
         col.remove(this);
         u.setMemberCollectives(col);
 
-        // hacer update de los votos de los proyectos
-        for (Project p: getVotedProjects()){
-            p.updateVotes(u);
-        }
-
+        // actualizar votos
+        updateFamilyVotes();
     }
 
     /**

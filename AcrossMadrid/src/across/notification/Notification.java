@@ -29,6 +29,8 @@ public class Notification{
      */
     public Notification(Project project) { 
         this.project = project;
+        this.message = messageByProjectState(project.getProjectState());
+        notify();
     }
 
 
@@ -56,15 +58,15 @@ public class Notification{
             case RECHAZADO:
                 message = "El proyecto:" + this.project.getName() +  ", ha sido rechazado";
             case VOTOSALCANZADOS:
-                message = "El proyecto:" + this.project.getName() +  ", ha alcanzdo el numero minimo de votos, podra proceder a enviarlo para su financiación cuando vea oportuno";
+                message = "El proyecto:" + this.project.getName() +  ", ha alcanzado el numero minimo de votos, podra proceder a enviarlo para su financiación cuando vea oportuno";
             case ENVIADO:
                 message = "El proyecto:" + this.project.getName() +  ", ha sido enviado a financiación";
             case FINANCIADO:
-                message = "El proyecto:" + this.project.getName() +  ", va a recivir financiacion";
+                message = "El proyecto:" + this.project.getName() +  ", va a recibir financiacion";
             case NOFINANCIADO:
                 message = "El proyecto:" + this.project.getName() +  ", no va a recibir financiacion";
             case CADUCADO:
-                message = "El proyecto:" + this.project.getName() +  ", a caducado, demasiado tiempo sin recibir apoyos de la comunidad";
+                message = "El proyecto:" + this.project.getName() +  ", ha caducado, demasiado tiempo sin recibir apoyos de la comunidad";
         }
 
         return message;
@@ -74,7 +76,7 @@ public class Notification{
         ArrayList<User> receivers = new ArrayList<>();
 
         if(User.class == this.project.getCreator().getClass()){
-            receivers.add((User)this.project.getCreator());
+            receivers.add(this.project.getCreator());
         } else{
             Collective collective = (Collective) this.project.getCreator();
 
@@ -99,11 +101,17 @@ public class Notification{
      */
     public void notify(projectState ps){
 
-        this.setMessage(messageByProjectState(ps));
         this.setReceivers(receiversByProjectState(ps));
 
         for(User user : this.receivers){
             user.addNotification(this);
         }
+    }
+
+
+
+
+    public String toString() {
+        return message;
     }
 }

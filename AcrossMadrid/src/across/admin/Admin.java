@@ -14,6 +14,7 @@ import java.io.*;
 public class Admin implements Serializable {
 
     private String password = "soyadmin";
+    private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
 
     /* GETTERS */
@@ -39,6 +40,7 @@ public class Admin implements Serializable {
 
 
     public void PantallaAdmin(){
-        // elegir entre: Ver proyectos (pa validar y demas), ver usuarios (igual), configuracion
+        // notifications
+        // elegir entre: Ver proyectos (pa validar y demas), ver usuarios (pa block y unblock y validar) y configuracion
     }
 }

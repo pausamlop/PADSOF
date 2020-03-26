@@ -301,6 +301,11 @@ public class Application implements Serializable, Comparable<Project>{
     }
 
     
+    public void logout(){
+        currentUser = null;
+        currentAdmin = false;
+        pantallaLogin();
+    }
 
 
     
