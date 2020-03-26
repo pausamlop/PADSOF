@@ -27,7 +27,6 @@ public abstract class UserCollective implements Serializable {
     }
 
    
-    
     /**
      * Devuelve los proyectos creados por el objeto usuario o colectivo
      *
@@ -45,7 +44,4 @@ public abstract class UserCollective implements Serializable {
     public ArrayList<Project> getVotedProjects(){
         return this.votedProjects;
     }
-
-
-
 }

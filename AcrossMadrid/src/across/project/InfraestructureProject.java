@@ -3,12 +3,12 @@ package across.project;
 import across.enumerations.*;
 import java.util.*;
 
-public class InfraestructureProject extends Project {
+public class InfraestructureProject extends Project implements Serializable{
     private String image;
     private District district;
 
     public InfraestructureProject(String name, String dcp, double cost, String image, District district){
-        super(name, dcp, cost, lastVote, state);
+        super(name, dcp, cost);
         this.image = image;
         this.district = new District(district);
     }

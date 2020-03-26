@@ -3,7 +3,9 @@ package across.notification;
 import across.project.*;
 import across.user.*;
 import across.enumerations.*;
+
 import java.lang.*;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -15,7 +17,7 @@ import java.util.*;
  *
  */
 
-public class Notification{
+public class Notification implements Serializable{
 
     private String message;
     private Project project;

@@ -17,21 +17,16 @@ public class Admin implements Serializable {
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
 
-    /* GETTERS */
 	public String getPassword() { return password; }
-
-
-    /* SETTERS */
 	public void setPassword(String password) { this.password = password; }
 
-
-    
 
 	/**
      * Comprueba que la contrasena coincida con la del administrador
 	 * 
 	 * @param pass password del objeto
-     * @return true si coinciden, false si no coinciden
+     * @return true si la contrasena es correcta
+     * @return false si la contrasena es incorrecta
      */
     public boolean login(String pass){
         if (password.equals(pass)) return true;
@@ -39,6 +34,10 @@ public class Admin implements Serializable {
     }
 
 
+    /************************************************************************/
+    /************ FUNCIONES AUXILIARES PARA PROBAR FUNCIONAMIENTO ***********/
+    /************************************************************************/
+    
     public void PantallaAdmin(){
         // notifications
         // elegir entre: Ver proyectos (pa validar y demas), ver usuarios (pa block y unblock y validar) y configuracion

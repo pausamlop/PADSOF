@@ -5,12 +5,10 @@ import across.notification.*;
 import across.user.*;
 
 import java.util.*;
-
-import com.apple.eawt.Application;
-
+import java.io.*;
 import java.time.*;
 
-public class Project{
+public class Project implements Serializable, Comparable<Project>{
     private String name;
     private String dcp;
     private double cost;
@@ -107,12 +105,23 @@ public class Project{
         else{ return false; }
     }
 
-
+    /**
+     * Sobreescribe el metodo compareTo para objetos de la clase Project
+     * 
+     * @param p 
+     * @return entero dependiendo de si es mayor menor o igual
+     */
+    @Override
+    public int compareTo(Project p){
+        if (this.getVotes() > p.getVotes()) return -1;
+        else if(this.getVotes() < p.getVotes()) return 1;
+        else return 0;
+    }
 
     /**
      * Valida un proyecto
      */
-    public void validateProject(){
+    public void validate(){
         ArrayList<Project> p1 = new ArrayList<Project>();
         p1.addAll(Application.getApplication().getProjects());
         p1.add(this);
@@ -126,25 +135,20 @@ public class Project{
 
         // Voto del creador
         vote(creator);
-
-        // Actualizar la lista de proyectos creados por el uc
-        ArrayList<Project> p1 = new ArrayList<Project>();
-        p1.addAll(uc.getCreatedProjects());
-        p1.add(this);
-        uc.setCreatedProjects(p1);
-
     }
 
 
 	/**
      * Rechaza un proyecto
      */
-    public void rejectProject(){
+    public void reject(){
         ArrayList<Project> p1 = new ArrayList<Project>();
         p1.addAll(Application.getApplication().getNonValidatedProjects());
         p1.remove(this);
 
         Application.getApplication().setNonValidatedProjects(p1);
+
+        // quitarlo del array de los del creador?? o mantener con estado rechazado?
     }
 
 

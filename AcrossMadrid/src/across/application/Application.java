@@ -26,7 +26,7 @@ public class Application implements Serializable, Comparable<Project>{
     private boolean currentAdmin = false;
 
     private int daysExpiration = 30;
-    private int minVotes = 1000; /* hay que preguntar al profe */
+    private int minVotes = 1000; 
 
     private Admin admin;
     private ArrayList<Project> projects;
@@ -37,10 +37,11 @@ public class Application implements Serializable, Comparable<Project>{
 
 
     /**
-     * Constructor
-    * @param daysExp numeros de dias sin votos para que caduque un proyecto
-    * @param minV minimo numero de votos en un proyecto para poder financiar
-    */
+     * Constructor de un objeto Application
+     * 
+     * @param daysExp numeros de dias sin votos para que caduque un proyecto
+     * @param minV minimo numero de votos en un proyecto para poder financiar
+     */
     public Application(){
         admin = new Admin();
         projects = new ArrayList<Project>();
@@ -49,7 +50,6 @@ public class Application implements Serializable, Comparable<Project>{
         users = new ArrayList<User>();
         nonValidatedUsers = new ArrayList<User>();
     }
-
 
     /**
      * Crea un nuevo objeto Application ni no ha sido creado con anterioridad o,
@@ -112,6 +112,7 @@ public class Application implements Serializable, Comparable<Project>{
 
     /**
      * Devuelve el numero de dias sin votos nuevos para que un proyecto caduque
+     * 
      * @return daysExpiration
      */
     public int getDaysExpiration(){ 
@@ -120,6 +121,7 @@ public class Application implements Serializable, Comparable<Project>{
 
     /**
      * Actualiza el numero de dias sin votos nuevos para que un proyecto caduque
+     * 
      * @param daysExp numero de dias
      */
     public void setDaysExpiration(int daysExp){
@@ -128,6 +130,7 @@ public class Application implements Serializable, Comparable<Project>{
 
     /**
      * Devuelve el minimo numero de votos en un proyecto para poder financiar
+     * 
      * @return minVotes
      */
     public int getMinVotes(){ 
@@ -136,13 +139,18 @@ public class Application implements Serializable, Comparable<Project>{
 
     /**
      * Actualiza el minimo numero de votos en un proyecto para poder financiar
+     * 
      * @param minV numero de votos
      */
     public void setMinVotes(int minV){ 
         minVotes = minV; 
     }
 
-
+    /**
+     * Devuelve un array con todos los usualrios validados que contiene la aplicacion
+     * 
+     * @return array de usuarios validados
+     */
     public ArrayList<User> getUsers() {
         return this.users;
     }
@@ -210,6 +218,274 @@ public class Application implements Serializable, Comparable<Project>{
     
 
     /**
+     * Permite a un usuario registrarse en la aplicacion
+     * 
+     * @param username nombre de usuario
+     * @param NIF NIF del usuario a registrar
+     * @param password contrasena del usuario
+     * @return true, si se lleva a cabo el registro con exito
+     * @return false, si no se puede registrar porque ya existe el nombre de
+     * usuario introducido o el NIF ya ha sido registrado
+     */
+    public boolean register(String username, String NIF, String password){
+
+        //comprobar que el username y el NIF no existen
+        for (User u: users) {
+            if (username.equals(u.getUsername()) || NIF.equals(u.getNIF())) return false;
+        }
+        for (User u: nonValidatedUsers) {
+            if (username.equals(u.getUsername()) || NIF.equals(u.getNIF())) return false;
+        }
+
+        User u = new User(username, NIF, password, false);
+        nonValidatedUsers.add(u);
+
+        // mandar a validar al admin
+        new Notification(u);
+        return true;
+    }
+
+    /**
+     * Permite a un usuario loguearse en la aplicacion
+     * 
+     * @param username nombre de usuario
+     * @param password contrasena del usuario
+     * @return true, si la contrasena coincide con la del nombre de usuario
+     * @return false, en otro caso
+     */
+    public boolean login(String username, String password){
+        for (User u: users){
+            if (username.equals(u.getUsername()) && password.equals(u.getPassword())){
+                activeUser = u;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Permite a cualquier usuario cerrar sesion
+     */
+    public void logout(){
+        currentUser = null;
+        currentAdmin = false;
+        pantallaLogin();
+    }
+
+    /**
+     * Filtra un proyecto social por su estado
+     * 
+     * @param type tipo de proyecto social
+     * @param group Grupo social al que va dirigido
+     * @return ArrayList de proyectos qye cumplen las condiciones
+     */
+    public ArrayList<Project> filterProject(projectState state){
+        ArrayList<Project> output = new ArrayList<Project>();
+
+        // encontrar proyectos con un cierto estado
+        for (Project p: projects){
+            if (p.getState().equals(state))
+                output.add(p);
+        }
+
+        return output;
+    }
+
+    /**
+     * Filtra un proyecto social por el tipo
+     * 
+     * @param type tipo de proyecto social
+     * @return ArrayList de proyectos que cumplen las condiciones
+     */
+    public ArrayList<Project> filterSocialProject(typeSocial type){
+        ArrayList<Project> output = new ArrayList<Project>();
+
+        // encontrar proyectos sociales nacionales o internacionales
+        for (Project p: projects){
+            if (p.getClass().equals(SocialProject.class))
+                output.add(p);
+        }
+
+        return output;
+    }
+
+
+    /**
+     * Filtra un proyecto social por el grupo social al que va dirigido
+     * 
+     * @param group Grupo social al que va dirigido
+     * @return ArrayList de proyectos que cumplen las condiciones
+     */
+    public ArrayList<Project> filterSocialProject(String group){
+        ArrayList<Project> output = new ArrayList<Project>();
+
+        // encontrar proyectos sociales dirigidos a cierto grupo
+        for (Project p: projects){
+            if (p.getClass().equals(SocialProject.class)){
+                if (p.getGroup().equals(group))
+                    output.add(p);
+            }
+        }
+
+        return output;
+    }
+
+    /**
+     * Filtra un proyecto de infraestructura por distrito
+     * 
+     * @param d distrito 
+     * @return ArrayList de proyectos que cumplen las condiciones
+     */
+    public ArrayList<Project> filterInfrProject(String d){
+        ArrayList<Project> output = new ArrayList<Project>();
+
+        // encotrar proyectos de infraestructura en cierto distrito
+        for (Project p: projects){
+            if (p.getClass().equals(InfraestructureProject.class)){ 
+                if (p.getDistrict().equals(d) || d == "") 
+                    output.add(p);
+            }
+        }
+
+        return output;
+
+    }
+
+    /**
+     * Busca un proyecto segun si el input esta contenido en el nombre
+     * o en la descripcion del proyecto
+     * 
+     * @param subj string a buscar
+     * @return ArrayList de proyectos que cumplen las condiciones
+     */
+    public ArrayList<Project> searchProject(String subj){
+        ArrayList<Project> output = new ArrayList<Project>();
+
+        for (Project p: projects){
+            if (p.getName().contains(subj) || p.getDescription().contains(str)) output.add(p);
+        }
+        
+        return output;
+    }
+
+    /**
+     * Busca un colectivo segun si el input esta contenido en el nombre
+     * o en la descripcion del proyecto
+     * 
+     * @param subj string a buscar
+     * @return ArrayList de colectivos que cumplen las condiciones
+     */
+    public ArrayList<Collective> searchCollective(String subj){
+        ArrayList<Collective> output = new ArrayList<Collective>();
+
+        for (Collective c: collectives){
+            if (p.getName().contains(subj) || p.getDescription().contains(str)) output.add(p);
+        }
+        
+        return output;
+    }
+
+    /**
+     * Ordena los proyectos en base a su numero de votos
+     * 
+     * @return ArrayList proyectos
+     */
+    public ArrayList<Project> popularityReport(){
+
+        ArrayList<Project> output = new ArrayList<Project>();
+        output.addAll(projects);
+        Array.sort(output);
+
+        String proy = "";
+        int count = 1;
+        for (Project p: output){
+            proy += count + ". " + p.getName() + "\n";
+            count++;
+        }
+
+        return proy;
+    }
+
+    /**
+     * Devuelve el informe de afinidad de un colectivo
+     * 
+     * @param c colectivo sobre el que se hace el informe
+     * @return HashMap de los colectivos ordenados segun afinidad
+     */
+    public LinkedHashMap<Collective, Integer> affinityReport(Collective c){
+        if (currentUser.getMemberCollectives().contains(c) == false){
+            return null;
+        }
+
+        HashMap<Collective, Integer> notSorted= new HashMap<Collective, Integer>();
+
+        for (Collective col: collectives){
+            if (c.equals(col)) {
+            } else {
+                Set<Project> p1 = new HashSet<Project>();
+                Set<Project> p2 = new HashSet<Project>();
+                Set<Project> p3 = new HashSet<Project>(); 
+
+                p1.addAll(c.getCreatedProjects());
+                p1.addAll(col.getVotedProjects());
+
+                p2.addAll(col.getCreatedProjects());
+                p2.addAll(c.getVotedProjects());
+
+                p3.addAll(c.getVotedProjected());
+                p3.addAll(col.getVotedProjected());
+
+                int tasa = (p1.size() + p2.size())/p3.size();
+                notSorted.put(col, tasa);
+
+            }
+        }
+
+        LinkedHashMap<Collective, Integer> output = sortCollectives(notSorted);
+        return output;
+    }
+
+    /**
+     * Permite ordenar un HashMap en orden decreciente segun el valor de las entradas
+     * 
+     * @param input HashMap a ordenar
+     * @return HashMap con mismo contenido que input pero ordenado
+     */
+    private LinkedHashMap<Collective,Integer> sortCollectives (HashMap<Collective, Integer> input){
+        List<Collective> mapKeys = new ArrayList<>(input.keySet());
+        List<Integer> mapValues = new ArrayList<>(input.values());
+        Collection.sort(mapValues);
+        Collection.sort(mapKeys);
+
+        LinkedHashMap<Collective, Integer> sortedMap = new LinkedHashMap<>();
+
+        Iterator<Integer> valueIt = mapValues.iterator();
+        while (valueIt.hasNext()) {
+            Integer val = valueIt.next();
+            Iterator<Collective> keyIt = mapKeys.iterator();
+
+            while (keyIt.hasNext()) {
+                Collective key = keyIt.next();
+                Integer comp1 = input.get(key);
+                Integer comp2 = val;
+
+                if (comp1.equals(comp2)) {
+                    keyIt.remove();
+                    sortedMap.put(key, val);
+                    break;
+                }
+            }
+        }
+        return sortedMap;
+    }
+
+
+    /************************************************************************/
+    /************ FUNCIONES AUXILIARES PARA PROBAR FUNCIONAMIENTO ***********/
+    /************************************************************************/
+
+
+    /**
      * Pantalla de inicio de la aplicacion.
      * Da opcion de registrarse como nuevo usario o iniciar sesion como usuario o administrador
      * 
@@ -256,290 +532,15 @@ public class Application implements Serializable, Comparable<Project>{
     }
 
     /**
-     * Permite a un usuario registrarse en la aplicacion
-     * @param username nombre de usuario
-     * @param NIF NIF del usuario a registrar
-     * @param password contrasena del usuario
-     * @return true, si ...
-     * @return false, si ...
+     * Redirige la aplicacion a la pantalla principal de usuario o de administrador,
+     * segun cual de los dos este logueado
      */
-    public boolean register(String username, String NIF, String password){
-        //comprobar que el username no existe
-        for (User u: users) {
-            if (username.equals(u.getUsername())) return false;
-        }
-        User u = new User(username, NIF, password, false);
-
-        // mandar al admin a validar
-        nonValidatedUsers.add(u);
-        return true;
-    }
-
-    /**
-     * Permite a un usuario loguearse en la aplicacion
-     * @param username nombre de usuario
-     * @param password contrasena del usuario
-     * @return true, si la contrasena coincide con la del nombre de usuario
-     * @return false, en otro caso
-     */
-    public boolean login(String username, String password){
-        for (User u: users){
-            if (username.equals(u.getUsername()) && password.equals(u.getPassword())){
-                activeUser = u;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    
     public void pantallaPrincipal(){
         if (currentUser)
             currentUser.PrincipalUser();
         else
             admin.PrincipalAdmin();
     }
-
-    
-    public void logout(){
-        currentUser = null;
-        currentAdmin = false;
-        pantallaLogin();
-    }
-
-
-    
-    // METODOS DE PROJECT Y COLECTIVOS
-
-    /**
-     * Filtra un proyecto social por su estado
-     * 
-     * @param type tipo de proyecto social
-     * @param group Grupo social al que va dirigido
-     * @return ArrayList de proyectos qye cumplen las condiciones
-     */
-    public ArrayList<Project> filterProject(projectState state){
-        ArrayList<Project> output = new ArrayList<Project>();
-
-        for (Project p: projects){
-            if (p.getState().equals(state))
-                output.add(p);
-        }
-
-        return output;
-    }
-
-
-    /**
-     * Filtra un proyecto social por el tipo
-     * 
-     * @param type tipo de proyecto social
-     * @return ArrayList de proyectos que cumplen las condiciones
-     */
-    public ArrayList<Project> filterSocialProject(typeSocial type){
-        ArrayList<Project> output = new ArrayList<Project>();
-
-        for (Project p: projects){
-            if (p.getClass().equals(SocialProject.class))
-                output.add(p);
-        }
-
-        return output;
-    }
-
-
-    /**
-     * Filtra un proyecto social por el grupo social al que va dirigido
-     * 
-     * @param group Grupo social al que va dirigido
-     * @return ArrayList de proyectos que cumplen las condiciones
-     */
-    public ArrayList<Project> filterSocialProject(String group){
-        ArrayList<Project> output = new ArrayList<Project>();
-
-        for (Project p: projects){
-            if (p.getClass().equals(SocialProject.class)){
-                if (p.getGroup().equals(group))
-                    output.add(p);
-            }
-        }
-
-        return output;
-    }
-
-    /**
-     * Filtra un proyecto de infraestructura por distrito
-     * 
-     * @param d distrito
-     * @return ArrayList de proyectos que cumplen las condiciones
-     */
-    public ArrayList<Project> filterInfrProject(String d){
-        ArrayList<Project> output = new ArrayList<Project>();
-
-        for (Project p: projects){
-            if (p.getClass().equals(InfraestructureProject.class)){ 
-                if (p.getDistrict().equals(d) || d == "") 
-                    output.add(p);
-
-            }
-        }
-
-        return output;
-
-    }
-
-    /**
-     * Busca un proyecto segun si el input esta contenido en el nombre
-     * o en la descripcion del proyecti
-     * 
-     * @param subj
-     * @return ArrayList de proyectos que cumplen las condiciones
-     */
-    public ArrayList<Project> searchProject(String subj){
-        ArrayList<Project> output = new ArrayList<Project>();
-        for (Project p: projects){
-            if (p.getName().contains(subj) || p.getDescription().contains(str)) output.add(p);
-        }
-        
-        return output;
-    }
-
-    /**
-     * Busca un colectivo segun si el input esta contenido en el nombre
-     * o en la descripcion del proyecto
-     * 
-     * @param subj
-     * @return ArrayList de colectivos que cumplen las condiciones
-     */
-    public ArrayList<Collective> searchCollective(String subj){
-        ArrayList<Collective> output = new ArrayList<Collective>();
-        for (Collective c: collectives){
-            if (p.getName().contains(subj) || p.getDescription().contains(str)) output.add(p);
-        }
-        
-        return output;
-    }
-
-
-
-   /**
-     * Sobreescribe el metodo compareTo (proyectos)
-     * 
-     * @param p
-     * @return entero dependiendo de si es mayor menor o igual
-     */
-    @Override
-    public int compareTo(Project p){
-        if (this.getVotes() > p.getVotes()) return -1;
-        else if(this.getVotes() < p.getVotes()) return 1;
-        else return 0;
-    }
-
-
-    /**
-     * Ordena los proyectos en base a su numero de votos
-     * 
-     * @return ArrayList proyectos
-     */
-    public ArrayList<Project> popularityReport(){
-
-        ArrayList<Project> output = new ArrayList<Project>();
-        output.addAll(projects);
-        Array.sort(output);
-
-        String proy = "";
-        int count = 1;
-        for (Project p: output){
-            proy += count + ". " + p.getName() + "\n";
-            count++;
-        }
-
-        return proy;
-    }
-
-
-    /**
-     * Sobreescribe el metodo compareTo (colectivos)
-     * 
-     * @param c
-     * @return entero dependiendo de si es mayor menor o igual
-     */
-    @Override
-    public int compareTo(Collective c){
-        if (this.getVotes() > p.getVotes()) return -1;
-        else if(this.getVotes() < p.getVotes()) return 1;
-        else return 0;
-    }
-
-    /**
-     * Devuelve un reporte de afinidad de un colectivo
-     * 
-     * @param c colectivo sobre el que se hace el reporte
-     * @return ArrayList de los colectivos ordenados segun afinidad
-     */
-    public LinkedHashMap<Collective, Integer> affinityReport(Collective c){
-        if (currentUser.getMemberCollectives().contains(c) == false){
-            return null;
-        }
-
-        HashMap<Collective, Integer> notSorted= new HashMap<Collective, Integer>();
-
-        for (Collective col: collectives){
-            if (c.equals(col)) {
-            } else {
-                Set<Project> p1 = new HashSet<Project>();
-                Set<Project> p2 = new HashSet<Project>();
-                Set<Project> p3 = new HashSet<Project>(); 
-
-                p1.addAll(c.getCreatedProjects());
-                p1.addAll(col.getVotedProjects());
-
-                p2.addAll(col.getCreatedProjects());
-                p2.addAll(c.getVotedProjects());
-
-                p3.addAll(c.getVotedProjected());
-                p3.addAll(col.getVotedProjected());
-
-                int tasa = (p1.size() + p2.size())/p3.size();
-                notSorted.put(col, tasa);
-
-            }
-        }
-
-        LinkedHashMap<Collective, Integer> output = sortCollectives(notSorted);
-        return output;
-    }
-
-
-    private LinkedHashMap<Collective,Integer> sortCollectives (HashMap<Collective, Integer> input){
-        List<Collective> mapKeys = new ArrayList<>(input.keySet());
-        List<Integer> mapValues = new ArrayList<>(input.values());
-        Collection.sort(mapValues);
-        Collection.sort(mapKeys);
-
-        LinkedHashMap<Collective, Integer> sortedMap = new LinkedHashMap<>();
-
-        Iterator<Integer> valueIt = mapValues.iterator();
-        while (valueIt.hasNext()) {
-            Integer val = valueIt.next();
-            Iterator<Collective> keyIt = mapKeys.iterator();
-
-            while (keyIt.hasNext()) {
-                Collective key = keyIt.next();
-                Integer comp1 = input.get(key);
-                Integer comp2 = val;
-
-                if (comp1.equals(comp2)) {
-                    keyIt.remove();
-                    sortedMap.put(key, val);
-                    break;
-                }
-            }
-        }
-        return sortedMap;
-    }
-
-
     
 
 }

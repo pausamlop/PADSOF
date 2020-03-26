@@ -11,12 +11,12 @@ import java.util.*;
  * @author Paula Samlop paula.samper@estudiante.uam.es
  *
  */
-public class SocialProject extends Project {
+public class SocialProject extends Project implements Serializable{
     private String group;
     private typeSocial type;
 
     public SocialProject(String name, String dcp, double cost, String group, typeSocial type){
-        super(name, dcp, cost, lastVote, state);
+        super(name, dcp, cost);
         this.group = group;
         this.type = type;
     }

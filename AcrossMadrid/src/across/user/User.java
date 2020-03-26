@@ -31,7 +31,6 @@ public class User extends UserCollective implements Serializable {
     private ArrayList<Project> followedProjects = new ArrayList<Project>();
 
 
-
 	/**
      * Constructor de un objeto de la clase User
 	 * 
@@ -44,8 +43,6 @@ public class User extends UserCollective implements Serializable {
 	 * @param notifications notificaciones del usuario
 	 * @param followedProjects proyectos seguidos por el usuario
      */
-
-
     public User(String username, String NIF, String password, boolean blocked) {
         this.username = username;
         this.NIF = NIF;
@@ -78,7 +75,6 @@ public class User extends UserCollective implements Serializable {
     public void setFollowedProjects(ArrayList<Project> followedProjects) { this.followedProjects = followedProjects; }
 
 
-
 	/**
      * Valida un usuario
      */
@@ -96,11 +92,8 @@ public class User extends UserCollective implements Serializable {
         Application.getApplication().setNonValidatedUsers(u2);
     }
 
-
 	/**
      * Rechaza un usuario
-	 * 
-     * @return boolean para comprobar errores
      */
     public void reject(){
         ArrayList<User> u1 = new ArrayList<User>();
@@ -108,16 +101,17 @@ public class User extends UserCollective implements Serializable {
         u1.remove(this);
 
         Application.getApplication().setNonValidatedUsers(u1);
-
     }
+
     /**
-     * Añade una notificacion a la lista
+     * Añade una notificacion la lista de notificaciones del usuario
      * 
      * @param notification
      */
     public void addNotification(Notification notification){
         this.notifications.add(notification);
     }
+
     /**
      * Nos permite acceder al mensaje asociado a la notificacion
      * 
@@ -128,23 +122,10 @@ public class User extends UserCollective implements Serializable {
         return notification.getMessage();
     }
 
-
-	/**
-     * Comprueba que el username y el password coinciden con los del objeto
-	 * 
-     * @param name username del objeto
-	 * @param pass password del objeto
-     * @return true si coinciden, false si no coinciden
-     */
-   //@Override
-    public boolean login(String name, String pass){
-        if (username.equals(name) && password.equals(pass)) return true;
-        else return false;
-    }
-
-
 	/**
      * Bloquea a un usuario
+     * 
+     * @param mssg mensaje que le envia el administrador al usuario cuando lo bloquea
      */
     public void block(String mssg){ 
         blocked = true; 
@@ -157,7 +138,6 @@ public class User extends UserCollective implements Serializable {
         for (Project p: getVotedProjects()) p.updateVotes();
 
     }
-
 
 	/**
      * Desbloquea a un usuario
@@ -173,6 +153,35 @@ public class User extends UserCollective implements Serializable {
         for (Project p: getVotedProjects()) p.updateVotes();
     }
 
+    /**
+     * Forma un String para poder visualizar correctamente toda la informacion
+     * importante relativa a User al imprimirlo por pantalla
+     * 
+     * @return infomacion del objeto User
+     */
+    public String toString(){
+        String perfil = "";
+        perfil += "Nombre de usuario: " + username;
+        perfil += "\nNIF: " + NIF;
+        perfil += "\nProyectos creados:";
+        for (Project p: getCreatedProjects()) resumen += "\n" + p.toString();
+        perfil += "\n\nProyectos votados:";
+        for (Project p: getVotedProjects()) resumen += "\n" + p.toString();
+        perfil += "\n\nProyectos seguidos:";
+        for (Project p: followedProjects) resumen += "\n" + p.toString();
+        perfil += "\n\nColectivos creados: ";
+        for (Collective c: createdCollectives) resumen += "\n" + c.toString();
+        perfil += "\n\nColectivos a los que pertenezco: ";
+        for (Collective c: memberCollectives) resumen += "\n" + c.toString();
+        return perfil;
+
+    }
+
+
+
+    /************************************************************************/
+    /************ FUNCIONES AUXILIARES PARA PROBAR FUNCIONAMIENTO ***********/
+    /************************************************************************/
 
     public void PrincipalUser(){
         Application app = Application.getApplication();
@@ -500,22 +509,6 @@ public class User extends UserCollective implements Serializable {
         }
     }
 
-    public String toString(){
-        String perfil = "";
-        perfil += "Nombre de usuario: " + username;
-        perfil += "\nNIF: " + NIF;
-        perfil += "\nProyectos creados:";
-        for (Project p: getCreatedProjects()) resumen += "\n" + p.toString();
-        perfil += "\n\nProyectos votados:";
-        for (Project p: getVotedProjects()) resumen += "\n" + p.toString();
-        perfil += "\n\nProyectos seguidos:";
-        for (Project p: followedProjects) resumen += "\n" + p.toString();
-        perfil += "\n\nColectivos creados: ";
-        for (Collective c: createdCollectives) resumen += "\n" + c.toString();
-        perfil += "\n\nColectivos a los que pertenezco: ";
-        for (Collective c: memberCollectives) resumen += "\n" + c.toString();
-        return perfil;
-
-    }
+    
 
 }
