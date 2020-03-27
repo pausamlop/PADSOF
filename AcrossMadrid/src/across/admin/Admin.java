@@ -70,42 +70,44 @@ public class Admin implements Serializable {
     
     public void principalAdmin(){
         displayNotifications();
-        System.out.println("Ver notificaciones pendientes (n), ver usuarios (u),ir a configuracion de la app (c):");
+        System.out.println("Ver notificaciones pendientes (n), ver usuarios (u), ir a configuracion de la app (c):");
         
+        String opc = "";
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String opc = reader.readLine();
-            switch (opc) {
-                case "n":
-                    displayNotifications();
-                
-                case "u":
-                    displayUsers();
-
-                case "c":
-                    configuracion();
-
-                case "q":
-                    reader.close();
-                    Application.getApplication().logout();
-            }   
-
-            reader.close();  
+            opc = reader.readLine();
         }catch(IOException exc){
             exc.printStackTrace();
+         }
+        switch (opc) {
+            case "n":
+                displayNotifications();
+                break;
+            
+            case "u":
+                displayUsers();
+                break;
+
+            case "c":
+                configuracion();
+                break;
+
+            default:
+                Application.getApplication().logout();
         }
+        System.out.println(Application.getApplication().getLogOut());   
 
     }
 
     
     private void displayNotifications(){
+        System.out.println(" ------------- NOTIFICACIONES -------------");
+
         if (notifications.size() == 0){
-            System.out.println("notif");
+            System.out.println("No hay notificaciones pendientes");
             return;
         } 
         
-        System.out.println(" ------------- NOTIFICACIONES -------------");
-
         int count = 1;
         for (Notification n: notifications){
             System.out.println(count + ". " + n.getMessage());
@@ -114,35 +116,34 @@ public class Admin implements Serializable {
 
         System.out.println("Elige notificacion (por numero): ");
         try{
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader reader1 = new BufferedReader(new InputStreamReader(System.in));
 
             int opc = 0;
             try{
-                opc = Integer.parseInt(reader.readLine()) - 1;
+                opc = Integer.parseInt(reader1.readLine()) - 1;
 
                 if (opc >= notifications.size() || opc < 0){
-                    //reader.close();
+                    System.out.println("Elija una notificacion valida");
                     displayNotifications();
                 }
             }catch(NumberFormatException exc){
-                //reader.close();
-                displayNotifications();
+                exc.printStackTrace();
             }
 
             Notification notif = notifications.get(opc);
             String opc2;
             if (notif instanceof NotificationAdminUser){
                 System.out.println("Validar (v) o rechazar (r) usuario:");
-                opc2 = reader.readLine();
-                if (opc2 == "v")
+                opc2 = reader1.readLine();
+                if (opc2.equals("v"))
                     ((NotificationAdminUser) notif).getUser().validate();
                 else 
                     ((NotificationAdminUser) notif).getUser().reject();
             }
             else{ //notificacion de proyecto
                 System.out.println("Validar (v) o rechazar (r) proyecto: ");
-                opc2 = reader.readLine();
-                if (opc2 == "v")
+                opc2 = reader1.readLine();
+                if (opc2.equals("v"))
                     ((NotificationAdminProject) notif).getProject().validate();
                 else 
                     ((NotificationAdminProject) notif).getProject().reject();
@@ -180,11 +181,9 @@ public class Admin implements Serializable {
             try{
                 num = Integer.parseInt(reader.readLine()) - 1;
                 if (num >= cont || num < 0){
-                    reader.close();
                     displayUsers();
                 }
             }catch(NumberFormatException excep){
-                reader.close();
                 displayUsers();
             }
 
@@ -209,7 +208,6 @@ public class Admin implements Serializable {
                     System.out.println("Usuario bloqueado. No podra acceder al sistema hasta que sea desbloqueado");
                 }
             }
-            reader.close();
         }catch(IOException exc){
             exc.printStackTrace();
         }
@@ -234,12 +232,10 @@ public class Admin implements Serializable {
                     int num = Integer.parseInt(reader.readLine());
                     if (num < 0){
                         System.out.println("No puede introducir un numero negativo");
-                        reader.close();
                         configuracion();
                     }
                     app.setMinVotes(num);
                 }catch(NumberFormatException excep){
-                    reader.close();
                     configuracion();
                 }
             }else if (opc == "d"){
@@ -248,16 +244,13 @@ public class Admin implements Serializable {
                     int num = Integer.parseInt(reader.readLine());
                     if (num < 0){
                         System.out.println("No puede introducir un numero negativo");
-                        reader.close();
                         configuracion();
                     }
                     app.setDaysExpiration(num);
                 }catch(NumberFormatException excep){
-                    reader.close();
                     configuracion();
                 }
             }
-            reader.close();
         }catch(IOException exc){
             exc.printStackTrace();
         }

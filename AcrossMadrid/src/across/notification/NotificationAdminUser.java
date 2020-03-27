@@ -59,4 +59,5 @@ public class NotificationAdminUser extends Notification implements Serializable{
         Application.getApplication().getAdmin().addNotification(this);
     }
 
+
 }

@@ -75,6 +75,7 @@ public class Main{
 
         while (!app.getLogOut()){
             app.pantallaPrincipal();
+            System.out.println(app.getLogOut() + "3");
         }
 
         saveData(app);

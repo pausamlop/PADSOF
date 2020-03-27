@@ -36,7 +36,7 @@ public class Application implements Serializable{
     private ArrayList<User> users;
     private ArrayList<User> nonValidatedUsers;
 
-    private boolean logOut = false;
+    private boolean logOut;
 
 
     /**
@@ -562,7 +562,7 @@ public class Application implements Serializable{
                 String NIF = reader.readLine();
                 System.out.println("Contrasena:");
                 String password = reader.readLine();
-                reader.close();
+                //reader.close();
                 if(!register(username, NIF, password)){
                     System.out.println("El nombre de usuario o NIF ya han sido registrados");
                     out = false;
@@ -573,7 +573,6 @@ public class Application implements Serializable{
                 String username = reader.readLine();
                 System.out.println("Contrasena:");
                 String password = reader.readLine();
-                reader.close();
                 if (!login(username, password)){
                     System.out.println("Nombre de usuario o contrasena incorrectos");
                     out = false;
@@ -585,10 +584,10 @@ public class Application implements Serializable{
                 if (!admin.login(password)){
                     System.out.println("Contrasena erronea");
                     out = false;
+                }else{
+                    currentAdmin = true;
                 }
-                currentAdmin = true;
             }
-            reader.close();
         }catch(IOException exception){
             exception.printStackTrace();
             return false;
@@ -603,12 +602,16 @@ public class Application implements Serializable{
     public void pantallaPrincipal(){
         if (currentUser != null)
             currentUser.principalUser();
-        else if (currentAdmin)
+        else if (currentAdmin){
             admin.principalAdmin();
+            System.out.println(logOut + "1");
+        }
         else{
             logOut = true;
-            return;
         }
+        System.out.println(logOut + "2");
+        return;
+
     }
     
 
