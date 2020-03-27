@@ -164,15 +164,15 @@ public class User extends UserCollective implements Serializable {
         perfil += "Nombre de usuario: " + username;
         perfil += "\nNIF: " + NIF;
         perfil += "\nProyectos creados:";
-        for (Project p: getCreatedProjects()) resumen += "\n" + p.toString();
+        for (Project p: getCreatedProjects()) perfil += "\n" + p.toString();
         perfil += "\n\nProyectos votados:";
-        for (Project p: getVotedProjects()) resumen += "\n" + p.toString();
+        for (Project p: getVotedProjects()) perfil += "\n" + p.toString();
         perfil += "\n\nProyectos seguidos:";
-        for (Project p: followedProjects) resumen += "\n" + p.toString();
+        for (Project p: followedProjects) perfil += "\n" + p.toString();
         perfil += "\n\nColectivos creados: ";
-        for (Collective c: createdCollectives) resumen += "\n" + c.toString();
+        for (Collective c: createdCollectives) perfil += "\n" + c.toString();
         perfil += "\n\nColectivos a los que pertenece: ";
-        for (Collective c: memberCollectives) resumen += "\n" + c.toString();
+        for (Collective c: memberCollectives) perfil += "\n" + c.toString();
         return perfil;
 
     }
@@ -183,7 +183,7 @@ public class User extends UserCollective implements Serializable {
     /************ FUNCIONES AUXILIARES PARA PROBAR FUNCIONAMIENTO ***********/
     /************************************************************************/
 
-    public void PrincipalUser(){
+    public void principalUser(){
         Application app = Application.getApplication();
         if (blocked){
                 System.out.println("Ha sido bloqueado por el administrador");
@@ -248,7 +248,7 @@ public class User extends UserCollective implements Serializable {
             }catch(IOException exception){
                 exception.printStackTrace();
             }
-            PrincipalUser();
+            principalUser();
         }
     }
 
@@ -265,80 +265,88 @@ public class User extends UserCollective implements Serializable {
     }
 
     private void displayProjects(ArrayList<Project> projects){
-        if (projects.size()){
+        if (projects.size() == 0){
             System.out.println("No hay proyectos");
-            PrincipalUser();
+            principalUser();
         }
-        for (int i = 0; i < projects.size(); i++){
-            System.out.println("%d. %s", i+1, projects.get(i).getName());
+
+        int cont = 1;
+        for (Project p: projects){
+            System.out.println(cont + ". " + p);
+            cont++;
         }
+
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            int opc = Integer.parseInt(reader.readLine());
-            if (opc >= projects.size() || opc < 0)
+            int opc = 0;
+            try{
+                opc = Integer.parseInt(reader.readLine());
+                if (opc >= projects.size() || opc < 0)
+                    displayProjects(projects);
+            }catch(NumberFormatException exc){
                 displayProjects(projects);
-        }catch(IOException exc){
-            exc.printStackTrace();
-        }catch(NumberFormatException exc){
-            displayProjects(projects);
-        }
-        Project p = project.get(opc);
-        System.out.println(p);
-        if (getVotedProjects().contains(p))
-            System.out.println("Has votado este proyecto");
-        if (followedProjects.contains(p))
-            System.out.println("Sigues a este proyecto");
-        
-        System.out.println("\nElige una opcion: votar (v), votar como colectivo(vc), seguir (s) o dejar de seguir (d)");
-        
-        try{
-            String opc = reader.readLine();
+            }
 
-            switch (opc) {
+            Project p = projects.get(opc);
+            System.out.println(p);
+            if (getVotedProjects().contains(p))
+                System.out.println("Has votado este proyecto");
+            if (followedProjects.contains(p))
+                System.out.println("Sigues a este proyecto");
+            
+            System.out.println("\nElige una opcion: votar (v), votar como colectivo(vc), seguir (s) o dejar de seguir (d)");
+            
+            String opc2 = reader.readLine();
+        
+            switch (opc2) {
                 case "v": //vote
                     p.vote(this);
-
+        
                 case "vc": //votar como colectivo
                     if (createdCollectives.size() == 0){
                         System.out.println("No has creado ningun colectivo todavia");
                         displayProjects(projects);
                     }
-                    for (int i = 0; i < createdCollectives.size(); i++)
-                        System.out.println("%d. %s", i+1, createdCollectives.get(i).getName());
+
+                    cont = 1;
+                    for (Collective c: createdCollectives){
+                        System.out.println(cont + ". " + c);
+                        cont++;
+                    }
                     
-                    int num_col;
+                    int num_col = 0;
                     try{
-                        num_col = Integer.pargeInteger(reader.readLine()) - 1;
+                        num_col = Integer.parseInt(reader.readLine()) - 1;
                     }catch(NumberFormatException ex){
                         num_col = 0;
                     }finally{
                         p.vote(createdCollectives.get(num_col));
                     }
-
+        
                 case "s": //seguir
                     p.follow(this);
-
+        
                 case "ds": //dejar de seguir
                     p.unfollow(this);
-
+        
                 case "q": //cerrar sesion
-                    app.logout();
-
+                    Application.getApplication().logout();
+        
                 default: // otro
-                    displayProjects();
+                    displayProjects(projects);
             }
             reader.close();
-        }
-        catch(IOException exc){
+        }catch(IOException exc){
             exc.printStackTrace();
         }
+        
     }
 
 
     private void displayCollectives(ArrayList<Collective> collectives){
         if (collectives.size() == 0){
             System.out.println("No hay colectivos");
-            PrincipalUser();
+            principalUser();
         }
         for (int i = 0; i < collectives.size(); i++){
             int j = i + 1 ;
@@ -346,8 +354,9 @@ public class User extends UserCollective implements Serializable {
         }
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            int opc = 0;
             try{
-                int opc = Integer.parseInt(reader.readLine()) - 1;
+                opc = Integer.parseInt(reader.readLine()) - 1;
                 if (opc >= collectives.size() || opc < 0)
                     displayCollectives(collectives);
             }catch(NumberFormatException exc){
@@ -390,8 +399,9 @@ public class User extends UserCollective implements Serializable {
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         
+            int num = 0;
             try{
-                int num = Integer.parseInt(reader.readLine()) - 1;
+                num = Integer.parseInt(reader.readLine()) - 1;
                 if (num >= memberCollectives.size() || num < 0){
                     reader.close();
                     affinityReport();
@@ -416,32 +426,34 @@ public class User extends UserCollective implements Serializable {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             String name = reader.readLine();
             String dcp = reader.readLine();
+
             for (int i = 0; i < Application.getApplication().getCollectives().size(); i++){ 
                 int j = i + 1;
                 System.out.println("%d. %s" + j + Application.getApplication().getCollectives().get(i).getName());
             }
             String parent_str = reader.readLine();
             reader.close();
+
+            Collective parent;
+            if (parent_str == "") parent = null;
+            else {
+                try{
+                    int parent_int = Integer.parseInt(parent_str) - 1;
+                    if (parent_int >= Application.getApplication().getCollectives().size() || parent_int < 0){
+                        reader.close();
+                        createCollective();
+                    }
+                    parent = Application.getApplication().getCollectives().get(parent_int);
+                }catch(NumberFormatException excep){
+                    reader.close();
+                    return;
+                }
+            }
+            Application.getApplication().addCollectives(new Collective(name, dcp, parent));
         }catch(IOException exc){
             exc.printStackTrace();
         }
 
-        Collective parent;
-        if (parent_str == "") parent = null;
-        else {
-            try{
-                int parent_int = Integer.parseInt(parent_str) - 1;
-                if (parent_int >= Application.getApplication().getCollectives().size() || parent_int < 0){
-                    reader.close();
-                    createdCollectives();
-                }
-                parent = app.getCollectives().get(parent_int);
-            }catch(NumberFormatException excep){
-                reader.close();
-                return;
-            }
-        }
-        Application.getApplication().addCollectives(new Collective(name, dcp, parent));
     }
 
 
@@ -480,6 +492,7 @@ public class User extends UserCollective implements Serializable {
 
 
     private void filterProject(){
+    	Application app = Application.getApplication();
         System.out.println("Filtrar proyecto por estado (e), tipo social (ts) o infraestructura (ti)");
 
         try{
@@ -494,7 +507,7 @@ public class User extends UserCollective implements Serializable {
                     reader.close();
                     return;
                 }
-                displayProjects(app.filterProject(state));
+                displayProjects(app.filterProject(projectState.values()[state]));
             }
             else if (filtro == "ts"){
                 System.out.println("Buscar por ambito (N/I), por grupo (escribir grupo) o nada (enter):");
@@ -502,7 +515,7 @@ public class User extends UserCollective implements Serializable {
                 if (opc2 == "N")
                     displayProjects(app.filterSocialProject(typeSocial.NACIONAL));
                 else if(opc2 == "I")
-                    displayProjects(app.filterSocialProject(typeSocial.INNACIONAL));
+                    displayProjects(app.filterSocialProject(typeSocial.INTERNACIONAL));
                 else 
                     displayProjects(app.filterSocialProject(opc2));   
             }
@@ -512,7 +525,7 @@ public class User extends UserCollective implements Serializable {
             }
             else{
                 reader.close();
-                PrincipalUser();
+                principalUser();
             }
         }catch(IOException exc){
             exc.printStackTrace();

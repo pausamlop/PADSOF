@@ -39,11 +39,11 @@ public class Main{
      * 
      * @return Application con la informacion del archivo
      */
-    public static Application loadData(){
-        Application app = null;
+    public static Object loadData(){
+        Object app = null;
         try{
             ObjectInputStream input = new ObjectInputStream(new FileInputStream("app.objectData"));
-            app = (Application)input.readObject();
+            app = input.readObject();
             input.close();
         }catch(IOException | ClassNotFoundException exception){
             exception.printStackTrace();
@@ -58,8 +58,8 @@ public class Main{
      * 
      */
     public static void main() {
-        Application.setApplication(loadData());
-        Application app = Application.getApplication();
+    	Application app = Application.getApplication();
+        app.setApplication(loadData());
 
         System.out.println(" ----- BIENVENIDO A ACROSS MADRID -----");
         if (!app.pantallaLogin()){
@@ -67,23 +67,24 @@ public class Main{
             System.exit(1);
         }
 
-        pantallaPrincipal();
+        app.pantallaPrincipal();
 
-        User user = app.getCurrentUser();
-        if (user){
-            if (user.getBlocked()){
-                System.out.println("Ha sido bloqueado por el administrador");
-                // mensaje de Admin
-                // solo puede cerrar sesion
-            }
-            else{
-                System.out.println();
-                PantallaUser();
-                // elegir entre: MiPerfil, SolicitarInforme, CrearColectivo, CrearProyecto, Buscar, Notificaciones
-            }
-        }
-        else{ /* admin */
-            // elegir entre: Ver proyectos (pa validar y demas), ver usuarios (igual), configuracion
-        }
+//        User user = app.getCurrentUser();
+//        if (user != null){
+//            if (user.getBlocked()){
+//                System.out.println("Ha sido bloqueado por el administrador");
+//                // mensaje de Admin
+//                // solo puede cerrar sesion
+//            }
+//            else{
+//                System.out.println();
+//                user.pantallaUser();
+//                // elegir entre: MiPerfil, SolicitarInforme, CrearColectivo, CrearProyecto, Buscar, Notificaciones
+//            }
+//        }
+//        else{ /* admin */
+//        	app.getAdmin().pantallaAdmin();
+//            // elegir entre: Ver proyectos (pa validar y demas), ver usuarios (igual), configuracion
+//        }
     }
 }

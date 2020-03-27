@@ -1,4 +1,5 @@
 package across.project;
+
 import across.application.*;
 import across.enumerations.*;
 import across.notification.*;
@@ -7,6 +8,7 @@ import across.user.*;
 import java.util.*;
 import java.io.*;
 import java.time.*;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 
 public class Project implements Serializable, Comparable<Project>{
@@ -99,7 +101,7 @@ public class Project implements Serializable, Comparable<Project>{
 
     public boolean checkExpire(){ 
         int maxDays = Application.getApplication().getDaysExpiration();
-        int diff = DAYS.between(LocalDate.now(), lastVote);
+        long diff = DAYS.between(LocalDate.now(), lastVote);
 
         if(maxDays <= diff){ return true; }
 

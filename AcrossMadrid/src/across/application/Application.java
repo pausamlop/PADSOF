@@ -19,7 +19,7 @@ import java.lang.Integer;
  * @author Paula Samlop paula.samper@estudiante.uam.es
  *
 */
-public class Application implements Serializable, Comparable<Project>{
+public class Application implements Serializable{
 
     private static Application application;
     private User currentUser = null;
@@ -42,7 +42,7 @@ public class Application implements Serializable, Comparable<Project>{
      * @param daysExp numeros de dias sin votos para que caduque un proyecto
      * @param minV minimo numero de votos en un proyecto para poder financiar
      */
-    public Application(){
+    private Application(){
         admin = new Admin();
         projects = new ArrayList<Project>();
         nonValidatedProjects = new ArrayList<Project>();
@@ -69,8 +69,8 @@ public class Application implements Serializable, Comparable<Project>{
      * 
      * @param app aplicacion
      */
-    public static void setApplication(Applicacion app){
-        application = app;
+    public void setApplication(Object app){
+        application = (Application)app;
     }
 
     /**
@@ -560,10 +560,10 @@ public class Application implements Serializable, Comparable<Project>{
      * segun cual de los dos este logueado
      */
     public void pantallaPrincipal(){
-        if (currentUser)
-            currentUser.PrincipalUser();
+        if (currentUser != null)
+            currentUser.principalUser();
         else
-            admin.PrincipalAdmin();
+            admin.principalAdmin();
     }
     
 

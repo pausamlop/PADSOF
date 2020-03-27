@@ -68,7 +68,7 @@ public class Admin implements Serializable {
     /************ FUNCIONES AUXILIARES PARA PROBAR FUNCIONAMIENTO ***********/
     /************************************************************************/
     
-    public void PantallaAdmin(){
+    public void principalAdmin(){
         displayNotifications();
         System.out.println("Ver notificaciones pendientes (n), ver usuarios (u),ir a configuracion de la app (c):");
         
@@ -94,7 +94,7 @@ public class Admin implements Serializable {
         }catch(IOException exc){
             exc.printStackTrace();
         }
-        PantallaAdmin();
+        principalAdmin();
     }
 
     
@@ -153,8 +153,9 @@ public class Admin implements Serializable {
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+            int num = 0;
             try{
-                int num = Integer.parseInt(reader.readLine()) - 1;
+                num = Integer.parseInt(reader.readLine()) - 1;
                 if (num >= cont || num < 0){
                     reader.close();
                     displayUsers();
