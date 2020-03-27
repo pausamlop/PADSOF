@@ -47,7 +47,7 @@ public class NotificationAdminProject extends Notification implements Serializab
      * 
      * @return  mensaje a enviar
      */
-    private String generateMessage(){
+    public String generateMessage(){
         return "El proyecto:" + project.getName() + ", esta listo para ser validado.";
     }
 

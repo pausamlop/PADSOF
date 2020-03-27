@@ -421,23 +421,23 @@ public class Application implements Serializable{
     /**
      * Ordena los proyectos en base a su numero de votos
      * 
-     * @return ArrayList proyectos
+     * @return Informe de popularidad de los proyectos creados
      */
-    public ArrayList<Project> popularityReport(){
+    public String popularityReport(){
+    	String report = "";
 
         ArrayList<Project> output = new ArrayList<Project>();
         output.addAll(projects);
         Collections.sort(output, Comparator.comparing(p -> p.getVotes()));
 
 
-        String proy = "";
         int count = 1;
         for (Project p: output){
-            proy += count + ". " + p.getName() + "\n";
+            report += count + ". " + p.getName() + "\n";
             count++;
         }
 
-        return output;
+        return report;
     }
 
     /**

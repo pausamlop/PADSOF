@@ -220,7 +220,7 @@ public class Collective extends UserCollective implements Serializable { // add 
     public void join(User u){
 
         // checkear si usuario esta en colectivos padres o hijos
-        if (getAllFamilyMembers().contains(this)) return;
+        if (getAllFamilyMembers().contains(u)) return;
 
         // añadirlo al array de members de collective
         members.add(u);
@@ -241,10 +241,10 @@ public class Collective extends UserCollective implements Serializable { // add 
     * @param u usuario a borrarse
     */
     public void disjoin(User u){
-        if (members.contains(this) == false) return;
+        if (members.contains(u) == false) return;
 
         //quitar de array de members de collective
-        members.remove(this);
+        members.remove(u);
 
         //quitarlo del array de colectivos de u
         ArrayList<Collective> col = new ArrayList<Collective>();

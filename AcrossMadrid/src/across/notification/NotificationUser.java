@@ -20,7 +20,7 @@ import java.util.*;
 public class NotificationUser extends Notification implements Serializable{
 
     private Project project;
-    private ArrayList<User> receivers = new ArrayList<User>();
+    private ArrayList<User> receivers;
 
 
 	/**
@@ -51,7 +51,7 @@ public class NotificationUser extends Notification implements Serializable{
      * 
      * @return  mensaje a enviar
      */
-    private String generateMessage(){
+    public String generateMessage(){
         String message = " ";
         projectState ps = project.getProjectState();
 
@@ -80,14 +80,14 @@ public class NotificationUser extends Notification implements Serializable{
     /**
      * Metodo para obtener quienes son aquellos a los que enviar la notificacion
      */
-    private void generateReceivers(){
+    public void generateReceivers(){
         projectState ps = project.getProjectState();
-        receivers = new ArrayList<>();
+        receivers = new ArrayList<User>();
 
         if(User.class == project.getCreator().getClass()){
-            receivers.add(this.project.getCreator());
+            receivers.add((User) project.getCreator());
         } else{
-            Collective collective = this.project.getCreator();
+            Collective collective = (Collective) project.getCreator();
 
             receivers.add(collective.getManager());
         }

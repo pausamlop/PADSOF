@@ -36,7 +36,7 @@ public class NotificationAdminUser extends Notification implements Serializable{
 
 
     /* GETTERS */
-    public Project getUser() { return user; }
+    public User getUser() { return user; }
 
     /* SETTERS */
     public void setUser(User u) { this.user = u; }
@@ -47,7 +47,7 @@ public class NotificationAdminUser extends Notification implements Serializable{
      * 
      * @return  mensaje a enviar
      */
-    private String generateMessage(){
+    public String generateMessage(){
         return "El usuario:" + user.getUsername() + ",\n de NIF:" + user.getNIF() + ", esta pendiente de validacion";
     }
 
