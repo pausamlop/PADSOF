@@ -45,8 +45,10 @@ public class Main{
             ObjectInputStream input = new ObjectInputStream(new FileInputStream("app.objectData"));
             app = input.readObject();
             input.close();
-        }catch(IOException | ClassNotFoundException exception){
-            exception.printStackTrace();
+        }catch(FileNotFoundException exc) {
+        	app = (Object)Application.getApplication();
+        }catch(IOException | ClassNotFoundException exc){
+            exc.printStackTrace();
         }
         return app;
     }
@@ -57,34 +59,25 @@ public class Main{
      * Funcion principal de la aplicacion Across Madrid
      * 
      */
-    public static void main() {
-    	Application app = Application.getApplication();
-        app.setApplication(loadData());
+    public static void main(String[] args) {
+        Application app = (Application)loadData();
+        app.setLogOut(false);
+
+        if(app == null){
+            System.out.println("null");
+        }
 
         System.out.println(" ----- BIENVENIDO A ACROSS MADRID -----");
         if (!app.pantallaLogin()){
-            System.out.println("No se ha podido iniciar la app"); // hay que añadir lo de wrong password
-            System.exit(1);
+            System.out.println("No se ha podido iniciar la app");
+            return; 
         }
 
-        app.pantallaPrincipal();
+        while (!app.getLogOut()){
+            app.pantallaPrincipal();
+        }
 
-//        User user = app.getCurrentUser();
-//        if (user != null){
-//            if (user.getBlocked()){
-//                System.out.println("Ha sido bloqueado por el administrador");
-//                // mensaje de Admin
-//                // solo puede cerrar sesion
-//            }
-//            else{
-//                System.out.println();
-//                user.pantallaUser();
-//                // elegir entre: MiPerfil, SolicitarInforme, CrearColectivo, CrearProyecto, Buscar, Notificaciones
-//            }
-//        }
-//        else{ /* admin */
-//        	app.getAdmin().pantallaAdmin();
-//            // elegir entre: Ver proyectos (pa validar y demas), ver usuarios (igual), configuracion
-//        }
+        saveData(app);
+
     }
 }

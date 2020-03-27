@@ -94,13 +94,15 @@ public class Admin implements Serializable {
         }catch(IOException exc){
             exc.printStackTrace();
         }
-        principalAdmin();
+
     }
 
     
     private void displayNotifications(){
-        if (notifications.size() == 0) 
+        if (notifications.size() == 0){
+            System.out.println("notif");
             return;
+        } 
         
         System.out.println(" ------------- NOTIFICACIONES -------------");
 
@@ -119,11 +121,11 @@ public class Admin implements Serializable {
                 opc = Integer.parseInt(reader.readLine()) - 1;
 
                 if (opc >= notifications.size() || opc < 0){
-                    reader.close();
+                    //reader.close();
                     displayNotifications();
                 }
             }catch(NumberFormatException exc){
-                reader.close();
+                //reader.close();
                 displayNotifications();
             }
 

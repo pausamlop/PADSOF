@@ -29,8 +29,8 @@ public class NotificationAdminProject extends Notification implements Serializab
      * @param project
      */
     public NotificationAdminProject(Project p) { 
-        super();
         this.project = p;
+        setMessage(generateMessage());
         sendNotification();
     }
 

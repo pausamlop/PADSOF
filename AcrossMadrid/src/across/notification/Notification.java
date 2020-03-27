@@ -21,17 +21,6 @@ public abstract class Notification implements Serializable{
 
     private String message;
 
-
-	/**
-     * Constructor de la clase notificacion, para la notificacion acerca de proyectos
-     * 
-     * @param project
-     */
-    public Notification() { 
-        this.message = generateMessage();
-    }
-
-
     /* GETTERS */
     public String getMessage() { return message; }
 

@@ -30,9 +30,9 @@ public class NotificationUser extends Notification implements Serializable{
      * @param project
      */
     public NotificationUser(Project p) { 
-        super();
         this.project = p;
         generateReceivers();
+        setMessage(generateMessage());
         sendNotification();
     }
 

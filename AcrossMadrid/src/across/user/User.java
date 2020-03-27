@@ -248,7 +248,6 @@ public class User extends UserCollective implements Serializable {
             }catch(IOException exception){
                 exception.printStackTrace();
             }
-            principalUser();
         }
     }
 

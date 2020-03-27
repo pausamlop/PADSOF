@@ -36,12 +36,12 @@ public class Application implements Serializable{
     private ArrayList<User> users;
     private ArrayList<User> nonValidatedUsers;
 
+    private boolean logOut = false;
+
 
     /**
      * Constructor de un objeto Application
      * 
-     * @param daysExp numeros de dias sin votos para que caduque un proyecto
-     * @param minV minimo numero de votos en un proyecto para poder financiar
      */
     private Application(){
         admin = new Admin();
@@ -167,6 +167,11 @@ public class Application implements Serializable{
     }
     
 
+    public boolean getLogOut(){
+        return this.logOut;
+    }
+
+
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
@@ -225,6 +230,10 @@ public class Application implements Serializable{
 
     public void addNewProject(Project p) {
         this.nonValidatedProjects.add(p);
+    }
+
+    public void setLogOut(boolean lo){
+        this.logOut = lo;
     }
     
     /**
@@ -302,7 +311,7 @@ public class Application implements Serializable{
     public void logout(){
         currentUser = null;
         currentAdmin = false;
-        pantallaLogin();
+        logOut = true;
     }
 
     /**
@@ -541,11 +550,12 @@ public class Application implements Serializable{
      * @return false, si no se ha podido realizar la accion
      */
     public boolean pantallaLogin(){
+        boolean out = true;
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("1. Registro\n2. Login\n3. Login como administrador");
             String opc = reader.readLine();
-            if (opc == "1") {
+            if (opc.equals("1")) {
                 System.out.println("Nombre de usuario:");
                 String username = reader.readLine();
                 System.out.println("NIF:");
@@ -553,30 +563,37 @@ public class Application implements Serializable{
                 System.out.println("Contrasena:");
                 String password = reader.readLine();
                 reader.close();
-                return register(username, NIF, password);
+                if(!register(username, NIF, password)){
+                    System.out.println("El nombre de usuario o NIF ya han sido registrados");
+                    out = false;
+                }
             }
-            else if(opc == "2") {
+            else if(opc.equals("2")) {
                 System.out.println("Nombre de usuario:");
                 String username = reader.readLine();
                 System.out.println("Contrasena:");
                 String password = reader.readLine();
                 reader.close();
-                return login(username, password);
+                if (!login(username, password)){
+                    System.out.println("Nombre de usuario o contrasena incorrectos");
+                    out = false;
+                }
             }
             else {
-                System.out.println("Contrasena de administrador:");
+                System.out.println("Contrasena de administrador: ");
                 String password = reader.readLine();
-                if (admin.login(password)){
-                    currentAdmin = true;
-                    return true;
+                if (!admin.login(password)){
+                    System.out.println("Contrasena erronea");
+                    out = false;
                 }
-                reader.close();
-                return false;
+                currentAdmin = true;
             }
+            reader.close();
         }catch(IOException exception){
             exception.printStackTrace();
             return false;
         }
+        return out;
     }
 
     /**
@@ -586,8 +603,12 @@ public class Application implements Serializable{
     public void pantallaPrincipal(){
         if (currentUser != null)
             currentUser.principalUser();
-        else
+        else if (currentAdmin)
             admin.principalAdmin();
+        else{
+            logOut = true;
+            return;
+        }
     }
     
 
