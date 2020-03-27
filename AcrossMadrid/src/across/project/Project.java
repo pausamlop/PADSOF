@@ -8,6 +8,7 @@ import java.util.*;
 import java.io.*;
 import java.time.*;
 
+
 public class Project implements Serializable, Comparable<Project>{
     private String name;
     private String dcp;
@@ -205,11 +206,11 @@ public class Project implements Serializable, Comparable<Project>{
 
             // Usuarios individuales
             if (uc.getClass().equals(User.class)){
-                set.add(uc);
+                set.add((User)uc);
 
             // Usuarios que forman parte de colectivos
             } else {
-                set.add(uc.getChildrenMembers());
+                set.addAll(((Collective)uc).getChildrenMembers());
             }
         }
 
@@ -240,7 +241,7 @@ public class Project implements Serializable, Comparable<Project>{
 
         // Si vota como colectivo
         else {
-            if ((Application.getApplication().getCurrentUser()).equals( uc.getManager() )){
+            if ((Application.getApplication().getCurrentUser()).equals(((Collective)uc).getManager())){
 
                 // Añadir el colectivo a voters
                 voters.add(uc);
@@ -297,7 +298,7 @@ public class Project implements Serializable, Comparable<Project>{
         resumen += "\nDescripcion: " + dcp;
         resumen += "\nEstado: " + state.name();
         resumen += "\nVotos: " + votes + "/" + Application.getApplication().getMinVotes(); 
-        resumen += "\nCoste: " + coste;
+        resumen += "\nCoste: " + cost;
         resumen += "\nUltimo voto (fecha): " + lastVote;
         return resumen;
     }

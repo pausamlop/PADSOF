@@ -1,7 +1,7 @@
 package across.project;
 
 import across.enumerations.*;
-import java.util.*;
+import java.io.*;
 
 /**
  * Clase abstracta UserCollective

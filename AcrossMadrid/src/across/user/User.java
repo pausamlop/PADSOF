@@ -1,13 +1,13 @@
 package across.user;
 
+import java.io.*;
+import java.util.*;
+
 import across.application.Application;
 import across.enumerations.*;
 import across.user.*;
 import across.project.*;
 import across.notification.*;
-
-import java.io.*;
-import java.util.*;
 
 /**
  * COMENTAR
@@ -68,7 +68,7 @@ public class User extends UserCollective implements Serializable {
     public void setNIF(String NIF) { this.NIF = NIF; }
     public void setPassword(String password) { this.password = password; }
     public void setBlocked(boolean blocked) { this.blocked = blocked; }
-    public boolean setBlockedMssg(String blockedMssg) { this.blockedMssg = blockedMssg; }
+    public void setBlockedMssg(String blockedMssg) { this.blockedMssg = blockedMssg; }
     public void setCreatedCollectives(ArrayList<Collective> createdCollectives) { this.createdCollectives = createdCollectives; }
     public void setMemberCollectives(ArrayList<Collective> memberCollectives) { this.memberCollectives = memberCollectives; }
     public void setNotifications(ArrayList<Notification> notifications) { this.notifications = notifications; }
@@ -171,7 +171,7 @@ public class User extends UserCollective implements Serializable {
         for (Project p: followedProjects) resumen += "\n" + p.toString();
         perfil += "\n\nColectivos creados: ";
         for (Collective c: createdCollectives) resumen += "\n" + c.toString();
-        perfil += "\n\nColectivos a los que pertenezco: ";
+        perfil += "\n\nColectivos a los que pertenece: ";
         for (Collective c: memberCollectives) resumen += "\n" + c.toString();
         return perfil;
 
@@ -193,7 +193,7 @@ public class User extends UserCollective implements Serializable {
                     reader.readLine();
                     reader.close();
                 }catch(IOException ex){
-                    exc.printStackTrace();
+                    ex.printStackTrace();
                 } 
                 app.logout();
         } 
@@ -226,8 +226,8 @@ public class User extends UserCollective implements Serializable {
                         createCollective();
 
                     case "bc": // buscar colectivo
-                        System.out.println("Buscar proyecto: ");
-                        displayCollectives(app.searchProject(reader.readLine()));
+                        System.out.println("Buscar colectivo: ");
+                        displayCollectives(app.searchCollective(reader.readLine()));
 
                     case "p": // crear proyecto
                         createProject();
@@ -240,6 +240,7 @@ public class User extends UserCollective implements Serializable {
                         filterProject();
 
                     case "q": //cerrar sesion
+                        reader.close();
                         app.logout();
                     }
                 reader.readLine(); // dar a enter para salir
@@ -258,8 +259,9 @@ public class User extends UserCollective implements Serializable {
         
         System.out.println(" ------------- NOTIFICACIONES -------------");
         for (Notification n: notifications){
-            System.out.println(n);
+            System.out.println(n.getMessage());
         }
+        notifications.clear();
     }
 
     private void displayProjects(ArrayList<Project> projects){
@@ -334,12 +336,13 @@ public class User extends UserCollective implements Serializable {
 
 
     private void displayCollectives(ArrayList<Collective> collectives){
-        if (collectives.size()){
+        if (collectives.size() == 0){
             System.out.println("No hay colectivos");
             PrincipalUser();
         }
         for (int i = 0; i < collectives.size(); i++){
-            System.out.println("%d. %s", i+1, collectives.get(i).getName());
+            int j = i + 1 ;
+            System.out.println("%d. %s" + j + collectives.get(i).getName());
         }
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -372,16 +375,21 @@ public class User extends UserCollective implements Serializable {
     }
 
     private void affinityReport(){
-        System.out.println("Selecciones colectivo a anlizar: ");
         if (memberCollectives.size() == 0){
             System.out.println("Todavia no perteneces a ningun colectivo");
             return;
         }
-        for (int i = 0; i < memberCollectives.size(); i++)
-            System.out.println("%d. %s", i+1, memberCollectives.get(i).getName());
+
+        System.out.println("Selecciones colectivo a anlizar: ");
+        
+        for (int i = 0; i < memberCollectives.size(); i++){
+            int j = i + 1 ;
+            System.out.println("%d. %s" + j + memberCollectives.get(i).getName());
+        }
         
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        
             try{
                 int num = Integer.parseInt(reader.readLine()) - 1;
                 if (num >= memberCollectives.size() || num < 0){
@@ -408,8 +416,10 @@ public class User extends UserCollective implements Serializable {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             String name = reader.readLine();
             String dcp = reader.readLine();
-            for (int i = 0; i < Application.getApplication().getCollectives().size(); i++) 
-                System.out.println("%d. %s", i+1, Application.getApplication().getCollectives().get(i).getName());
+            for (int i = 0; i < Application.getApplication().getCollectives().size(); i++){ 
+                int j = i + 1;
+                System.out.println("%d. %s" + j + Application.getApplication().getCollectives().get(i).getName());
+            }
             String parent_str = reader.readLine();
             reader.close();
         }catch(IOException exc){
@@ -435,7 +445,7 @@ public class User extends UserCollective implements Serializable {
     }
 
 
-    private createProject(){
+    private void createProject(){
         System.out.println("Nombre del proyecto, descripcion, coste, tipo (S/I):");
         
         try{
@@ -454,7 +464,7 @@ public class User extends UserCollective implements Serializable {
                 System.out.println("Imagen y distrito: ");
                 String image = reader.readLine();
                 String d = reader.readLine();
-                Application.getApplication().addNewProject(new InfraestructureProject(name2, dcp2, cost, image,d));
+                Application.getApplication().addNewProject(new InfraestructureProject(name2, dcp2, cost, image,new District(d)));
             }
             else if (tipo == "S"){
                 System.out.println("Grupo social y ambito (N/I):");

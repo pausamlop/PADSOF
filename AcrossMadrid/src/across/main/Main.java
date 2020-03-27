@@ -1,16 +1,13 @@
 package across.main;
 
+import java.util.*;
+import java.io.*;
+
 import across.application.*;
-import across.collective.*;
 import across.enumerations.*;
 import across.project.*;
 import across.user.*;
-
-import java.util.*;
-
-import com.apple.eawt.Application;
-
-import java.io.*;
+import across.application.*;
 
 /**
  * Clase Main

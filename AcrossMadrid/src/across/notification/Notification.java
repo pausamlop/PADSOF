@@ -3,8 +3,8 @@ package across.notification;
 import across.project.*;
 import across.user.*;
 import across.enumerations.*;
+import across.application.Application;
 
-import java.lang.*;
 import java.io.*;
 import java.util.*;
 
@@ -21,16 +21,30 @@ public class Notification implements Serializable{
 
     private String message;
     private Project project;
+    private User user;
     private ArrayList<User> receivers = new ArrayList<User>();
+    private boolean isTypeProject;
 
 
 	/**
-     * Constructor de un objeto de la clase Admin
-	 * 
-	 * @param password contraseña del objeto
+     * Constructor de la clase notificacion, para la notificacion acerca de proyectos
+     * 
+     * @param project
      */
     public Notification(Project project) { 
+        this.isTypeProject = true;
         this.project = project;
+        this.message = messageByProjectState(project.getProjectState());
+        notify();
+    }
+
+    /**
+     * Constructor de la clase notificacion, para la notificacion acerca de usuarios
+     * @param user
+     */
+    public Notification(User user) { 
+        this.isTypeProject=false;
+        this.user = user;
         this.message = messageByProjectState(project.getProjectState());
         notify();
     }
@@ -48,7 +62,11 @@ public class Notification implements Serializable{
     public void setProject(Project project) { this.project = project; }
     public void setReceivers(ArrayList<User> receivers) { this.receivers = receivers; }
 
-
+    /**
+     * Metodo que dependiendo del estado del proyecto a notificar, genera un mensaje personalizado
+     * @param ps estado del proyecto
+     * @return  mensaje a enviar
+     */
     private String messageByProjectState(projectState ps){
         String message = " ";
 
@@ -73,12 +91,16 @@ public class Notification implements Serializable{
 
         return message;
     }
-
+    /**
+     * Metodo para obtener quienes son aquellos a los que enviar la notificacion
+     * @param ps estado del proyecto a notificar
+     * @return receptores de la notificacion
+     */
     private ArrayList<User> receiversByProjectState(projectState ps){
         ArrayList<User> receivers = new ArrayList<>();
 
         if(User.class == this.project.getCreator().getClass()){
-            receivers.add(this.project.getCreator());
+            receivers.add((User) this.project.getCreator());
         } else{
             Collective collective = (Collective) this.project.getCreator();
 
@@ -96,24 +118,51 @@ public class Notification implements Serializable{
     }
 
 	/**
-     * Notifica a los usuarios en cuestion el mensaje en cuestion, todo esto, en funcion del
-     * estado del proceso
+     * Notifica a los usuarios en cuestion acerca del proceso en funcion del estado del mismo.
+     * En caso de ser un proyecto recien creado, por ende, en el estado inicial tambien le será notificado al administrador
 	 * 
-	 * @param projectState
      */
-    public void notify(projectState ps){
+    public void notifyProject(){
+        projectState ps = this.project.getProjectState();
 
         this.setReceivers(receiversByProjectState(ps));
+        this.setMessage(messageByProjectState(ps));
 
         for(User user : this.receivers){
             user.addNotification(this);
         }
+
+        if(ps == projectState.ENVALIDACION){
+            Notification admin = new Notification(this.project);
+            admin.setMessage("El proyecto:" + this.project.getName() + ", esta listo para ser validado.");
+            Application.getApplication().getAdmin().addNotification(admin);
+        }
+
+    }
+
+    /**
+     * Notifica acerca del usuario con el cual la notificacion ha sido inicializada.
+     * En caso de que se acabe de registrar, se usará para enviar la notificación al admin para que se le valide.
+     * En caso de que haya sido bloqueado, será utilizada para que el admin le envíe un mensaje de bloqueo.
+     * 
+     */
+    public void notifyUser(){
+
+        Application app = Application.getApplication();
+
+        if(app.getNonValidatedUsers().contains(this.user)){
+            this.setMessage("El usuario:" + user.getUsername() + ",\n de NIF:" + user.getNIF() + ", esta pendiente de validacion");
+            app.getAdmin().addNotification(this);
+        }
+
+        if(this.user.getBlocked()){
+                this.setMessage(user.getBlockedMssg());
+                user.addNotification(this);
+        }
+
     }
 
 
 
 
-    public String toString() {
-        return message;
-    }
 }

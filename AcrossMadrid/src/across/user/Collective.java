@@ -2,7 +2,8 @@ package across.user;
 
 import java.util.ArrayList;
 
-import com.apple.eawt.Application;
+import across.application.*;
+import across.project.*;
 
 import java.io.*;
 
@@ -159,7 +160,7 @@ public class Collective extends UserCollective implements Serializable { // add 
      * 
      * @param members arrays de los usuarios miembros
      */
-    public void setMembers(User[] members){ this.members = members; }
+    public void setMembers(ArrayList<User> members){ this.members = members; }
 
     // METODOS
 
@@ -174,7 +175,7 @@ public class Collective extends UserCollective implements Serializable { // add 
 
         for(Collective auxCol : this.getChildren()){
             all.addAll(auxCol.members);
-            all.addAll(aunxCol.getChildrenMembers());
+            all.addAll(auxCol.getChildrenMembers());
         }
 
         return all; 
@@ -193,12 +194,7 @@ public class Collective extends UserCollective implements Serializable { // add 
     }
 
 
-    /**
-     * Constructor de un objeto Collective hijo
-     * 
-     * @param name       nombre del colectivo
-     * @param decription descripcion del colectivo
-     */
+    
     public void updateFamilyVotes() {
         Collective par = parent;
 
@@ -230,8 +226,8 @@ public class Collective extends UserCollective implements Serializable { // add 
         members.add(u);
 
         //añadirlo al array de colectivos de u
-        ArrayList<Collectives> col = new ArrayList<Collectives>();
-        col.addAll(u.getMemberCollective())
+        ArrayList<Collective> col = new ArrayList<Collective>();
+        col.addAll(u.getMemberCollectives());
         col.add(this);
         u.setMemberCollectives(col);
 
@@ -251,8 +247,8 @@ public class Collective extends UserCollective implements Serializable { // add 
         members.remove(this);
 
         //quitarlo del array de colectivos de u
-        ArrayList<Collectives> col = new ArrayList<Collectives>();
-        col.addAll(u.getMemberCollective())
+        ArrayList<Collective> col = new ArrayList<Collective>();
+        col.addAll(u.getMemberCollectives());
         col.remove(this);
         u.setMemberCollectives(col);
 

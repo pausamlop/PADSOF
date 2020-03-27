@@ -1,7 +1,8 @@
 package across.project;
 
-import across.enumerations.*;
-import java.util.*;
+import java.io.*;
+
+
 
 public class InfraestructureProject extends Project implements Serializable{
     private String image;
@@ -10,7 +11,7 @@ public class InfraestructureProject extends Project implements Serializable{
     public InfraestructureProject(String name, String dcp, double cost, String image, District district){
         super(name, dcp, cost);
         this.image = image;
-        this.district = new District(district);
+        this.district = district;
     }
 
     public void setImage(String image) { this.image = image; }

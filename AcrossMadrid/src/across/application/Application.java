@@ -1,10 +1,10 @@
 package across.application;
 
-import across.collective.*;
 import across.enumerations.*;
+import across.admin.*;
 import across.project.*;
 import across.user.*;
-import jdk.internal.jline.internal.InputStreamReader;
+import across.notification.*;
 
 import java.util.*;
 import java.io.*;
@@ -88,7 +88,7 @@ public class Application implements Serializable, Comparable<Project>{
      * @param current usuario conectado
      */
     public void setCurrentUser(User current){
-        currentUser = user;
+        currentUser = current;
     }
 
     /**
@@ -144,6 +144,15 @@ public class Application implements Serializable, Comparable<Project>{
      */
     public void setMinVotes(int minV){ 
         minVotes = minV; 
+    }
+
+    /**
+     * Devuelve el admistrador de la app
+     * 
+     * @return administrador de la app
+     */
+    public Admin getAdmin(){ 
+        return admin; 
     }
 
     /**
@@ -256,7 +265,7 @@ public class Application implements Serializable, Comparable<Project>{
     public boolean login(String username, String password){
         for (User u: users){
             if (username.equals(u.getUsername()) && password.equals(u.getPassword())){
-                activeUser = u;
+                currentUser = u;
                 return true;
             }
         }
@@ -284,7 +293,7 @@ public class Application implements Serializable, Comparable<Project>{
 
         // encontrar proyectos con un cierto estado
         for (Project p: projects){
-            if (p.getState().equals(state))
+            if (p.getProjectState().equals(state))
                 output.add(p);
         }
 
@@ -322,7 +331,7 @@ public class Application implements Serializable, Comparable<Project>{
         // encontrar proyectos sociales dirigidos a cierto grupo
         for (Project p: projects){
             if (p.getClass().equals(SocialProject.class)){
-                if (p.getGroup().equals(group))
+                if (((SocialProject)p).getGroup().equals(group))
                     output.add(p);
             }
         }
@@ -336,13 +345,13 @@ public class Application implements Serializable, Comparable<Project>{
      * @param d distrito 
      * @return ArrayList de proyectos que cumplen las condiciones
      */
-    public ArrayList<Project> filterInfrProject(String d){
+    public ArrayList<Project> filterInfrProject(District disc){
         ArrayList<Project> output = new ArrayList<Project>();
 
         // encotrar proyectos de infraestructura en cierto distrito
         for (Project p: projects){
             if (p.getClass().equals(InfraestructureProject.class)){ 
-                if (p.getDistrict().equals(d) || d == "") 
+                if (((InfraestructureProject)p).getDistrict().equals(disc)) 
                     output.add(p);
             }
         }
@@ -362,7 +371,7 @@ public class Application implements Serializable, Comparable<Project>{
         ArrayList<Project> output = new ArrayList<Project>();
 
         for (Project p: projects){
-            if (p.getName().contains(subj) || p.getDescription().contains(str)) output.add(p);
+            if (p.getName().contains(subj) || p.getDescription().contains(subj)) output.add(p);
         }
         
         return output;
@@ -379,7 +388,7 @@ public class Application implements Serializable, Comparable<Project>{
         ArrayList<Collective> output = new ArrayList<Collective>();
 
         for (Collective c: collectives){
-            if (p.getName().contains(subj) || p.getDescription().contains(str)) output.add(p);
+            if (c.getName().contains(subj) || c.getDescription().contains(subj)) output.add(c);
         }
         
         return output;
@@ -394,7 +403,8 @@ public class Application implements Serializable, Comparable<Project>{
 
         ArrayList<Project> output = new ArrayList<Project>();
         output.addAll(projects);
-        Array.sort(output);
+        Collections.sort(output, Comparator.comparing(p -> p.getVotes()));
+
 
         String proy = "";
         int count = 1;
@@ -403,7 +413,7 @@ public class Application implements Serializable, Comparable<Project>{
             count++;
         }
 
-        return proy;
+        return output;
     }
 
     /**
@@ -432,8 +442,8 @@ public class Application implements Serializable, Comparable<Project>{
                 p2.addAll(col.getCreatedProjects());
                 p2.addAll(c.getVotedProjects());
 
-                p3.addAll(c.getVotedProjected());
-                p3.addAll(col.getVotedProjected());
+                p3.addAll(c.getVotedProjects());
+                p3.addAll(col.getVotedProjects());
 
                 int tasa = (p1.size() + p2.size())/p3.size();
                 notSorted.put(col, tasa);
@@ -454,8 +464,8 @@ public class Application implements Serializable, Comparable<Project>{
     private LinkedHashMap<Collective,Integer> sortCollectives (HashMap<Collective, Integer> input){
         List<Collective> mapKeys = new ArrayList<>(input.keySet());
         List<Integer> mapValues = new ArrayList<>(input.values());
-        Collection.sort(mapValues);
-        Collection.sort(mapKeys);
+        //Collections.sort(mapValues);
+        //Collections.sort(mapKeys);
 
         LinkedHashMap<Collective, Integer> sortedMap = new LinkedHashMap<>();
 
@@ -477,6 +487,20 @@ public class Application implements Serializable, Comparable<Project>{
             }
         }
         return sortedMap;
+    }
+
+    /**
+     * Funcion para pedir algo al usuario por pantalla.(Desde metodos sobretodo)
+     * @return cadena de caracteres leida por pantalla
+     */
+    public String askUser(){
+        try{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        return reader.readLine();
+        }catch(IOException exception){
+            exception.printStackTrace();
+            return null;
+        }
     }
 
 

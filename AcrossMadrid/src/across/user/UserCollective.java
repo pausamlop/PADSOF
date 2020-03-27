@@ -1,6 +1,5 @@
 package across.user;
 
-import across.user.*;
 import across.project.*;
 import java.util.*;
 import java.io.*;
