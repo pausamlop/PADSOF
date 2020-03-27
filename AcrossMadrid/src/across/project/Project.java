@@ -10,8 +10,15 @@ import java.io.*;
 import java.time.*;
 import static java.time.temporal.ChronoUnit.DAYS;
 
-
-public class Project implements Serializable, Comparable<Project>{
+/**
+ * Clase abstracta Project
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
+public abstract class Project implements Serializable, Comparable<Project>{
     private String name;
     private String dcp;
     private double cost;
@@ -59,7 +66,7 @@ public class Project implements Serializable, Comparable<Project>{
 
     public void setprojectState(  projectState state) {
         this.state = state;
-        new Notification(this);
+        new NotificationUser(this);
     }
 
     public String getName() {

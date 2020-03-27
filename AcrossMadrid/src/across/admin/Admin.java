@@ -114,8 +114,9 @@ public class Admin implements Serializable {
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+            int opc = 0;
             try{
-                int opc = Integer.parseInt(reader.readLine()) - 1;
+                opc = Integer.parseInt(reader.readLine()) - 1;
 
                 if (opc >= notifications.size() || opc < 0){
                     reader.close();
@@ -125,14 +126,34 @@ public class Admin implements Serializable {
                 reader.close();
                 displayNotifications();
             }
-            // distinguir entre notif de user y notif de proyecto
+
+            Notification notif = notifications.get(opc);
+            String opc2;
+            if (notif instanceof NotificationAdminUser){
+                System.out.println("Validar (v) o rechazar (r) usuario:");
+                opc2 = reader.readLine();
+                if (opc2 == "v")
+                    notif.getUser().validate();
+                else 
+                    notif.getUser().reject();
+            }
+            else{ //notificacion de proyecto
+                System.out.println("Validar (v) o rechazar (r) proyecto: ");
+                opc2 = reader.readLine();
+                if (opc2 == "v")
+                    notif.getProject().validate();
+                else 
+                    notif.getProject().reject();
+            }
+            
+            //eliminar notificacion
+            notifications.remove(notif);
 
 
         }catch(IOException exc){
             exc.printStackTrace();
         }
 
-        // eliminar la notificacion que ha visto
     }
 
 

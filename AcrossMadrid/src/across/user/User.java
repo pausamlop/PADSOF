@@ -10,7 +10,7 @@ import across.project.*;
 import across.notification.*;
 
 /**
- * COMENTAR
+ * Clase User que hereda de UserCollective
  * 
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@estudiante.uam.es
@@ -476,7 +476,7 @@ public class User extends UserCollective implements Serializable {
                 System.out.println("Imagen y distrito: ");
                 String image = reader.readLine();
                 String d = reader.readLine();
-                Application.getApplication().addNewProject(new InfraestructureProject(name2, dcp2, cost, image,new District(d)));
+                Application.getApplication().addNewProject(new InfraestructureProject(name2, dcp2, cost, image,d));
             }
             else if (tipo == "S"){
                 System.out.println("Grupo social y ambito (N/I):");

@@ -4,7 +4,7 @@ import across.enumerations.*;
 import java.io.*;
 
 /**
- * Clase abstracta UserCollective
+ * Clase SocialProject que hereda de Project
  *
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@estudiante.uam.es
@@ -19,6 +19,7 @@ public class SocialProject extends Project implements Serializable{
         super(name, dcp, cost);
         this.group = group;
         this.type = type;
+        new NotificationAdminProject(this);
     }
 
     public void setGroup(String group) { this.group = group; }

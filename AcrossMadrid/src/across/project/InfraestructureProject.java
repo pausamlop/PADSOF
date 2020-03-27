@@ -3,22 +3,30 @@ package across.project;
 import java.io.*;
 
 
-
+/**
+ * Clase InfraestructureProject que hereda de Project
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 public class InfraestructureProject extends Project implements Serializable{
     private String image;
-    private District district;
+    private String district;
 
-    public InfraestructureProject(String name, String dcp, double cost, String image, District district){
+    public InfraestructureProject(String name, String dcp, double cost, String image, String district){
         super(name, dcp, cost);
         this.image = image;
         this.district = district;
+        new NotificationAdminProject(this);
     }
 
     public void setImage(String image) { this.image = image; }
-    public void setDistrict(District district) { this.district = district; }
+    public void setDistrict(String district) { this.district = district; }
 
     public String getImage() { return image; }
-    public District getDistrict() { return district; }
+    public String getDistrict() { return district; }
 
     
     @Override

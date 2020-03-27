@@ -27,6 +27,7 @@ public class Application implements Serializable{
 
     private int daysExpiration = 30;
     private int minVotes = 1000; 
+    private ArrayList<String> districts;
 
     private Admin admin;
     private ArrayList<Project> projects;
@@ -49,6 +50,7 @@ public class Application implements Serializable{
         collectives = new ArrayList<Collective>();
         users = new ArrayList<User>();
         nonValidatedUsers = new ArrayList<User>();
+        districts = readDistricts();
     }
 
     /**
@@ -225,6 +227,28 @@ public class Application implements Serializable{
         this.nonValidatedProjects.add(p);
     }
     
+    /**
+     * Lee del archivo de texto "Distritos.txt" los distritos de Madrid y los guarda en un array
+     * 
+     * @return
+     */
+    public ArrayList<String> readDistricts(){
+        districts = new ArrayList<String>();
+        try {
+            File file = new File("Distritos.txt");
+            Scanner myReader = new Scanner(file);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                districts.add(data);
+            }
+            myReader.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return districts;
+    }
 
     /**
      * Permite a un usuario registrarse en la aplicacion
@@ -250,7 +274,7 @@ public class Application implements Serializable{
         nonValidatedUsers.add(u);
 
         // mandar a validar al admin
-        new Notification(u);
+        new NotificationAdminUser(u);
         return true;
     }
 
@@ -345,7 +369,7 @@ public class Application implements Serializable{
      * @param d distrito 
      * @return ArrayList de proyectos que cumplen las condiciones
      */
-    public ArrayList<Project> filterInfrProject(District disc){
+    public ArrayList<Project> filterInfrProject(String disc){
         ArrayList<Project> output = new ArrayList<Project>();
 
         // encotrar proyectos de infraestructura en cierto distrito
