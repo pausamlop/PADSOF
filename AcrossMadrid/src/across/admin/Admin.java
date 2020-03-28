@@ -1,6 +1,6 @@
 package across.admin;
 
-import across.application.*;
+import across.application.Application;
 import across.enumerations.*;
 import across.notification.*;
 import across.project.*;
@@ -69,6 +69,7 @@ public class Admin implements Serializable {
     /************************************************************************/
     
     public void principalAdmin(){
+
         displayNotifications();
         System.out.println("Ver notificaciones pendientes (n), ver usuarios (u), ir a configuracion de la app (c):");
         
@@ -123,11 +124,11 @@ public class Admin implements Serializable {
                 opc = Integer.parseInt(reader1.readLine()) - 1;
 
                 if (opc >= notifications.size() || opc < 0){
-                    System.out.println("Elija una notificacion valida");
+                    System.out.println("Selecione numero de notificacion valida");
                     displayNotifications();
                 }
             }catch(NumberFormatException exc){
-                exc.printStackTrace();
+                return;
             }
 
             Notification notif = notifications.get(opc);
@@ -181,10 +182,11 @@ public class Admin implements Serializable {
             try{
                 num = Integer.parseInt(reader.readLine()) - 1;
                 if (num >= cont || num < 0){
+                    System.out.println("Seleccione un numero de usuario valido");
                     displayUsers();
                 }
             }catch(NumberFormatException excep){
-                displayUsers();
+                return;
             }
 
             User u = app.getUsers().get(num);
@@ -217,8 +219,8 @@ public class Admin implements Serializable {
         Application app = Application.getApplication();
         System.out.println(" ------------- CONFIGURACION -------------");
         
-        System.out.println("\nEl numero minimo de votos para enviar un proyecto a financiacion es de " + app.getMinVotes() + "votos.");
-        System.out.println("Han de pasar " + app.getDaysExpiration() +" dias para que un proyecto caduque.");
+        System.out.println("\n - El numero minimo de votos para enviar un proyecto a financiacion es de " + app.getMinVotes() + " votos.");
+        System.out.println("\n - Han de pasar " + app.getDaysExpiration() +" dias para que un proyecto caduque.");
 
         System.out.println("Escriba 'v' para editar el numero minimo de votos y 'd' para cambiar los dias que ha de pasar para que un proyecto caduque:");
 
@@ -226,7 +228,7 @@ public class Admin implements Serializable {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             String opc = reader.readLine();
 
-            if (opc == "v"){
+            if (opc.equals("v")){
                 System.out.println("Escriba numero de votos minimo:");
                 try{
                     int num = Integer.parseInt(reader.readLine());
@@ -236,9 +238,9 @@ public class Admin implements Serializable {
                     }
                     app.setMinVotes(num);
                 }catch(NumberFormatException excep){
-                    configuracion();
+                    return;
                 }
-            }else if (opc == "d"){
+            }else if (opc.equals("d")){
                 System.out.println("Escriba numero de dias para caducidad:");
                 try{
                     int num = Integer.parseInt(reader.readLine());
@@ -248,7 +250,7 @@ public class Admin implements Serializable {
                     }
                     app.setDaysExpiration(num);
                 }catch(NumberFormatException excep){
-                    configuracion();
+                    return;
                 }
             }
         }catch(IOException exc){

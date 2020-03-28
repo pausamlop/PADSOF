@@ -63,10 +63,6 @@ public class Main{
         Application app = (Application)loadData();
         app.setLogOut(false);
 
-        if(app == null){
-            System.out.println("null");
-        }
-
         System.out.println(" ----- BIENVENIDO A ACROSS MADRID -----");
         if (!app.pantallaLogin()){
             System.out.println("No se ha podido iniciar la app");

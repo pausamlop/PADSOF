@@ -455,7 +455,7 @@ public class Application implements Serializable{
      * @param c colectivo sobre el que se hace el informe
      * @return HashMap de los colectivos ordenados segun afinidad
      */
-    public LinkedHashMap<Collective, Integer> affinityReport(Collective c){
+    public String affinityReport(Collective c){
         if (currentUser.getMemberCollectives().contains(c) == false){
             return null;
         }
@@ -485,7 +485,18 @@ public class Application implements Serializable{
         }
 
         LinkedHashMap<Collective, Integer> output = sortCollectives(notSorted);
-        return output;
+
+        // Pasar a string
+
+        String result = "";
+        int count = 1;
+
+        for (Collective colec : output.keySet()) {
+            result += count + ". " + colec.getName() + ", " + output.get(colec);
+            count ++;
+          }
+        return result;
+
     }
 
     /**
