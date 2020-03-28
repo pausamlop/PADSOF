@@ -544,6 +544,10 @@ public class User extends UserCollective implements Serializable {
                 System.out.println("Imagen y distrito: ");
                 String image = reader.readLine();
                 String d = reader.readLine();
+                if (!Application.getApplication().getDistricts().contains(d)){
+                    System.out.println("Ese distrito no existe");
+                    return;
+                }
                 Application.getApplication().addNewProject(new InfraestructureProject(name2, dcp2, cost, image,d, creator));
             }
             else if (tipo.equals("S")){

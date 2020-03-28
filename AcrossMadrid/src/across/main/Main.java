@@ -65,15 +65,13 @@ public class Main{
         Application app = Application.getApplication();
         app.setLogOut(false);
 
-        LocalDate date = LocalDate.now();
-        date = date.plusDays(8);
-        app.setCCGGDate(date);
-
         System.out.println(" ------------------------------------------------------");
         System.out.println(" ------------- BIENVENIDO A ACROSS MADRID -------------");
         System.out.println(" ------------------------------------------------------");
 
-       
+        LocalDate date = LocalDate.now();
+        date = date.plusDays(8);
+        app.setCCGGDate(date);
     
         while (true){
             // comprobaciones constantes
@@ -90,8 +88,7 @@ public class Main{
             saveData(app);
         }
 
-
-       
+        
 
     }
 }

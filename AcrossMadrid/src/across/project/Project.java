@@ -70,7 +70,6 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
     public void setProjectState( projectState state) {
         this.state = state;
-        System.out.println(this);
         new NotificationUser(this);
     }
 
@@ -406,7 +405,7 @@ public abstract class Project implements Serializable, Comparable<Project>{
             resumen += "\n      Creado por " + ((User)creator).getUsername();
         resumen += "\n      Estado: " + state.name();
         resumen += "\n      Votos: " + votes + "/" + Application.getApplication().getMinVotes(); 
-        resumen += "\n      Coste: " + cost;
+        resumen += "\n      Coste: " + String.format("%.2f €", cost);
         resumen += "\n      Ultimo voto (fecha): " + lastVote;
         return resumen;
     }

@@ -167,6 +167,16 @@ public class Application implements Serializable{
         return admin; 
     }
 
+
+    public boolean getLogOut(){
+        return this.logOut;
+    }
+
+    public void setLogOut(boolean lo){
+        this.logOut = lo;
+    }
+
+
     /**
      * Devuelve un array con todos los usualrios validados que contiene la aplicacion
      * 
@@ -174,11 +184,6 @@ public class Application implements Serializable{
      */
     public ArrayList<User> getUsers() {
         return this.users;
-    }
-    
-
-    public boolean getLogOut(){
-        return this.logOut;
     }
 
 
@@ -199,6 +204,10 @@ public class Application implements Serializable{
 
     public void setNonValidatedUsers(ArrayList<User> nonValidatedUsers) {
         this.nonValidatedUsers = nonValidatedUsers;
+    }
+
+    public ArrayList<String> getDistricts(){
+        return this.districts;
     }
 
 
@@ -252,13 +261,11 @@ public class Application implements Serializable{
         this.nonValidatedProjects.add(p);
     }
 
-    public void setLogOut(boolean lo){
-        this.logOut = lo;
-    }
 
     public void addPendingFinance(Project project, String id){
         pendingFinance.put(project, id);
     }
+
 
     /**
      * Metodo auxiliar para los tests, para poder avanzar la fecha de la pasarela hasta la fecha date y asi poder
@@ -276,15 +283,13 @@ public class Application implements Serializable{
     public ArrayList<String> readDistricts(){
         districts = new ArrayList<String>();
         try {
-            File file = new File("Distritos.txt");
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                districts.add(data);
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("Distritos.txt")));
+            String line;
+            while((line = buffer.readLine()) != null){
+                districts.add(line);
             }
-            myReader.close();
-
-        } catch (FileNotFoundException e) {
+            buffer.close();
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
@@ -576,14 +581,14 @@ public class Application implements Serializable{
         HashMap<Project,String> output = new HashMap<Project,String>();
 
         for (Project p: pendingFinance.keySet()){
-
+            Double aux = p.financed(pendingFinance.get(p));
             // Si todavia no hay respuesta
-            if (p.financed(pendingFinance.get(p))==null){
+            if (aux == null){
                 //Anadir al nuevo array de financiacion
                 output.put(p, pendingFinance.get(p));
             }
             // Si no ha sido financiado
-            else if (p.financed(pendingFinance.get(p)).equals(0)){
+            else if (aux.equals((double) 0)){
                 
                 // Cambiar el estado del proyecto y enviar Notificacion
                 p.setProjectState(projectState.NOFINANCIADO);
@@ -595,7 +600,7 @@ public class Application implements Serializable{
             // Si ha sido financiado
             }  else {
                 // Cambiar el coste del proyecto
-                p.setCost(p.financed(pendingFinance.get(p)));
+                p.setCost(aux);
 
                 // Cambiar el estado del proyecto y enviar Notificacion
                 p.setProjectState(projectState.FINANCIADO);

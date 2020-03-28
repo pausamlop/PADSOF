@@ -2,8 +2,8 @@ Arganzuela
 Barajas
 Carabanchel
 Centro
-Chamartín
-Chamberí
+Chamartin
+Chamberi
 Ciudad Lineal
 Fuencarral-El Pardo
 Hortaleza 
@@ -14,8 +14,8 @@ Puente de Vallecas
 Retiro
 Salamanca
 San Blas-Canillejas
-Tetuán
+Tetuan
 Usera
-Vicálvaro
+Vicalvaro
 Villa de Vallecas
 Villaverde
