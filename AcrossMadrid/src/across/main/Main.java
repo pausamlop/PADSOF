@@ -39,14 +39,14 @@ public class Main{
      * 
      * @return Application con la informacion del archivo
      */
-    public static Object loadData(){
-        Object app = null;
+    public static Application loadData(){
+        Application app = null;
         try{
             ObjectInputStream input = new ObjectInputStream(new FileInputStream("app.objectData"));
-            app = input.readObject();
+            app = (Application)input.readObject();
             input.close();
         }catch(FileNotFoundException exc) {
-        	app = (Object)Application.getApplication();
+        	app = Application.getApplication();
         }catch(IOException | ClassNotFoundException exc){
             exc.printStackTrace();
         }
@@ -60,10 +60,13 @@ public class Main{
      * 
      */
     public static void main(String[] args) {
-        Application app = (Application)loadData();
+        Application.setApplication(loadData());
+        Application app = Application.getApplication();
         app.setLogOut(false);
 
-        System.out.println(" ----- BIENVENIDO A ACROSS MADRID -----");
+        System.out.println(" ------------------------------------------------------");
+        System.out.println(" ------------- BIENVENIDO A ACROSS MADRID -------------");
+        System.out.println(" ------------------------------------------------------");
         if (!app.pantallaLogin()){
             System.out.println("No se ha podido iniciar la app");
             return; 
@@ -71,7 +74,6 @@ public class Main{
 
         while (!app.getLogOut()){
             app.pantallaPrincipal();
-            System.out.println(app.getLogOut() + "3");
         }
 
         saveData(app);

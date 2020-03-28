@@ -196,7 +196,9 @@ public class User extends UserCollective implements Serializable {
                 app.logout();
         } 
         else{
-            displayNotifications();
+            if (notifications.size() != 0)
+                displayNotifications();
+                
             System.out.println("Ver mi perfil (yo)"); 
             System.out.println("Solicitar informe popularidad (ip)");
             System.out.println("Solicitar informe afinidad (ia)"); 
@@ -212,7 +214,7 @@ public class User extends UserCollective implements Serializable {
 
                 switch (opc) {
                     case "yo": //perfil
-                        toString();
+                        System.out.println(this);;
                         break;
 
                     case "ip": // popularidad
@@ -220,7 +222,7 @@ public class User extends UserCollective implements Serializable {
                         break;
 
                     case "ia": // informe afinidad
-                        affinityReport();
+                        System.out.println(affinityReport()); 
                         break;
 
                     case "c": // crear colectivo
@@ -245,10 +247,10 @@ public class User extends UserCollective implements Serializable {
                         filterProject();
                         break;
 
-                    case "q": //cerrar sesion
+                    default: //cerrar sesion
                         app.logout();
-                        break;
                     }
+                reader.readLine(); // enter para continuar
             }catch(IOException exception){
                 exception.printStackTrace();
             }

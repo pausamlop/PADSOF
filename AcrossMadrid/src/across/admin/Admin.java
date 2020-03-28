@@ -70,7 +70,9 @@ public class Admin implements Serializable {
     
     public void principalAdmin(){
 
-        displayNotifications();
+        if (notifications.size() != 0)
+            displayNotifications();
+
         System.out.println("Ver notificaciones pendientes (n), ver usuarios (u), ir a configuracion de la app (c):");
         
         String opc = "";
@@ -96,13 +98,11 @@ public class Admin implements Serializable {
             default:
                 Application.getApplication().logout();
         }
-        System.out.println(Application.getApplication().getLogOut());   
 
     }
-
-    
+// me has puesto algo mas? que me he levantado y no lo he visto jej
     private void displayNotifications(){
-        System.out.println(" ------------- NOTIFICACIONES -------------");
+        System.out.println("\n ------------------- NOTIFICACIONES -------------------");
 
         if (notifications.size() == 0){
             System.out.println("No hay notificaciones pendientes");
@@ -115,7 +115,7 @@ public class Admin implements Serializable {
             count++;
         }
 
-        System.out.println("Elige notificacion (por numero): ");
+        System.out.println("\nElige notificacion (numero): ");
         try{
             BufferedReader reader1 = new BufferedReader(new InputStreamReader(System.in));
 
@@ -164,17 +164,21 @@ public class Admin implements Serializable {
     private void displayUsers(){
         Application app = Application.getApplication();
 
+        System.out.println("\n ----------------- USUARIOS VALIDADOS -----------------");
+
         if (app.getUsers().size() == 0){
             System.out.println("Todavia no hay ningun usuario registrado");
             return;
         }
 
-        System.out.println("Seleccione usuario:");
-         
         int cont = 1;
-        for (User u: app.getUsers())
+        for (User u: app.getUsers()){
             System.out.println(cont + ". " + u.getUsername());
+            cont++;
+        }
         
+        System.out.println("\nSeleccione usuario:");
+
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -194,16 +198,16 @@ public class Admin implements Serializable {
 
             System.out.println(u);
             if (u.getBlocked()){
-                System.out.println("\nEste usuario ha sido bloqueado. ¿Desea desbloquearlo? (y/n)");
+                System.out.println("\nEste usuario esta bloqueado. ¿Desea desbloquearlo? (s/n)");
                 ans = reader.readLine();
-                if (ans == "y"){
+                if (ans.equals("s")){
                     u.unblock();
                     System.out.println("Usuario desbloqueado");
                 }
             }else{
-                System.out.println("\n¿Desea bloquear este usuario? (y/n)");
+                System.out.println("\n¿Desea bloquear este usuario? (s/n)");
                 ans = reader.readLine();
-                if (ans == "y"){
+                if (ans.equals("s")){
                     System.out.println("Escriba motivo de bloqueo:");
                     String motivo = reader.readLine();
                     u.block(motivo);
@@ -217,12 +221,12 @@ public class Admin implements Serializable {
 
     private void configuracion(){
         Application app = Application.getApplication();
-        System.out.println(" ------------- CONFIGURACION -------------");
+        System.out.println("\n -------------------- CONFIGURACION -------------------");
         
         System.out.println("\n - El numero minimo de votos para enviar un proyecto a financiacion es de " + app.getMinVotes() + " votos.");
         System.out.println("\n - Han de pasar " + app.getDaysExpiration() +" dias para que un proyecto caduque.");
 
-        System.out.println("Escriba 'v' para editar el numero minimo de votos y 'd' para cambiar los dias que ha de pasar para que un proyecto caduque:");
+        System.out.println("\nEscriba 'v' para editar el numero minimo de votos y 'd' para cambiar los dias que ha de pasar para que un proyecto caduque:");
 
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

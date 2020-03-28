@@ -71,8 +71,8 @@ public class Application implements Serializable{
      * 
      * @param app aplicacion
      */
-    public void setApplication(Object app){
-        application = (Application)app;
+    public static void setApplication(Application app){
+        Application.application = app;
     }
 
     /**
@@ -615,12 +615,10 @@ public class Application implements Serializable{
             currentUser.principalUser();
         else if (currentAdmin){
             admin.principalAdmin();
-            System.out.println(logOut + "1");
         }
         else{
             logOut = true;
         }
-        System.out.println(logOut + "2");
         return;
 
     }
