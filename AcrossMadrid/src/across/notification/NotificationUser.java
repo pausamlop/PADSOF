@@ -30,6 +30,7 @@ public class NotificationUser extends Notification implements Serializable{
      * @param project
      */
     public NotificationUser(Project p) { 
+        receivers = new ArrayList<User>();
         this.project = p;
         generateReceivers();
         setMessage(generateMessage());
@@ -56,22 +57,32 @@ public class NotificationUser extends Notification implements Serializable{
         projectState ps = project.getProjectState();
 
         switch (ps) {
-            case ENVALIDACION:
-                message = "El proyecto:" + this.project.getName() +  ", ha sido enviado a nuestro servicio de validación, pronto será notificado acerca del nuevo estado del mismo";
             case ACEPTADO:
-                message = "El proyecto:" + this.project.getName() + ", ha sido aceptado, la comunidad podrá acceder a el y darle su apoyo";
-            case RECHAZADO:
-                message = "El proyecto:" + this.project.getName() +  ", ha sido rechazado";
+                message = "El proyecto:" + this.project.getName() +  ", se encuentra en estado de aceptado y puede ser votado";
+                break;
+                
             case VOTOSALCANZADOS:
                 message = "El proyecto:" + this.project.getName() +  ", ha alcanzado el numero minimo de votos, podra proceder a enviarlo para su financiación cuando vea oportuno";
+                break;
+                
             case ENVIADO:
                 message = "El proyecto:" + this.project.getName() +  ", ha sido enviado a financiación";
+                break;
+                
             case FINANCIADO:
-                message = "El proyecto:" + this.project.getName() +  ", va a recibir financiacion";
+                message = "El proyecto:" + this.project.getName() +  ", va a recibir una financiacion de " + this.project.getCost() + "€";
+                break;
+                
             case NOFINANCIADO:
                 message = "El proyecto:" + this.project.getName() +  ", no va a recibir financiacion";
+                break;
+                
             case CADUCADO:
                 message = "El proyecto:" + this.project.getName() +  ", ha caducado, demasiado tiempo sin recibir apoyos de la comunidad";
+                break;
+                
+            default:
+                break;
         }
 
         return message;
@@ -81,25 +92,11 @@ public class NotificationUser extends Notification implements Serializable{
      * Metodo para obtener quienes son aquellos a los que enviar la notificacion
      */
     public void generateReceivers(){
-        projectState ps = project.getProjectState();
-        receivers = new ArrayList<User>();
-
-        if(User.class == project.getCreator().getClass()){
-            receivers.add((User) project.getCreator());
-        } else{
-            Collective collective = (Collective) project.getCreator();
-
-            receivers.add(collective.getManager());
+  
+        for(User user : project.getFollowers()){
+            receivers.add(user);
         }
         
-        if (ps == projectState.VOTOSALCANZADOS || ps == projectState.ENVIADO || 
-            ps==projectState.FINANCIADO || ps==projectState.NOFINANCIADO || 
-            ps==projectState.CADUCADO){
-           
-            for(User user : project.getFollowers()){
-                receivers.add(user);
-            }
-        }
     }
 
     /**

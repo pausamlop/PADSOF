@@ -5,6 +5,8 @@ import across.enumerations.*;
 import across.notification.*;
 import across.user.*;
 
+import es.uam.eps.sadp.grants.*;
+
 import java.util.*;
 import java.io.*;
 import java.time.*;
@@ -30,18 +32,20 @@ public abstract class Project implements Serializable, Comparable<Project>{
     private List<UserCollective> voters = new ArrayList<>();
     private List<User> followers = new ArrayList<>();
 
-    public Project(String name, String dcp, double cost) {
+    public Project(String name, String dcp, double cost, UserCollective creator) {
         this.name = name;
         this.dcp = dcp;
         this.cost = cost;
         this.votes = 0;
         this.lastVote = LocalDate.now();
         this.state = projectState.ENVALIDACION;
+        this.creator = creator;
 
         ArrayList<Project> p1 = new ArrayList<Project>();
         p1.addAll(Application.getApplication().getNonValidatedProjects());
         p1.add(this);
         Application.getApplication().setNonValidatedProjects(p1);
+
     }
 
     public void setName(  String name) {
@@ -64,8 +68,9 @@ public abstract class Project implements Serializable, Comparable<Project>{
         this.lastVote = lastVote;
     }
 
-    public void setprojectState(  projectState state) {
+    public void setProjectState( projectState state) {
         this.state = state;
+        System.out.println(this);
         new NotificationUser(this);
     }
 
@@ -106,15 +111,34 @@ public abstract class Project implements Serializable, Comparable<Project>{
         return this.followers;
     }
 
-    public boolean checkExpire(){ 
+    public boolean isExpired(){ 
         int maxDays = Application.getApplication().getDaysExpiration();
         long diff = DAYS.between(LocalDate.now(), lastVote);
 
-        if(maxDays <= diff){ return true; }
+        if(maxDays <= diff){
+            setProjectState(projectState.CADUCADO); 
+            return true;
+        }
 
         else{ return false; }
     }
 
+    /**
+     * Actualiza el estado del objeto Project en funcion de sus votos
+     */
+    public void updateState(){
+
+        // Comprobar si ha llegado al min de votos
+        if (getProjectState().equals(projectState.ACEPTADO) && (Application.getApplication().getMinVotes() <= votes) ){
+            setProjectState(projectState.VOTOSALCANZADOS);
+        }
+        if (getProjectState().equals(projectState.VOTOSALCANZADOS) && (Application.getApplication().getMinVotes() > votes) ){
+            setProjectState(projectState.ACEPTADO);
+        }
+
+    }
+
+    
     /**
      * Sobreescribe el metodo compareTo para objetos de la clase Project
      * 
@@ -123,8 +147,8 @@ public abstract class Project implements Serializable, Comparable<Project>{
      */
     @Override
     public int compareTo(Project p){
-        if (this.getVotes() > p.getVotes()) return -1;
-        else if(this.getVotes() < p.getVotes()) return 1;
+        if (this.getVotes() < p.getVotes()) return 1;
+        else if(this.getVotes() > p.getVotes()) return -1;
         else return 0;
     }
 
@@ -143,6 +167,15 @@ public abstract class Project implements Serializable, Comparable<Project>{
         Application.getApplication().setProjects(p1);
         Application.getApplication().setNonValidatedProjects(p2);
 
+        //añadir a proyectos creados
+        ArrayList<Project> p3 = new ArrayList<Project>();
+        p3.addAll(creator.getCreatedProjects());
+        p3.add(this);
+        creator.setCreatedProjects(p3);
+
+        // Cambiar el estado del proyecto
+        state = projectState.ACEPTADO;
+
         // Voto del creador
         vote(creator);
     }
@@ -158,7 +191,17 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
         Application.getApplication().setNonValidatedProjects(p1);
 
-        // quitarlo del array de los del creador?? o mantener con estado rechazado?
+        // Anadirlo al array de rechazados
+        ArrayList<Project> p2 = new ArrayList<Project>();
+        p2.addAll(Application.getApplication().getRejectedProjects());
+        p2.add(this);
+
+        Application.getApplication().setRejectedProjects(p2);
+
+        // Cambiar el estado del proyecto
+        state = projectState.RECHAZADO;
+
+
     }
 
 
@@ -223,11 +266,14 @@ public abstract class Project implements Serializable, Comparable<Project>{
             }
         }
 
+        Set<User> output = new HashSet <>();
+        output.addAll(set);
+
         for(User u: set){
             if(u.getBlocked())
-                set.remove(u);
+                output.remove(u);
         }
-        return set;
+        return output;
     }
 
 
@@ -250,7 +296,8 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
         // Si vota como colectivo
         else {
-            if ((Application.getApplication().getCurrentUser()).equals(((Collective)uc).getManager())){
+            if (Application.getApplication().getCurrentAdmin() || 
+                Application.getApplication().getCurrentUser().equals(((Collective)uc).getManager())){
 
                 // Añadir el colectivo a voters
                 voters.add(uc);
@@ -269,6 +316,10 @@ public abstract class Project implements Serializable, Comparable<Project>{
         p1.addAll(uc.getVotedProjects());
         p1.add(this);
         uc.setVotedProjects(p1);
+
+        // Update estado
+        updateState();
+  
 
     }
 
@@ -291,24 +342,72 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
         votes = allVoters.size();
         
+        // Update estado
+        updateState();
+        
     }
     
 
-    // send to Finance
-
-    public void sendToFinance(){
-        // ESTO ES CON EL JAR NO???
+    /**
+     * Metodo para mandar a financiar un proyecto en cuestion
+     *  
+     * @return true en caso de que haya sido enviado y false en caso contrario
+     */
+    public boolean sendToFinance(){
+    	if(this.getVotes() < Application.getApplication().getMinVotes()) return false;
+    	
+    	String id;
+    	
+    	CCGG gateway = CCGG.getGateway();
+    	Request request = new Request(this);
+    	
+    	try {
+            id = gateway.submitRequest(request);
+            Application.getApplication().addPendingFinance(this, id);
+            this.setProjectState(projectState.ENVIADO);
+	    	return true;
+		} catch (IOException | InvalidRequestException e) {
+			e.printStackTrace();
+			return false;
+		}
+    	
     }
+
+    /**
+     * Metodo para obtener la financiacion dada a un proyecto en cuestion
+     * 
+     * @return en caso de haber sido financiado, el dinero con el que ha sido financiado. En caso de que aun no haya sido atendida
+     * esta request, devolverá null.
+     */
+    public Double financed(String id){
+    	Double finance;
+    	
+    	try {
+            finance = CCGG.getGateway().getAmountGranted(id);
+			return finance;
+		} catch (IOException | InvalidIDException e) {
+            e.printStackTrace();
+            return (double) -1;
+        }
+        
+    }
+    
+
+
 
 
     public String toString(){
         String resumen = "";
         resumen += "Nombre: " + name;
-        resumen += "\nDescripcion: " + dcp;
-        resumen += "\nEstado: " + state.name();
-        resumen += "\nVotos: " + votes + "/" + Application.getApplication().getMinVotes(); 
-        resumen += "\nCoste: " + cost;
-        resumen += "\nUltimo voto (fecha): " + lastVote;
+        resumen += ", descripcion: " + dcp;
+        if (creator instanceof Collective)
+            resumen += "\n      Creado por colectivo " + ((Collective)creator).getName();
+        else   
+            resumen += "\n      Creado por " + ((User)creator).getUsername();
+        resumen += "\n      Estado: " + state.name();
+        resumen += "\n      Votos: " + votes + "/" + Application.getApplication().getMinVotes(); 
+        resumen += "\n      Coste: " + cost;
+        resumen += "\n      Ultimo voto (fecha): " + lastVote;
         return resumen;
     }
 

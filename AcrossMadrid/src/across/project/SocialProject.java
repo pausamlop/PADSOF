@@ -2,7 +2,7 @@ package across.project;
 
 import across.enumerations.*;
 import across.notification.*;
-
+import across.user.*;
 
 import java.io.*;
 
@@ -18,8 +18,8 @@ public class SocialProject extends Project implements Serializable{
     private String group;
     private typeSocial type;
 
-    public SocialProject(String name, String dcp, double cost, String group, typeSocial type){
-        super(name, dcp, cost);
+    public SocialProject(String name, String dcp, double cost, String group, typeSocial type, UserCollective creator){
+        super(name, dcp, cost, creator);
         this.group = group;
         this.type = type;
         new NotificationAdminProject(this);
@@ -35,9 +35,9 @@ public class SocialProject extends Project implements Serializable{
     @Override
     public String toString(){
         String resumen = super.toString();
-        resumen += "\nPROYECTO TIPO SOCIAL";
-        resumen += "\nAmbito: " + type.name();
-        resumen += "\nDirigido a: " + group;
+        resumen += "\n      PROYECTO TIPO SOCIAL";
+        resumen += "\n      + Ambito: " + type.name();
+        resumen += "\n      + Dirigido a: " + group;
         return resumen;
     }
 

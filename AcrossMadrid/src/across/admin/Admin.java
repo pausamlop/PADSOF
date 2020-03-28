@@ -1,6 +1,6 @@
 package across.admin;
 
-import across.application.Application;
+import across.application.Application; 
 import across.enumerations.*;
 import across.notification.*;
 import across.project.*;
@@ -95,8 +95,9 @@ public class Admin implements Serializable {
                 configuracion();
                 break;
 
-            default:
+            case "q":
                 Application.getApplication().logout();
+
         }
 
     }
@@ -118,10 +119,11 @@ public class Admin implements Serializable {
         System.out.println("\nElige notificacion (numero): ");
         try{
             BufferedReader reader1 = new BufferedReader(new InputStreamReader(System.in));
-
+            String opcs = reader1.readLine();
+            if(opcs.equals("")) return;
             int opc = 0;
             try{
-                opc = Integer.parseInt(reader1.readLine()) - 1;
+                opc = Integer.parseInt(opcs) - 1;
 
                 if (opc >= notifications.size() || opc < 0){
                     System.out.println("Selecione numero de notificacion valida");

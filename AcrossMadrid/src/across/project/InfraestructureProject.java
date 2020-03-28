@@ -21,8 +21,8 @@ public class InfraestructureProject extends Project implements Serializable{
     private String image;
     private String district;
 
-    public InfraestructureProject(String name, String dcp, double cost, String image, String district){
-        super(name, dcp, cost);
+    public InfraestructureProject(String name, String dcp, double cost, String image, String district, UserCollective creator){
+        super(name, dcp, cost, creator);
         this.image = image;
         this.district = district;
         new NotificationAdminProject(this);
@@ -38,9 +38,9 @@ public class InfraestructureProject extends Project implements Serializable{
     @Override
     public String toString(){
         String resumen = super.toString();
-        resumen += "\nPROYECTO TIPO INFRAESTRUCTURA";
-        resumen += "\nDistrito: " + district;
-        resumen += "\nFoto: " + image;
+        resumen += "\n      PROYECTO TIPO INFRAESTRUCTURA";
+        resumen += "\n      + Distrito: " + district;
+        resumen += "\n      + Foto: " + image;
         return resumen;
     }
     

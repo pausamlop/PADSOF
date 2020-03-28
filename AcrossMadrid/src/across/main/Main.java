@@ -2,12 +2,12 @@ package across.main;
 
 import java.util.*;
 import java.io.*;
+import java.time.LocalDate;
 
 import across.application.*;
 import across.enumerations.*;
 import across.project.*;
 import across.user.*;
-import across.application.*;
 
 /**
  * Clase Main
@@ -29,6 +29,7 @@ public class Main{
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("app.objectData"));
             output.writeObject(app);
             output.close();
+            System.out.println("La aplicacion se ha guardado con exito");
         }catch(IOException ioException){
             ioException.printStackTrace();
         }
@@ -64,19 +65,33 @@ public class Main{
         Application app = Application.getApplication();
         app.setLogOut(false);
 
+        LocalDate date = LocalDate.now();
+        date = date.plusDays(8);
+        app.setCCGGDate(date);
+
         System.out.println(" ------------------------------------------------------");
         System.out.println(" ------------- BIENVENIDO A ACROSS MADRID -------------");
         System.out.println(" ------------------------------------------------------");
-        if (!app.pantallaLogin()){
-            System.out.println("No se ha podido iniciar la app");
-            return; 
-        }
 
-        while (!app.getLogOut()){
+       
+    
+        while (true){
+            // comprobaciones constantes
+            app.checkFinance();
+            app.checkExpired();
+
+            app.pantallaLogin();
+            if (app.getLogOut()){
+                System.out.println("\nSaliendo de la aplicacion");
+                break;
+            }
             app.pantallaPrincipal();
+            app.setLogOut(false);
+            saveData(app);
         }
 
-        saveData(app);
+
+       
 
     }
 }

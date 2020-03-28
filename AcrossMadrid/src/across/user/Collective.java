@@ -38,7 +38,26 @@ public class Collective extends UserCollective implements Serializable { // add 
         this.manager = Application.getApplication().getCurrentUser();
         this.name = name;
         this.description = description;
-        this.parent = null;        
+        this.parent = null;    
+        
+        // array de colectivos de la aplicacion
+        Application.getApplication().addCollectives(this);
+
+        // array creados del manager
+        ArrayList<Collective> c1 = new ArrayList<Collective>();
+        c1.addAll(manager.getCreatedCollectives());
+        c1.add(this);
+        manager.setCreatedCollectives(c1);
+
+        // array de los colectivos a los que pertenece el manager
+        ArrayList<Collective> c2 = new ArrayList<Collective>();
+        c2.addAll(manager.getMemberCollectives());
+        c2.add(this);
+        manager.setMemberCollectives(c2);
+
+
+        // unir al manager
+        members.add(manager);
     }
 
 
@@ -54,6 +73,24 @@ public class Collective extends UserCollective implements Serializable { // add 
         this.description = description;
         this.parent = parent;
         parent.addChild(this);
+
+        // array de colectivos de la aplicacion
+        Application.getApplication().addCollectives(this);
+
+        // array creados del manager
+        ArrayList<Collective> c1 = new ArrayList<Collective>();
+        c1.addAll(manager.getCreatedCollectives());
+        c1.add(this);
+        manager.setCreatedCollectives(c1);
+
+        // array de los colectivos a los que pertenece el manager
+        ArrayList<Collective> c2 = new ArrayList<Collective>();
+        c2.addAll(manager.getMemberCollectives());
+        c2.add(this);
+        manager.setMemberCollectives(c2);
+
+        // unir al manager
+        members.add(manager);
     }
 
 
@@ -218,18 +255,22 @@ public class Collective extends UserCollective implements Serializable { // add 
     * @param u usuario a unirse
     */
     public void join(User u){
-
+        
         // checkear si usuario esta en colectivos padres o hijos
-        if (getAllFamilyMembers().contains(u)) return;
+        if (getAllFamilyMembers().contains(u)) {
+            System.out.println("No se puede unir a este colectivo");
+            return;
+        }
 
         // añadirlo al array de members de collective
         members.add(u);
 
-        //añadirlo al array de colectivos de u
-        ArrayList<Collective> col = new ArrayList<Collective>();
-        col.addAll(u.getMemberCollectives());
-        col.add(this);
-        u.setMemberCollectives(col);
+        // array de los colectivos a los que pertenece el manager
+        ArrayList<Collective> c2 = new ArrayList<Collective>();
+        c2.addAll(u.getMemberCollectives());
+        c2.add(this);
+        u.setMemberCollectives(c2);
+        
 
         // actualizar votos
         updateFamilyVotes();
@@ -242,6 +283,9 @@ public class Collective extends UserCollective implements Serializable { // add 
     */
     public void disjoin(User u){
         if (members.contains(u) == false) return;
+
+        //comprobar que el que quiere salir no sea el manager
+        if (u.equals(manager)) return;
 
         //quitar de array de members de collective
         members.remove(u);
@@ -276,12 +320,14 @@ public class Collective extends UserCollective implements Serializable { // add 
     public String toString() {
         String resumen = "";
         resumen += "Nombre: "+ name;
-        resumen += "\nDescipcion"+ description;
+        resumen += ", descipcion: "+ description;
         if (parent != null){
-            resumen += "\n  Padre:\n" + parent.toString();
+            resumen += ", padre: " + parent.getName();
         }
-        resumen += "\n  Hijos:";
-        for (Collective c: children) resumen += "\n" + c.toString();
+        if (children.size() > 0){
+            resumen += ", hijos: ";
+            for (Collective c: children) resumen += c.getName() + " ";
+        }
 
         return resumen;
     }

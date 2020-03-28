@@ -6,8 +6,11 @@ import across.project.*;
 import across.user.*;
 import across.notification.*;
 
+import es.uam.eps.sadp.grants.*;
+
 import java.util.*;
 import java.io.*;
+import java.time.*;
 import java.lang.Integer;
 
 
@@ -21,6 +24,8 @@ import java.lang.Integer;
 */
 public class Application implements Serializable{
 
+    private static final long serialVersionUID = 1L;
+
     private static Application application;
     private User currentUser = null;
     private boolean currentAdmin = false;
@@ -32,11 +37,14 @@ public class Application implements Serializable{
     private Admin admin;
     private ArrayList<Project> projects;
     private ArrayList<Project> nonValidatedProjects;
+    private ArrayList<Project> rejectedProjects;
     private ArrayList<Collective> collectives;
     private ArrayList<User> users;
     private ArrayList<User> nonValidatedUsers;
 
     private boolean logOut;
+
+    private HashMap<Project,String> pendingFinance = new HashMap<Project,String>();
 
 
     /**
@@ -47,6 +55,7 @@ public class Application implements Serializable{
         admin = new Admin();
         projects = new ArrayList<Project>();
         nonValidatedProjects = new ArrayList<Project>();
+        rejectedProjects = new ArrayList<Project>();
         collectives = new ArrayList<Collective>();
         users = new ArrayList<User>();
         nonValidatedUsers = new ArrayList<User>();
@@ -146,6 +155,7 @@ public class Application implements Serializable{
      */
     public void setMinVotes(int minV){ 
         minVotes = minV; 
+        for (Project p: projects) p.updateState();
     }
 
     /**
@@ -228,12 +238,34 @@ public class Application implements Serializable{
         this.nonValidatedProjects = nonValidatedProjects;
     }
 
+
+    public ArrayList<Project> getRejectedProjects() {
+        return this.rejectedProjects;
+    }
+
+    public void setRejectedProjects(ArrayList<Project> rejectedProjects) {
+        this.rejectedProjects = rejectedProjects;
+    }
+
+
     public void addNewProject(Project p) {
         this.nonValidatedProjects.add(p);
     }
 
     public void setLogOut(boolean lo){
         this.logOut = lo;
+    }
+
+    public void addPendingFinance(Project project, String id){
+        pendingFinance.put(project, id);
+    }
+
+    /**
+     * Metodo auxiliar para los tests, para poder avanzar la fecha de la pasarela hasta la fecha date y asi poder
+     * simular facilmente.
+     */
+    public void setCCGGDate(LocalDate date) {
+    	CCGG.getGateway().setDate(date);
     }
     
     /**
@@ -364,7 +396,7 @@ public class Application implements Serializable{
         // encontrar proyectos sociales dirigidos a cierto grupo
         for (Project p: projects){
             if (p.getClass().equals(SocialProject.class)){
-                if (((SocialProject)p).getGroup().equals(group))
+                if (((SocialProject)p).getGroup().contains(group))
                     output.add(p);
             }
         }
@@ -383,8 +415,8 @@ public class Application implements Serializable{
 
         // encotrar proyectos de infraestructura en cierto distrito
         for (Project p: projects){
-            if (p.getClass().equals(InfraestructureProject.class)){ 
-                if (((InfraestructureProject)p).getDistrict().equals(disc)) 
+            if (p instanceof InfraestructureProject){ 
+                if (((InfraestructureProject)p).getDistrict().contains(disc)) 
                     output.add(p);
             }
         }
@@ -437,8 +469,7 @@ public class Application implements Serializable{
 
         ArrayList<Project> output = new ArrayList<Project>();
         output.addAll(projects);
-        Collections.sort(output, Comparator.comparing(p -> p.getVotes()));
-
+        Collections.sort(output);
 
         int count = 1;
         for (Project p: output){
@@ -478,7 +509,9 @@ public class Application implements Serializable{
                 p3.addAll(c.getVotedProjects());
                 p3.addAll(col.getVotedProjects());
 
-                int tasa = (p1.size() + p2.size())/p3.size();
+                int tasa = 0;
+                if (p3.size() == 0) tasa = 0;
+                else tasa = (p1.size() + p2.size())/p3.size();
                 notSorted.put(col, tasa);
 
             }
@@ -492,7 +525,7 @@ public class Application implements Serializable{
         int count = 1;
 
         for (Collective colec : output.keySet()) {
-            result += count + ". " + colec.getName() + ", " + output.get(colec);
+            result = count + ". " + colec.getName() + ", " + output.get(colec) + "\n" + result;
             count ++;
           }
         return result;
@@ -530,22 +563,65 @@ public class Application implements Serializable{
                 }
             }
         }
+
         return sortedMap;
     }
 
+
     /**
-     * Funcion para pedir algo al usuario por pantalla.(Desde metodos sobretodo)
-     * @return cadena de caracteres leida por pantalla
+     * Comprueba si hay algún proyecto nuevo financiado
      */
-    public String askUser(){
-        try{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        return reader.readLine();
-        }catch(IOException exception){
-            exception.printStackTrace();
-            return null;
+
+    public void checkFinance(){
+        HashMap<Project,String> output = new HashMap<Project,String>();
+
+        for (Project p: pendingFinance.keySet()){
+
+            // Si todavia no hay respuesta
+            if (p.financed(pendingFinance.get(p))==null){
+                //Anadir al nuevo array de financiacion
+                output.put(p, pendingFinance.get(p));
+            }
+            // Si no ha sido financiado
+            else if (p.financed(pendingFinance.get(p)).equals(0)){
+                
+                // Cambiar el estado del proyecto y enviar Notificacion
+                p.setProjectState(projectState.NOFINANCIADO);
+
+                // Anadir al array de rechazados
+                rejectedProjects.add(p);
+
+           
+            // Si ha sido financiado
+            }  else {
+                // Cambiar el coste del proyecto
+                p.setCost(p.financed(pendingFinance.get(p)));
+
+                // Cambiar el estado del proyecto y enviar Notificacion
+                p.setProjectState(projectState.FINANCIADO);
+
+            }
+
+            pendingFinance = output;
         }
+
     }
+
+    public void checkExpired(){
+        ArrayList<Project> newArray = new ArrayList<Project>();
+    
+        for (Project p: projects){
+            if (!p.isExpired()){
+                newArray.add(p);
+            }
+            else rejectedProjects.add(p);
+        }
+
+        projects = newArray;
+    }
+
+
+
 
 
     /************************************************************************/
@@ -560,8 +636,8 @@ public class Application implements Serializable{
      * @return true, si la accion se ejecuto con exito
      * @return false, si no se ha podido realizar la accion
      */
-    public boolean pantallaLogin(){
-        boolean out = true;
+    public void pantallaLogin(){
+        System.out.println("\n ------------------- ACROSS MADRID --------------------");
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("1. Registro\n2. Login\n3. Login como administrador");
@@ -576,7 +652,6 @@ public class Application implements Serializable{
                 //reader.close();
                 if(!register(username, NIF, password)){
                     System.out.println("El nombre de usuario o NIF ya han sido registrados");
-                    out = false;
                 }
             }
             else if(opc.equals("2")) {
@@ -586,24 +661,23 @@ public class Application implements Serializable{
                 String password = reader.readLine();
                 if (!login(username, password)){
                     System.out.println("Nombre de usuario o contrasena incorrectos");
-                    out = false;
                 }
             }
-            else {
+            else if (opc.equals("3")){
                 System.out.println("Contrasena de administrador: ");
                 String password = reader.readLine();
                 if (!admin.login(password)){
                     System.out.println("Contrasena erronea");
-                    out = false;
                 }else{
                     currentAdmin = true;
                 }
             }
+            else if(opc.equals("q")){
+                logOut = true;
+            }
         }catch(IOException exception){
             exception.printStackTrace();
-            return false;
         }
-        return out;
     }
 
     /**
@@ -611,13 +685,10 @@ public class Application implements Serializable{
      * segun cual de los dos este logueado
      */
     public void pantallaPrincipal(){
-        if (currentUser != null)
+        while (currentUser != null)
             currentUser.principalUser();
-        else if (currentAdmin){
+        while (currentAdmin){
             admin.principalAdmin();
-        }
-        else{
-            logOut = true;
         }
         return;
 
