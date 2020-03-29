@@ -3,7 +3,7 @@ package across.user;
 import across.application.*;
 import across.project.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Clase abstracta Collective que hereda de de UserCollective
@@ -57,7 +57,6 @@ public class Collective extends UserCollective {
         members.add(manager);
     }
 
-
     /**
      * Constructor de un objeto Collective hijo
      * 
@@ -91,8 +90,6 @@ public class Collective extends UserCollective {
     }
 
 
-
-    // GETTERS
     /**
      * Devuelve el nombre del colectivo
      * 
@@ -121,90 +118,31 @@ public class Collective extends UserCollective {
     }
 
     /**
-     * Devuelve el colectivo padre
-     * 
-     * @return padre 
-     */
-    public Collective getParent() {
-        return this.parent;
-    }
-
-    /**
      * Devuelve el usuario representante del colectivo
      * 
      * @return manager
      */
     public User getManager(){ return manager; }
 
+
     /**
-     * Devuelve un array con los usuarios pertenecientes al colectivo
+     * Anade a un objeto colectivo un hijo, el pasado como argumento
      * 
-     * @return members[]
+     * @param c colectivo hijo
      */
-    public ArrayList<User> getMembers(){ return members; }
-
-
-
-    // SETTERS
-    /**
-     * Actualiza el nombre del colectivo
-     * 
-     * @param name nombre del colectivo
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Actualiza la decripcion del colectivo
-     * 
-     * @param description descripcion del colectivo
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * Actualiza el array de hijos del colectivo
-     * 
-     * @param children ArrayList de colectivos hijos
-     */ 
-    public void children(ArrayList<Collective> children) {
-        this.children = children;
-    }
-
-    /**
-     * Actualiza el colectivo padre
-     * 
-     * @param parent colectivo padre
-     */
-    public void parent(Collective parent) {
-        this.parent = parent;
-    }
-
-    // /**
-    //  * Actualiza el representante del colectivo
-    //  * 
-    //  * @param manager Usuario que crea el colectivo
-    //  */
-    // public void setManager(User manager){ this.manager = manager; }
-
-    /**
-     * Actualiza los miembrios del colectivo
-     * 
-     * @param members arrays de los usuarios miembros
-     */
-    public void setMembers(ArrayList<User> members){ this.members = members; }
-
-    // METODOS
-
-    private void addChild(Collective c) {
+    public void addChild(Collective c) {
         if (c == null) return;
         children.add(c);
     }
 
-    public ArrayList<User> getChildrenMembers(){
-        ArrayList<User> all = new ArrayList<>();
+    /**
+     * Crea una lista con los usuarios que pertenecen tanto al colectivo desde el que
+     * se llama a este metodo como a cada uno de sus hijos
+     * 
+     * @return ArrayList con todos los miembros del colectivo (directos e indirectos)
+     */
+    public Set<User> getChildrenMembers(){
+        Set<User> all = new HashSet<>();
         all.addAll(members);
 
         for(Collective auxCol : this.getChildren()){
@@ -215,8 +153,14 @@ public class Collective extends UserCollective {
         return all; 
     }
 
-    public ArrayList<User> getAllFamilyMembers(){
-        ArrayList<User> all = getChildrenMembers();
+    /**
+     * Crea una lista con los ususarios que pertenecen al colectivo desde el que se llama
+     * al metodo, a los colectivos hijos y a los colectivos padres (y padres de padres)
+     * 
+     * @return ArrayList con todos los miembros del colectivo, de sus hijos y padres
+     */
+    public Set<User> getAllFamilyMembers(){
+        Set<User> all = getChildrenMembers();
         Collective par = parent;
 
         while (par != null){
@@ -227,8 +171,11 @@ public class Collective extends UserCollective {
         return all;
     }
 
-
-    
+    /**
+     * Actualiza los los votos de los proyectos a los que apoya un colectivo
+     * y sus padres (y padres de padres)
+     * 
+     */
     public void updateFamilyVotes() {
         Collective par = parent;
 
@@ -243,14 +190,11 @@ public class Collective extends UserCollective {
 
     }
 
-
-
-
-
     /**
-    * Permite a un usuario unirse al colectivo
-    * @param u usuario a unirse
-    */
+     * Permite a un usuario unirse al colectivo
+     *
+     * @param u usuario a unirse
+     */
     public void join(User u){
         
         // checkear si usuario esta en colectivos padres o hijos
@@ -267,7 +211,6 @@ public class Collective extends UserCollective {
         c2.addAll(u.getMemberCollectives());
         c2.add(this);
         u.setMemberCollectives(c2);
-        
 
         // actualizar votos
         updateFamilyVotes();
@@ -275,9 +218,10 @@ public class Collective extends UserCollective {
     }
 
     /**
-    * Permite a un usuario borrarse del colectivo
-    * @param u usuario a borrarse
-    */
+     * Permite a un usuario borrarse del colectivo
+     * 
+     * @param u usuario a borrarse
+     */
     public void disjoin(User u){
         if (members.contains(u) == false) return;
 
@@ -296,24 +240,12 @@ public class Collective extends UserCollective {
         // actualizar votos
         updateFamilyVotes();
     }
-
-    /**
-    * Comprueba si un usuario pertenece al colectivo
-    * @param u usuario
-    * @return true si el usuario pertenece al colectivo
-    * @return false si el usuario no pertenece al colectivo
-    */
-    public boolean checkMember(User u){
-    for (User memb: members){
-    if (u.equals(memb))
-    return true;
-    }
-    return false;
-    }
-
     
-
-
+    /**
+     * Crea una cadena de texto con la informacion mas relevante de un colectivo
+     * 
+     * @return String con la informacion del objeto Collective
+     */
     public String toString() {
         String resumen = "";
         resumen += "Nombre: "+ name;
@@ -327,25 +259,6 @@ public class Collective extends UserCollective {
         }
 
         return resumen;
-    }
-
-    
-
-    // para probar si funcionaba lo de padres e hijos
-    public static void main(String[] args) {
-        Collective a = new Collective("Padre", "soy el papi", null);
-        Collective b = new Collective("Hijo 1", "holiiiii", a);
-        Collective c = new Collective("Hijo 2", "pppppppp", a);
-
-        System.out.println(b);
-        System.out.println(c);
-        System.out.println(a);
-        System.out.println("\n   CHILDREN");
-        for (Collective col: a.getChildren()){
-            System.out.println(col);
-        }
-        System.out.println("\n   PARENT");
-        System.out.println(b.parent);
     }
 
 }

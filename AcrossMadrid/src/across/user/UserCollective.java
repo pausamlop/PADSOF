@@ -19,7 +19,6 @@ public abstract class UserCollective implements Serializable {
     private ArrayList<Project> votedProjects = new ArrayList<Project>();
 
     
-    
     /**
      * Devuelve los proyectos creados por el objeto usuario o colectivo
      *
@@ -38,10 +37,20 @@ public abstract class UserCollective implements Serializable {
         return this.votedProjects;
     }
 
-
+    /**
+     * Actualiza los proyectos creados por el objeto usuario o colectivo
+     * 
+     * @param createdProjects proyectos creados a establecer como atributo
+     */
     public void setCreatedProjects(ArrayList<Project> createdProjects) {
         this.createdProjects = createdProjects;
     }
+
+    /**
+     * Actualiza los proyectos votados por el objeto usuario o colectivo
+     * 
+     * @param votedProjects proyectos votados a establecer como atributo
+     */
     public void setVotedProjects(ArrayList<Project> votedProjects) {
         this.votedProjects = votedProjects;
     }
