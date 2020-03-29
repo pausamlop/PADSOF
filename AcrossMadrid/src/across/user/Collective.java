@@ -122,18 +122,8 @@ public class Collective extends UserCollective {
      * 
      * @return manager
      */
-    public User getManager(){
-        return this.manager; 
-    }
+    public User getManager(){ return manager; }
 
-    /**
-     * Devuelve un ArrayList de los usuarios miembros del colectivo
-     * 
-     * @return miembros del colectivo
-     */
-    public ArrayList<User> getMembers(){
-        return this.members;
-    }
 
     /**
      * Anade a un objeto colectivo un hijo, el pasado como argumento

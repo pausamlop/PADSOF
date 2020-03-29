@@ -15,16 +15,24 @@ import java.util.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-
 public class Admin implements Serializable {
 
     private String password = "soyadmin";
     private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
-
-	public String getPassword() { return password; }
+    /**
+     * Devuelve la contraseña del administrador
+     * 
+     * @return contraseña del admin
+     */
+    public String getPassword() { return password; }
+    
+    /**
+     * Establece la contraseña del administrador
+     * 
+     * @param password nueva contraseña
+     */
 	public void setPassword(String password) { this.password = password; }
-
 
 	/**
      * Comprueba que la contrasena coincida con la del administrador
@@ -66,6 +74,9 @@ public class Admin implements Serializable {
     /************ FUNCIONES AUXILIARES PARA PROBAR FUNCIONAMIENTO ***********/
     /************************************************************************/
     
+    /**
+     * Muestra por pantalla el menu del administrador
+     */
     public void principalAdmin(){
 
         if (notifications.size() != 0)
@@ -99,7 +110,10 @@ public class Admin implements Serializable {
         }
 
     }
-// me has puesto algo mas? que me he levantado y no lo he visto jej
+
+    /**
+     * Metodo para mostrar por pantallas las notificaciones del administrador
+     */
     private void displayNotifications(){
         System.out.println("\n ------------------- NOTIFICACIONES -------------------");
 
@@ -160,7 +174,9 @@ public class Admin implements Serializable {
 
     }
 
-
+    /**
+     * Metodo para la implementacion de las diferentes funcionalidades del admin en relacion a los usuarios
+     */
     private void displayUsers(){
         Application app = Application.getApplication();
 
@@ -219,6 +235,9 @@ public class Admin implements Serializable {
         }
     }
 
+    /**
+     * Metodo para la implementacion de las diferentes funcionalidades del admin en relacion a la configuracion de la app
+     */
     private void configuracion(){
         Application app = Application.getApplication();
         System.out.println("\n -------------------- CONFIGURACION -------------------");

@@ -22,7 +22,7 @@ public class NotificationAdminUser extends Notification {
      * Constructor de la clase notificacion para el administrador, para la notificacion
      * cuando un usuario se ha registrado y esta pendiende de validacion
      * 
-     * @param project
+     * @param u usuario del que se va notificar
      */
     public NotificationAdminUser(User u) { 
         this.user = u;
@@ -31,10 +31,18 @@ public class NotificationAdminUser extends Notification {
     }
 
 
-    /* GETTERS */
+    /**
+     * Devuelve el usuario al que va destinada la notificacion
+     * 
+     * @return usuario notificado
+     */
     public User getUser() { return user; }
 
-    /* SETTERS */
+    /**
+     * Establece el usuario de una notificacion
+     * 
+     * @param u usuario 
+     */
     public void setUser(User u) { this.user = u; }
 
 

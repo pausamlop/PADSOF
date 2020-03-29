@@ -32,6 +32,14 @@ public abstract class Project implements Serializable, Comparable<Project>{
     private List<UserCollective> voters = new ArrayList<>();
     private List<User> followers = new ArrayList<>();
 
+    /**
+     * Constructor de la clase abstracta proyecto, que heredaran sus dos subclases
+     * 
+     * @param name nombre del proyecto
+     * @param dcp descripcion del proyecto
+     * @param cost coste aproximado del proyecto
+     * @param creator creador del proyecto
+     */
     public Project(String name, String dcp, double cost, UserCollective creator) {
         this.name = name;
         this.dcp = dcp;
@@ -48,55 +56,121 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
     }
 
+    /**
+     * Establece el nombre del proyecto
+     * 
+     * @param name cadena de caracteres
+     */
     public void setName(  String name) {
         this.name = name;
     }
-
+    
+    /**
+     * Establece la descripcion del proyecto
+     * 
+     * @param dcp cadena de caracteres
+     */
     public void setDescription(  String dcp) {
         this.dcp = dcp;
     }
 
+    /**
+     * Establece el coste del proyecto
+     * 
+     * @param cost coste en euros
+     */
     public void setCost(  double cost) {
         this.cost = cost;
     }
 
+    /**
+     * Establece los votos del proyecto
+     * 
+     * @param votes int
+     */
     public void setVotes(  int votes) {
         this.votes = votes;
     }
 
+    /**
+     * Establece la fecha en la cual se realizo el ultimo voto al proyecto
+     * 
+     * @param lastVote fecha del ultimo voto
+     */
     public void setLastVote(  LocalDate lastVote) {
         this.lastVote = lastVote;
     }
 
+    /**
+     * Establece el estado actual del proyecto, dependiendo del cambio de estado,
+     * se generará un tipo de notificacion determinado y será enviada a sus seguidores
+     * 
+     * @param state estado del proyecto
+     */
     public void setProjectState( projectState state) {
         this.state = state;
         new NotificationUser(this);
     }
 
+    /**
+     * Devuelve el nombre del proyecto
+     * 
+     * @return nombre del proyecto
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Devuelve la descripcion del proyecto
+     * 
+     * @return descripcion del proyecto
+     */
     public String getDescription() {
         return dcp;
     }
 
+    /**
+     * Devuelve el coste del proyecto
+     * 
+     * @return coste del proyecto
+     */
     public double getCost() {
         return cost;
     }
 
+    /**
+     * Devuelve el numero de votos recibidos 
+     * 
+     * @return votos recibidos
+     */
     public int getVotes() {
         return votes;
     }
 
+    /**
+     * Devuelve la fecha del ultimo voto recibido
+     * 
+     * @return fecha del ultimo voto
+     */
     public LocalDate getLastVote() {
         return lastVote;
     }
 
+    /**
+     * Devuelve el estado del proyecto
+     * 
+     * @return estado del proyecto
+     */
     public projectState getProjectState() {
         return state;
     }
 
+    /**
+     * Devuelve el creador del proyecto, tanto si este ha sido creado como colectivo como si lo ha sido como usuario
+     * 
+     * @return creador del proyecto
+     */
     public UserCollective getCreator() {
         return creator;
     }
@@ -110,6 +184,11 @@ public abstract class Project implements Serializable, Comparable<Project>{
         return this.followers;
     }
 
+    /**
+     * Metodo que nos servira para saber si un proyecto ha caducado
+     * 
+     * @return true en caso de que haya caducado y false en caso contrario
+     */
     public boolean isExpired(){ 
         int maxDays = Application.getApplication().getDaysExpiration();
         long diff = DAYS.between(lastVote, LocalDate.now());
@@ -153,7 +232,7 @@ public abstract class Project implements Serializable, Comparable<Project>{
     }
 
     /**
-     * Valida un proyecto
+     * Metodo para validar un proyecto
      */
     public void validate(){
         ArrayList<Project> p1 = new ArrayList<Project>();
@@ -182,7 +261,7 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
 
 	/**
-     * Rechaza un proyecto
+     * Metodo para rechazar un proyecto
      */
     public void reject(){
         ArrayList<Project> p1 = new ArrayList<Project>();
@@ -394,10 +473,6 @@ public abstract class Project implements Serializable, Comparable<Project>{
         }
         
     }
-    
-
-
-
 
     public String toString(){
         String resumen = "";

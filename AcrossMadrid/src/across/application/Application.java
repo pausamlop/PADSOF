@@ -46,10 +46,8 @@ public class Application implements Serializable{
 
     private HashMap<Project,String> pendingFinance = new HashMap<Project,String>();
 
-
     /**
-     * Constructor de un objeto Application
-     * 
+     * Constructor de la clase aplicacion
      */
     private Application(){
         admin = new Admin();
@@ -167,11 +165,20 @@ public class Application implements Serializable{
         return admin; 
     }
 
-
+    /**
+     * Devuelve el indicador de si se va o no a salir el usuario en un instante dado, de la app
+     * 
+     * @return indicador de LogOut
+     */
     public boolean getLogOut(){
         return this.logOut;
     }
 
+    /**
+     * Establece el valor del LogOut
+     * 
+     * @param lo indicador de LogOut
+     */
     public void setLogOut(boolean lo){
         this.logOut = lo;
     }
@@ -186,82 +193,168 @@ public class Application implements Serializable{
         return this.users;
     }
 
-
+    /**
+     * Establece un array de usuarios validados en la app
+     * 
+     * @param users array que contiene los usuarios a establecer como validados en la app
+     */
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
-
+    /**
+     * Metodo para añadir un usuario en cuestion al array de usuarios registrados de la app
+     * 
+     * @param u usuario a añadir
+     */
     public void addUsers(User u) {
         this.users.add(u);
     }
 
-
+    /**
+     * Devuelve el array con todos los usuarios que aun no han sido validados
+     * 
+     * @return array de usuarios no validados
+     */
     public ArrayList<User> getNonValidatedUsers() {
         return this.nonValidatedUsers;
     }
 
 
+    /**
+     * Establece el array de usuarios no validados
+     * 
+     * @param nonValidatedUsers array con usuarios que seran no validados
+     */
     public void setNonValidatedUsers(ArrayList<User> nonValidatedUsers) {
         this.nonValidatedUsers = nonValidatedUsers;
     }
 
+    /**
+     * Devuelve el array que contiene los distritos que han sido cargados de la lista de distritos
+     * 
+     * @return array de distritos
+     */
     public ArrayList<String> getDistricts(){
         return this.districts;
     }
 
-
+    /**
+     * Metodo para añadir un usuario al array de usuarios no validados
+     * 
+     * @param u usuario a añadir
+     */
     public void addNewUsers(User u) {
         this.nonValidatedUsers.add(u);
     }
 
+    /**
+     * Devuelve un array con todos los colectivos contenidos en la app
+     * 
+     * @return array con los colectivos
+     */
     public ArrayList<Collective> getCollectives() {
         return this.collectives;
     }
 
+    /**
+     * Establece un nuevo array de colectivos a la app
+     * 
+     * @param collectives array de colectivos 
+     */
     public void setCollectives(ArrayList<Collective> collectives) {
         this.collectives = collectives;
     }
 
+    /**
+     * Metodo para añadir un colectivo al array de la app
+     * 
+     * @param c colectivo a añadir
+     */
     public void addCollectives(Collective c) {
         this.collectives.add(c);
     }
 
+    /**
+     * Devuelve el array de proyectos validadados y que aun siguen activos, es decir, que aun son totalmente
+     * funcionales para los usuarios(votar, seguir).
+     * 
+     * @return array de proyectos activos
+     */
     public ArrayList<Project> getProjects() {
         return this.projects;
     }
 
+    /**
+     * Establece el array de proyectos activos de la app
+     * 
+     * @param projects array de proyectos 
+     */
     public void setProjects(ArrayList<Project> projects) {
         this.projects = projects;
     }
 
+    /**
+     * Metodo para añadir un proyecto al array de proyectos activos de la app
+     * 
+     * @param p proyecto a añadir
+     */
     public void addProject(Project p) {
         this.projects.add(p);
     }
 
+    /**
+     * Devuelve el array de proyectos por validar
+     * 
+     * @return array de proyectos aun por validar
+     */
     public ArrayList<Project> getNonValidatedProjects() {
         return this.nonValidatedProjects;
     }
 
+    /**
+     * Establece el array de proyectos aun sin validar
+     * 
+     * @param nonValidatedProjects array de proyectos
+     */
     public void setNonValidatedProjects(ArrayList<Project> nonValidatedProjects) {
         this.nonValidatedProjects = nonValidatedProjects;
     }
 
-
+    /**
+     * Devuelve el array de proyectos denegados, tanto aquellos que han caducado como los que no han sido financiados 
+     * 
+     * @return array de proyectos rechazados
+     */
     public ArrayList<Project> getRejectedProjects() {
         return this.rejectedProjects;
     }
 
+    /**
+     * Establece los proyectos rechazados
+     * 
+     * @param rejectedProjects array de proyectos
+     */
     public void setRejectedProjects(ArrayList<Project> rejectedProjects) {
         this.rejectedProjects = rejectedProjects;
     }
 
-
+    /**
+     * Metodo para añadir un nuevo proyecto al array de poryectos rechazados
+     * 
+     * @param p poryecto a añadir
+     */
     public void addNewProject(Project p) {
         this.nonValidatedProjects.add(p);
     }
 
-
+    /**
+     * Metodo para añadir un elemento al mapa de proyectos cuya financiacion sigue aun pendiente de resolucion.
+     * En este mapa, project sera la clave e id el valor asociado a la misma.
+     * 
+     * @param project proyecto enviado a financiacion
+     * @param id cadena de caracteres asociada a la peticion de financiacion concreta de este preoyecto
+     */
     public void addPendingFinance(Project project, String id){
         pendingFinance.put(project, id);
     }
@@ -278,7 +371,7 @@ public class Application implements Serializable{
     /**
      * Lee del archivo de texto "Distritos.txt" los distritos de Madrid y los guarda en un array
      * 
-     * @return
+     * @return array de string con todos los distritos leidos del fichero
      */
     public ArrayList<String> readDistricts(){
         districts = new ArrayList<String>();
@@ -615,6 +708,9 @@ public class Application implements Serializable{
 
     }
 
+    /**
+     * Comprueba actualizar el array de proyectos rechazados, aniadiendo los que hayan caducado
+     */
     public void checkExpired(){
         ArrayList<Project> newArray = new ArrayList<Project>();
     

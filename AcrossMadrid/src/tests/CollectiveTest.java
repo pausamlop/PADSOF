@@ -1,7 +1,9 @@
 package tests;
 
 import across.application.Application;
+import across.enumerations.projectState;
 import across.enumerations.typeSocial;
+import across.notification.*;
 import across.project.*;
 import across.user.*;
 
@@ -102,48 +104,23 @@ public class CollectiveTest {
 
 	@Test
 	public void testUpdateFamilyVotes() {
-        // se llama a updateFamilyVotes() tanto en block/unblock como en join/disjoin
-
         assertEquals(6, p1.getVotes());
-
         u5.block("Prueba de actualizacion de votos");
-        //c111.updateFamilyVotes(); 
-        assertEquals(5, p1.getVotes()); // menos 1 voto porque hay un usuario bloqueado
-
-        c12.disjoin(u3);
-        //c12.updateFamilyVotes();
-        assertEquals(5, p1.getVotes()); // mismos votos porque u3 es creador de proyecto
-
-        c111.disjoin(u4);
-        //c111.updateFamilyVotes();
-        assertEquals(4, p1.getVotes()); // menos 1 voto porque colectivo nieto de colectivo votante tiene 1 miembro menos
-
-        u5.unblock();
-        c12.join(u3);
-        c111.join(u4);
-        assertEquals(6, p1.getVotes());
+        c111.updateFamilyVotes(); 
+        assertEquals(5, p1.getVotes());
+        c11.disjoin(u2);
+        //c11.updateFamilyVotes();
+        //assertEquals(4, p1.getVotes());
 	}
 
 	@Test
 	public void testJoin() {
-        c1.join(u4); // pertenece a familia de c1
-        c1.join(u6); // pertenece a c1
-        assertFalse(c1.getMembers().contains(u4));
-
-        c12.join(u4);
-        assertTrue(c12.getMembers().contains(u4));
-        assertTrue(c111.getMembers().contains(u4));
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testDisjoin() {
-        Collective c1Pre = c1;
-        c1.disjoin(u5); // no pertenece a c1
-        c1.disjoin(u1); // es creador de c1
-        assertSame(c1Pre,c1);
-
-        c1.disjoin(u6);
-        assertFalse(c1.getMembers().contains(u6));
+		fail("Not yet implemented");
 	}
 
 }

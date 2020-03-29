@@ -15,11 +15,19 @@ public abstract class Notification implements Serializable{
 
     private String message;
 
-    /* GETTERS */
+    /**
+     * Devuelve el mensaje asociado a la notificacion 
+     * 
+     * @return mensaje de la notificacion
+     */
     public String getMessage() { return message; }
 
 
-    /* SETTERS */
+    /**
+     * Establece el mensaje de una notificacion
+     * 
+     * @param message cadena de caracteres 
+     */
 	public void setMessage(String message) { this.message = message; }
 
 

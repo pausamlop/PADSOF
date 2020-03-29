@@ -49,22 +49,89 @@ public class User extends UserCollective {
         this.blocked = false;
     }
 
-
-    /* GETTERS Y SETTERS */
-
+    /**
+     * Devuelve el nombre del usuario
+     * 
+     * @return nombre del usuario
+     */
     public String getUsername() { return this.username; }
+
+    /**
+     * Devuelve el NIF del usuario
+     * 
+     * @return NIF del usuario
+     */
     public String getNIF() { return this.NIF; }
+
+    /**
+     * Devuelve la contraseña del usuario
+     * 
+     * @return contraseña del usuario
+     */
     public String getPassword() { return this.password; }
+
+    /**
+     * Devuelve si el usuario esta en estado de bloqueado
+     * 
+     * @return true en caso de que este bloqueado, false en caso contrario
+     */
     public boolean getBlocked() { return this.blocked; }
+
+    /**
+     * Devuelve el mensaje de bloqueo del usuario, en caso de que este lo haya sido
+     * 
+     * @return mensaje de bloque, en caso de que lo haya
+     */
     public String getBlockedMssg() { return this.blockedMssg; }
+
+    /**
+     * Devuelve un array con todos lo colectivos creados por el usuario
+     * 
+     * @return array de colectivos creados
+     */
     public ArrayList<Collective> getCreatedCollectives() { return this.createdCollectives;}
+
+    /**
+     * Devuelve un array con todos los colectivos de los cuales el usuario es miembro
+     * 
+     * @return array de colectivos a los que se pertence
+     */
     public ArrayList<Collective> getMemberCollectives() { return this.memberCollectives;}
+
+    /**
+     * Devuelve un array con las notificaciones recibidas y aun no vistas por el usuario
+     * 
+     * @return array de notificaciones del usuario
+     */
     public ArrayList<Notification> getNotifications() { return this.notifications; }
+
+    /**
+     * Devuelve un array con los proyectos seguidos por el usuario
+     * 
+     * @return array de proyectos seguidos
+     */
     public ArrayList<Project> getFollowedProjects() { return this.followedProjects; }
 
 
+    /**
+     * Establece el array de colectivos creados por el usuario
+     * 
+     * @param createdCollectives array de colectivos
+     */
     public void setCreatedCollectives(ArrayList<Collective> createdCollectives) { this.createdCollectives = createdCollectives; }
+
+    /**
+     * Establece el array de colectivos de los que el usuario es miembro
+     * 
+     * @param memberCollectives array de colectivos
+     */
     public void setMemberCollectives(ArrayList<Collective> memberCollectives) { this.memberCollectives = memberCollectives; }
+
+    /**
+     * Establece el array de proyectos seguidos por el usuario
+     * 
+     * @param followedProjects array de proyectos
+     */
     public void setFollowedProjects(ArrayList<Project> followedProjects) { this.followedProjects = followedProjects; }
     
     /**
@@ -76,10 +143,8 @@ public class User extends UserCollective {
         this.notifications.add(notification);
     }
 
-    
-
 	/**
-     * Valida un usuario
+     * Metodo para validar un usuario
      */
     public void validate(){
         ArrayList<User> u1 = new ArrayList<User>();
@@ -96,7 +161,7 @@ public class User extends UserCollective {
     }
 
 	/**
-     * Rechaza un usuario
+     * Metodo para rechazar un usuario
      */
     public void reject(){
         ArrayList<User> u1 = new ArrayList<User>();
@@ -124,7 +189,7 @@ public class User extends UserCollective {
     }
 
 	/**
-     * Desbloquea a un usuario
+     * Metodo para desbloquear a un usuario
      */
     public void unblock(){ 
         blocked = false;
@@ -167,6 +232,9 @@ public class User extends UserCollective {
     /************ FUNCIONES AUXILIARES PARA PROBAR FUNCIONAMIENTO ***********/
     /************************************************************************/
 
+    /**
+     * Metodo con el menu del usuario logueado
+     */
     public void principalUser(){
         Application app = Application.getApplication();
         if (blocked){
@@ -251,6 +319,9 @@ public class User extends UserCollective {
     }
 
 
+    /**
+     * Metodo para mostrar por pantallas las notificaciones por pantalla
+     */
     private void displayNotifications(){
         System.out.println("\n ------------------- NOTIFICACIONES -------------------");
         
@@ -260,7 +331,11 @@ public class User extends UserCollective {
         notifications.clear();
     }
 
-
+    /**
+     * Metodo para mostrar proyectos por pantalla 
+     * 
+     * @param projects proyectos a mostrar por pantalla
+     */
     private void displayProjects(ArrayList<Project> projects){
         if (projects.size() == 0){
             System.out.println("No hay proyectos");
@@ -343,7 +418,11 @@ public class User extends UserCollective {
         }   
     }
 
-
+    /**
+     * Metodo para mostrar colectivos por pantalla
+     * 
+     * @param collectives colectivos a mostrar por pantalla
+     */
     private void displayCollectives(ArrayList<Collective> collectives){
         if (collectives.size() == 0){
             System.out.println("No hay colectivos");
@@ -389,6 +468,11 @@ public class User extends UserCollective {
         }
     }
 
+    /**
+     * Devuelve el output de una solicitud de un informe de popularidad relizada por el usuario
+     * 
+     * @return cadena de caracteres con el output a mostrar por pantalla
+     */
     private String popularityReport(){
         String output = Application.getApplication().popularityReport();
         if (output.length() == 0){
@@ -397,6 +481,11 @@ public class User extends UserCollective {
         return output;
     }
 
+    /**
+     * Devuelve el output de una solicitud de un informe de afinidad relizada por el usuario
+     * 
+     * @return cadena de caracteres con el output a mostrar por pantalla
+     */
     private String affinityReport(){
         String output = "";
 
@@ -435,7 +524,10 @@ public class User extends UserCollective {
         return output;
     }
 
-
+    /**
+     * Metodo para crear un colectivo a partir de los parametros que va introduciendo el usuario logueado
+     * por terminal
+     */
     private void createCollective(){
         System.out.println("Nombre del colectivo, descripcion, padre:");
 
@@ -480,7 +572,10 @@ public class User extends UserCollective {
 
     }
 
-
+    /**
+     * Metodo para crear un proyecto a partir de los parametros que va introduciendo el usuario
+     * por terminal
+     */
     private void createProject(){
         UserCollective creator;
         
@@ -546,7 +641,9 @@ public class User extends UserCollective {
         }
     }
 
-
+    /**
+     * Metodo para filtrar una busqueda de proyectos
+     */
     private void filterProject(){
     	Application app = Application.getApplication();
         System.out.println("Filtrar proyecto por estado (e), tipo social (ts) o infraestructura (ti)");
@@ -588,7 +685,9 @@ public class User extends UserCollective {
         }
     }
 
-
+    /**
+     * Metodo para enviar un proyecto a financiacion
+     */
     private void sendToFinance(){
         ArrayList<Project> toFinance = Application.getApplication().filterProject(projectState.VOTOSALCANZADOS);
         

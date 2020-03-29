@@ -25,7 +25,7 @@ public class NotificationUser extends Notification {
      * Constructor de la clase notificacion para usuario, para la notificacion
      * acerca del cambio de estado de proyectos
      * 
-     * @param project
+     * @param project proyecto del cual se notificara
      */
     public NotificationUser(Project p) { 
         receivers = new ArrayList<User>();
@@ -36,12 +36,32 @@ public class NotificationUser extends Notification {
     }
 
 
-    /* GETTERS */
+    /**
+     * Devuelve el proyecto asociado a la notificacion
+     * 
+     * @return proyecto del que se notifica
+     */
     public Project getProject() { return project; }
+
+    /**
+     * Devuelve el array de usuarios que reciviran esta notificacion
+     * 
+     * @return array de usuarios notificados
+     */
     public ArrayList<User> getReceivers() { return receivers; }
 
-    /* SETTERS */
-	public void setProject(Project p) { this.project = p; }
+    /**
+     * Establece el proyecto del que se notifica
+     * 
+     * @param p proyecto 
+     */
+    public void setProject(Project p) { this.project = p; }
+    
+    /**
+     * Establece el array de usuarios que recibiran la notificacion
+     * 
+     * @param receivers array de usuarios
+     */
     public void setReceivers(ArrayList<User> receivers) { this.receivers = receivers; }
 
 
