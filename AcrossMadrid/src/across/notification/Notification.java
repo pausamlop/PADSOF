@@ -1,12 +1,6 @@
 package across.notification;
 
-import across.project.*;
-import across.user.*;
-import across.enumerations.*;
-import across.application.Application;
-
 import java.io.*;
-import java.util.*;
 
 /**
  * Clase abstracta Notification

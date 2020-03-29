@@ -308,6 +308,9 @@ public class Application implements Serializable{
      */
     public boolean register(String username, String NIF, String password){
 
+        //comprobar que username o NIF no estan vacios
+        if (username.isBlank() || NIF.isBlank()) return false; 
+
         //comprobar que el username y el NIF no existen
         for (User u: users) {
             if (username.equals(u.getUsername()) || NIF.equals(u.getNIF())) return false;
@@ -656,7 +659,7 @@ public class Application implements Serializable{
                 String password = reader.readLine();
                 //reader.close();
                 if(!register(username, NIF, password)){
-                    System.out.println("El nombre de usuario o NIF ya han sido registrados");
+                    System.out.println("El nombre de usuario o NIF no son validos o ya han sido registrados");
                 }
             }
             else if(opc.equals("2")) {

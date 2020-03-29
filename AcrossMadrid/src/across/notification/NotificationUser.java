@@ -3,9 +3,7 @@ package across.notification;
 import across.project.*;
 import across.user.*;
 import across.enumerations.*;
-import across.application.Application;
 
-import java.io.*;
 import java.util.*;
 
 /**
@@ -17,7 +15,7 @@ import java.util.*;
  *
  */
 
-public class NotificationUser extends Notification implements Serializable{
+public class NotificationUser extends Notification {
 
     private Project project;
     private ArrayList<User> receivers;
@@ -62,7 +60,7 @@ public class NotificationUser extends Notification implements Serializable{
                 break;
                 
             case VOTOSALCANZADOS:
-                message = "El proyecto:" + this.project.getName() +  ", ha alcanzado el numero minimo de votos, podra proceder a enviarlo para su financiación cuando vea oportuno";
+                message = "El proyecto:" + this.project.getName() +  ", ha alcanzado el numero minimo de votos, su creador podra proceder a enviarlo para su financiación cuando vea oportuno";
                 break;
                 
             case ENVIADO:

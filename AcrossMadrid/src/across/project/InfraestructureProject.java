@@ -1,12 +1,7 @@
 package across.project;
 
-import across.enumerations.*;
-import across.admin.*;
 import across.notification.*;
-import across.project.*;
 import across.user.*;
-
-import java.io.*;
 
 
 /**
@@ -17,7 +12,7 @@ import java.io.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-public class InfraestructureProject extends Project implements Serializable{
+public class InfraestructureProject extends Project {
     private String image;
     private String district;
 

@@ -1,12 +1,9 @@
 package across.user;
 
-import java.util.ArrayList;
-
 import across.application.*;
 import across.project.*;
 
-import java.io.*;
-
+import java.util.ArrayList;
 
 /**
  * Clase abstracta Collective que hereda de de UserCollective
@@ -17,7 +14,7 @@ import java.io.*;
  *
  */
 
-public class Collective extends UserCollective implements Serializable { // add extedns UserCollective
+public class Collective extends UserCollective { 
 
     private String name;
     private String description;

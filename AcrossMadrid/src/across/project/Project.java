@@ -112,14 +112,15 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
     public boolean isExpired(){ 
         int maxDays = Application.getApplication().getDaysExpiration();
-        long diff = DAYS.between(LocalDate.now(), lastVote);
+        long diff = DAYS.between(lastVote, LocalDate.now());
 
-        if(maxDays <= diff){
-            setProjectState(projectState.CADUCADO); 
-            return true;
+        if (state == projectState.ACEPTADO || state == projectState.VOTOSALCANZADOS){
+            if(maxDays <= diff){
+                setProjectState(projectState.CADUCADO); 
+                return true;
+            }
         }
-
-        else{ return false; }
+        return false;
     }
 
     /**
@@ -282,6 +283,9 @@ public abstract class Project implements Serializable, Comparable<Project>{
      * @param uc usercollective
      */
     public void vote (UserCollective uc){
+
+        //comprobar que no esta caducado o ya ha sido financiado
+        if (state == projectState.CADUCADO || state == projectState.FINANCIADO) return;
 
         // Comprobar si ha votado ya
         if (voters.contains(uc)) return;

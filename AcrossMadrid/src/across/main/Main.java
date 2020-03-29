@@ -1,13 +1,9 @@
 package across.main;
 
-import java.util.*;
 import java.io.*;
 import java.time.LocalDate;
 
 import across.application.*;
-import across.enumerations.*;
-import across.project.*;
-import across.user.*;
 
 /**
  * Clase Main

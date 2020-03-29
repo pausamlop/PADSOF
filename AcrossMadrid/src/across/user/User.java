@@ -17,7 +17,7 @@ import across.notification.*;
  *
  */
 
-public class User extends UserCollective implements Serializable {
+public class User extends UserCollective {
 
     private String username;
     private String NIF;

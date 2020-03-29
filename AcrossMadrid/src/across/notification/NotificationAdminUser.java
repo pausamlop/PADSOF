@@ -1,12 +1,8 @@
 package across.notification;
 
-import across.project.*;
 import across.user.*;
-import across.enumerations.*;
 import across.application.Application;
 
-import java.io.*;
-import java.util.*;
 
 /**
  * Clase NotificationAdminUser que hereda de Notification
@@ -17,7 +13,7 @@ import java.util.*;
  *
  */
 
-public class NotificationAdminUser extends Notification implements Serializable{
+public class NotificationAdminUser extends Notification {
 
     private User user;
 

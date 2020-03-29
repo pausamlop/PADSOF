@@ -4,7 +4,6 @@ import across.enumerations.*;
 import across.notification.*;
 import across.user.*;
 
-import java.io.*;
 
 /**
  * Clase SocialProject que hereda de Project
@@ -14,7 +13,7 @@ import java.io.*;
  * @author Paula Samlop paula.samper@estudiante.uam.es
  *
  */
-public class SocialProject extends Project implements Serializable{
+public class SocialProject extends Project {
     private String group;
     private typeSocial type;
 
