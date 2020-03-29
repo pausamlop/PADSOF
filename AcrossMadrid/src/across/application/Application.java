@@ -319,7 +319,7 @@ public class Application implements Serializable{
             if (username.equals(u.getUsername()) || NIF.equals(u.getNIF())) return false;
         }
 
-        User u = new User(username, NIF, password, false);
+        User u = new User(username, NIF, password);
         nonValidatedUsers.add(u);
 
         // mandar a validar al admin

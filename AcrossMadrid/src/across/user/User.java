@@ -42,11 +42,11 @@ public class User extends UserCollective {
 	 * @param notifications notificaciones del usuario
 	 * @param followedProjects proyectos seguidos por el usuario
      */
-    public User(String username, String NIF, String password, boolean blocked) {
+    public User(String username, String NIF, String password) {
         this.username = username;
         this.NIF = NIF;
         this.password = password;
-        this.blocked = blocked;
+        this.blocked = false;
     }
 
 
@@ -63,14 +63,8 @@ public class User extends UserCollective {
     public ArrayList<Project> getFollowedProjects() { return this.followedProjects; }
 
 
-    public void setUsername(String username) { this.username = username; }
-    public void setNIF(String NIF) { this.NIF = NIF; }
-    public void setPassword(String password) { this.password = password; }
-    public void setBlocked(boolean blocked) { this.blocked = blocked; }
-    public void setBlockedMssg(String blockedMssg) { this.blockedMssg = blockedMssg; }
     public void setCreatedCollectives(ArrayList<Collective> createdCollectives) { this.createdCollectives = createdCollectives; }
     public void setMemberCollectives(ArrayList<Collective> memberCollectives) { this.memberCollectives = memberCollectives; }
-    public void setNotifications(ArrayList<Notification> notifications) { this.notifications = notifications; }
     public void setFollowedProjects(ArrayList<Project> followedProjects) { this.followedProjects = followedProjects; }
 
 
