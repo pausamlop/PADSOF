@@ -66,7 +66,17 @@ public class User extends UserCollective {
     public void setCreatedCollectives(ArrayList<Collective> createdCollectives) { this.createdCollectives = createdCollectives; }
     public void setMemberCollectives(ArrayList<Collective> memberCollectives) { this.memberCollectives = memberCollectives; }
     public void setFollowedProjects(ArrayList<Project> followedProjects) { this.followedProjects = followedProjects; }
+    
+    /**
+     * Añade una notificacion la lista de notificaciones del usuario
+     * 
+     * @param notification
+     */
+    public void addNotification(Notification notification){
+        this.notifications.add(notification);
+    }
 
+    
 
 	/**
      * Valida un usuario
@@ -94,25 +104,6 @@ public class User extends UserCollective {
         u1.remove(this);
 
         Application.getApplication().setNonValidatedUsers(u1);
-    }
-
-    /**
-     * Añade una notificacion la lista de notificaciones del usuario
-     * 
-     * @param notification
-     */
-    public void addNotification(Notification notification){
-        this.notifications.add(notification);
-    }
-
-    /**
-     * Nos permite acceder al mensaje asociado a la notificacion
-     * 
-     * @param notification
-     * @return mensaje de la notificacion
-     */
-    public String getNotificationMessage(Notification notification){
-        return notification.getMessage();
     }
 
 	/**
