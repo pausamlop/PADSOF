@@ -156,7 +156,8 @@ public class Admin implements Serializable {
                     ((NotificationAdminUser) notif).getUser().reject();
             }
             else{ //notificacion de proyecto
-                System.out.println("Validar (v) o rechazar (r) proyecto: ");
+                System.out.println(((NotificationAdminProject) notif).getProject());
+                System.out.println("\nValidar (v) o rechazar (r) proyecto: ");
                 opc2 = reader1.readLine();
                 if (opc2.equals("v"))
                     ((NotificationAdminProject) notif).getProject().validate();
