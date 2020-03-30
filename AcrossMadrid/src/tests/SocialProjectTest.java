@@ -2,18 +2,13 @@ package tests;
 
 import across.application.Application;
 import across.enumerations.*;
-import across.notification.*;
 import across.project.*;
 import across.user.*;
 
 import static org.junit.Assert.*;
 
-import es.uam.eps.sadp.grants.*;
 
-import java.util.*;
-import java.io.*;
 import java.time.*;
-import static java.time.temporal.ChronoUnit.DAYS;
 
 import org.junit.Before;
 import org.junit.Test;

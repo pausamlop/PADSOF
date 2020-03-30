@@ -1,3 +1,5 @@
+package tests;
+
 import static org.junit.Assert.*;
 
 import across.application.*;
