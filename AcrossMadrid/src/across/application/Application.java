@@ -229,6 +229,15 @@ public class Application implements Serializable{
     public void setNonValidatedUsers(ArrayList<User> nonValidatedUsers) {
         this.nonValidatedUsers = nonValidatedUsers;
     }
+    
+    /**
+     * Metodo para añadir un usuario al array de usuarios no validados
+     * 
+     * @param usuario a añadir
+     */
+    public void addNonValidatedUsers(User u) {
+    	this.nonValidatedUsers.add(u);
+    }
 
     /**
      * Devuelve el array que contiene los distritos que han sido cargados de la lista de distritos
@@ -402,7 +411,7 @@ public class Application implements Serializable{
     public boolean register(String username, String NIF, String password){
 
         //comprobar que username o NIF no estan vacios
-        if (username.isBlank() || NIF.isBlank()) return false; 
+        if (username.trim().length() == 0 || NIF.trim().length() == 0) return false; 
 
         //comprobar que el username y el NIF no existen
         for (User u: users) {
@@ -448,7 +457,7 @@ public class Application implements Serializable{
     }
 
     /**
-     * Filtra un proyecto social por su estado
+     * Filtra un proyecto por su estado
      * 
      * @param type tipo de proyecto social
      * @param group Grupo social al que va dirigido
