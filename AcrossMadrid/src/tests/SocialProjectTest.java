@@ -2,13 +2,18 @@ package tests;
 
 import across.application.Application;
 import across.enumerations.*;
+import across.notification.*;
 import across.project.*;
 import across.user.*;
 
 import static org.junit.Assert.*;
 
+import es.uam.eps.sadp.grants.*;
 
+import java.util.*;
+import java.io.*;
 import java.time.*;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -268,7 +273,7 @@ public class SocialProjectTest {
 		p2.setVotes(Application.getApplication().getMinVotes() + 1);
 		assertTrue(p2.sendToFinance());
 		
-		//assertEquals(1, Application.getApplication().getPendingFinance().size());
+		assertEquals(1, Application.getApplication().getPendingFinance().size());
 		assertEquals(projectState.ENVIADO, p2.getProjectState());
 		
 		
@@ -293,9 +298,16 @@ public class SocialProjectTest {
 	
 	@Test
 	public void testFinanced() {
-		///???????
+		Application app = Application.getApplication();
+		p2.setVotes(app.getMinVotes() + 1);
+		p2.sendToFinance();
 		
-
+		LocalDate date = LocalDate.now();
+		date = date.plusDays(8);
+		app.setCCGGDate(date);
+		
+		assertNotNull(p2.financed(app.getPendingFinance().get(p2)));
+		
 		
 	}
 	
