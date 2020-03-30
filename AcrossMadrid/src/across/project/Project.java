@@ -371,6 +371,7 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
         // Si vota como usuario
         if (uc.getClass().equals(User.class)) {
+	    if(((User)uc).getBlocked()) return;
 
             // Añadir el usuario a voters
             voters.add(uc);
