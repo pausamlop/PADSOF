@@ -14,63 +14,22 @@ import across.application.*;
  *
  */
 public class Main{
-
-    /**
-     * Guarda el objecto Application pasado como parametro  
-     * 
-     * @param app aplicacion que se quiere guardar
-     */
-    public static void saveData(Application app){
-        try{
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("app.objectData"));
-            output.writeObject(app);
-            output.close();
-            System.out.println("La aplicacion se ha guardado con exito");
-        }catch(IOException ioException){
-            ioException.printStackTrace();
-        }
-    }
-
-    /**
-     * Carga la informacion de un objeto Application guardada anteriormente en un archivo
-     * 
-     * @return Application con la informacion del archivo
-     */
-    public static Application loadData(){
-        Application app = null;
-        try{
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream("app.objectData"));
-            app = (Application)input.readObject();
-            input.close();
-        }catch(FileNotFoundException exc) {
-        	app = Application.getApplication();
-        }catch(IOException | ClassNotFoundException exc){
-            exc.printStackTrace();
-        }
-        return app;
-    }
-
-
-    
+  
     /**
      * Funcion principal de la aplicacion Across Madrid
      * 
      */
     public static void main(String[] args) {
-        Application.setApplication(loadData());
+        Application.setApplication(Application.loadData());
         Application app = Application.getApplication();
         app.setLogOut(false);
 
         System.out.println(" ------------------------------------------------------");
         System.out.println(" ------------- BIENVENIDO A ACROSS MADRID -------------");
-        System.out.println(" ------------------------------------------------------");
-
-        LocalDate date = LocalDate.now();
-        date = date.plusDays(8);
-        app.setCCGGDate(date);
+        System.out.println(" ------------------------------------------------------");  
     
         while (true){
-            // comprobaciones constantes
+            
             app.checkFinance();
             app.checkExpired();
 
@@ -81,7 +40,7 @@ public class Main{
             }
             app.pantallaPrincipal();
             app.setLogOut(false);
-            saveData(app);
+            Application.saveData(app);
         }
 
         

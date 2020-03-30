@@ -468,9 +468,12 @@ public abstract class Project implements Serializable, Comparable<Project>{
     	try {
             finance = CCGG.getGateway().getAmountGranted(id);
 			return finance;
-		} catch (IOException | InvalidIDException e) {
-            e.printStackTrace();
-            return (double) -1;
+		} catch (InvalidIDException e1) {
+            e1.printStackTrace();
+            return null;
+        } catch (IOException e2){
+            System.out.println("Fallo de comunicacion con el Ayuntamiento");
+            return null;
         }
         
     }

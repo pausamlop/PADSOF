@@ -231,9 +231,9 @@ public class Application implements Serializable{
     }
     
     /**
-     * Metodo para añadir un usuario al array de usuarios no validados
+     * Metodo para aï¿½adir un usuario al array de usuarios no validados
      * 
-     * @param usuario a añadir
+     * @param usuario a aï¿½adir
      */
     public void addNonValidatedUsers(User u) {
     	this.nonValidatedUsers.add(u);
@@ -385,7 +385,7 @@ public class Application implements Serializable{
     public ArrayList<String> readDistricts(){
         districts = new ArrayList<String>();
         try {
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("Distritos.txt")));
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream("txt/Distritos.txt")));
             String line;
             while((line = buffer.readLine()) != null){
                 districts.add(line);
@@ -733,7 +733,40 @@ public class Application implements Serializable{
         projects = newArray;
     }
 
+    /**
+     * Guarda el objecto Application pasado como parametro  
+     * 
+     * @param app aplicacion que se quiere guardar
+     */
+    public static void saveData(Application app){
+        try{
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("app.objectData"));
+            output.writeObject(app);
+            output.close();
+            System.out.println("La aplicacion se ha guardado con exito");
+        }catch(IOException ioException){
+            ioException.printStackTrace();
+        }
+    }
 
+    /**
+     * Carga la informacion de un objeto Application guardada anteriormente en un archivo
+     * 
+     * @return Application con la informacion del archivo
+     */
+    public static Application loadData(){
+        Application app = null;
+        try{
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream("app.objectData"));
+            app = (Application)input.readObject();
+            input.close();
+        }catch(FileNotFoundException exc) {
+        	app = Application.getApplication();
+        }catch(IOException | ClassNotFoundException exc){
+            exc.printStackTrace();
+        }
+        return app;
+    }
 
 
 
