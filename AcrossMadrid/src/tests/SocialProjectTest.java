@@ -2,18 +2,12 @@ package tests;
 
 import across.application.Application;
 import across.enumerations.*;
-import across.notification.*;
 import across.project.*;
 import across.user.*;
 
 import static org.junit.Assert.*;
 
-import es.uam.eps.sadp.grants.*;
-
-import java.util.*;
-import java.io.*;
 import java.time.*;
-import static java.time.temporal.ChronoUnit.DAYS;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -126,15 +120,16 @@ public class SocialProjectTest {
 	@Test
 	public void testValidate() {
 		
-		SocialProject p = new SocialProject("Project", "Descripcion", 40000, "Grupo", typeSocial.NACIONAL, user1);
+		SocialProject proyecto1 = new SocialProject("Project", "Descripcion", 40000, "Grupo", typeSocial.NACIONAL, user1);
+		assertFalse(Application.getApplication().getProjects().contains(proyecto1));
 		
-		p.validate();
+		proyecto1.validate();
 		
-        assertEquals(4, Application.getApplication().getProjects().size());
-        assertEquals(0, Application.getApplication().getNonValidatedProjects().size());
-        assertEquals(3, user1.getCreatedProjects().size());
-        assertEquals(projectState.ACEPTADO, p.getProjectState());
-        assertEquals(1, p.getVotes());
+		assertTrue(Application.getApplication().getProjects().contains(proyecto1));
+		assertEquals(0, Application.getApplication().getNonValidatedProjects().size());
+		assertEquals(3, user1.getCreatedProjects().size());
+		assertEquals(projectState.ACEPTADO, proyecto1.getProjectState());
+		assertEquals(1, proyecto1.getVotes());
 
 	}
 
@@ -157,15 +152,16 @@ public class SocialProjectTest {
 	
 	@Test
 	public void testReject() {
-		SocialProject p = new SocialProject("Project", "Descripcion", 40000, "Grupo", typeSocial.NACIONAL, user1);
+		SocialProject proj = new SocialProject("Project", "Descripcion", 40000, "Grupo", typeSocial.NACIONAL, user1);
+        
+        assertTrue(Application.getApplication().getNonValidatedProjects().contains(proj));
+        proj.reject();
+        assertFalse(Application.getApplication().getNonValidatedProjects().contains(proj));
 		
-		p.reject();
-		
-        assertEquals(3, Application.getApplication().getProjects().size());
         assertEquals(0, Application.getApplication().getNonValidatedProjects().size());
         assertEquals(2, user1.getCreatedProjects().size());
         assertEquals(1, Application.getApplication().getRejectedProjects().size());
-        assertEquals(projectState.RECHAZADO, p.getProjectState());
+        assertEquals(projectState.RECHAZADO, proj.getProjectState());
  
 		
 	}
@@ -301,14 +297,9 @@ public class SocialProjectTest {
 		Application app = Application.getApplication();
 		p2.setVotes(app.getMinVotes() + 1);
 		p2.sendToFinance();
-		
-		LocalDate date = LocalDate.now();
-		date = date.plusDays(8);
-		app.setCCGGDate(date);
-		
-		assertNotNull(p2.financed(app.getPendingFinance().get(p2)));
-		
-		
+        
+        assertNull(p2.financed(app.getPendingFinance().get(p2)));
+        
 	}
 	
 

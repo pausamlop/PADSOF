@@ -2,22 +2,16 @@ package tests;
 
 import across.application.Application;
 import across.enumerations.*;
-import across.notification.*;
 import across.project.*;
 import across.user.*;
 
 import static org.junit.Assert.*;
 
-import es.uam.eps.sadp.grants.*;
 
-import java.util.*;
-import java.io.*;
 import java.time.*;
-import static java.time.temporal.ChronoUnit.DAYS;
 
 import org.junit.Before;
 import org.junit.Test;
-
 
 
 
@@ -89,9 +83,6 @@ public class InfraestructureProjectTest {
 		
 		//Enviar notificacion
 		assertEquals(1, user1.getNotifications().size());
-		
-		
-		
 	}
 		
 	
@@ -126,10 +117,11 @@ public class InfraestructureProjectTest {
 	public void testValidate() {
 		
 		SocialProject p = new SocialProject("Project", "Descripcion", 40000, "Grupo", typeSocial.NACIONAL, user1);
+		assertFalse(Application.getApplication().getProjects().contains(p));
 		
 		p.validate();
 		
-        assertEquals(4, Application.getApplication().getProjects().size());
+        assertTrue(Application.getApplication().getProjects().contains(p));
         assertEquals(0, Application.getApplication().getNonValidatedProjects().size());
         assertEquals(3, user1.getCreatedProjects().size());
         assertEquals(projectState.ACEPTADO, p.getProjectState());
@@ -156,16 +148,15 @@ public class InfraestructureProjectTest {
 	
 	@Test
 	public void testReject() {
-		SocialProject p = new SocialProject("Project", "Descripcion", 40000, "Grupo", typeSocial.NACIONAL, user1);
-		
-		p.reject();
-		
-        assertEquals(3, Application.getApplication().getProjects().size());
-        assertEquals(0, Application.getApplication().getNonValidatedProjects().size());
+		InfraestructureProject proj = new InfraestructureProject("PROYECTO", "Descripcion", 40000, "iamge.jpg", "Centro",user1);
+        
+        assertTrue(Application.getApplication().getNonValidatedProjects().contains(proj));
+		proj.reject();
+		assertFalse(Application.getApplication().getNonValidatedProjects().contains(proj));
+		assertEquals(0, Application.getApplication().getNonValidatedProjects().size());
         assertEquals(2, user1.getCreatedProjects().size());
         assertEquals(1, Application.getApplication().getRejectedProjects().size());
-        assertEquals(projectState.RECHAZADO, p.getProjectState());
- 
+        assertEquals(projectState.RECHAZADO, proj.getProjectState());
 		
 	}
 
@@ -282,14 +273,16 @@ public class InfraestructureProjectTest {
 	
 	@Test
 	public void testIsExpired() {
+		SocialProject p = new SocialProject("Project", "Descripcion", 40000, "Grupo", typeSocial.NACIONAL, user1);
+		p.validate();
 
-		p1.setLastVote(LocalDate.of(2018, 10, 30));
+		p.setLastVote(LocalDate.of(2018, 10, 30));
 		p2.setLastVote(LocalDate.now());
 		
-		assertTrue(p1.isExpired());
+		assertTrue(p.isExpired());
 		assertFalse(p2.isExpired());
 		
-		assertEquals(projectState.CADUCADO, p1.getProjectState());
+		assertEquals(projectState.CADUCADO, p.getProjectState());
 		assertEquals(projectState.ACEPTADO, p2.getProjectState());
 		
 	}
@@ -300,13 +293,9 @@ public class InfraestructureProjectTest {
 		Application app = Application.getApplication();
 		p2.setVotes(app.getMinVotes() + 1);
 		p2.sendToFinance();
-		
-		LocalDate date = LocalDate.now();
-		date = date.plusDays(8);
-		app.setCCGGDate(date);
-		
-		assertNotNull(p2.financed(app.getPendingFinance().get(p2)));
-		
+        
+        assertNull(p2.financed(app.getPendingFinance().get(p2)));
+
 		
 	}
 	

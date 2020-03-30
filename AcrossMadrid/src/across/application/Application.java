@@ -11,7 +11,6 @@ import es.uam.eps.sadp.grants.*;
 import java.util.*;
 import java.io.*;
 import java.time.*;
-import java.lang.Integer;
 
 
 /**
@@ -182,17 +181,6 @@ public class Application implements Serializable{
     public void setLogOut(boolean lo){
         this.logOut = lo;
     }
-    
-    /**
-     * Devuelve los proyectos que esperan una respuesta
-     * del ayuntamiento, con su id de la solicitud
-     *
-     * @return hashmap de los proyectos con su id 
-     */
-    public HashMap<Project, String> getPendingFinance(){
-    	return this.pendingFinance;
-    }
-
 
     /**
      * Devuelve un array con todos los usualrios validados que contiene la aplicacion
@@ -385,6 +373,14 @@ public class Application implements Serializable{
      */
     public void setCCGGDate(LocalDate date) {
     	CCGG.getGateway().setDate(date);
+    }
+    /**
+     * Devuelve el mapa de los proyectos, y los ids asociados a los mismo, pendientes de financiacion
+     * 
+     * @return mapa de proyectos pendientes
+     */
+    public HashMap<Project, String> getPendingFinance(){
+    	return pendingFinance;
     }
     
     /**
@@ -611,7 +607,7 @@ public class Application implements Serializable{
             return null;
         }
 
-        HashMap<Collective, Integer> notSorted= new HashMap<Collective, Integer>();
+        HashMap<Collective, Double> notSorted= new HashMap<Collective, Double>();
 
         for (Collective col: collectives){
             if (c.equals(col)) {
@@ -629,25 +625,27 @@ public class Application implements Serializable{
                 p3.addAll(c.getVotedProjects());
                 p3.addAll(col.getVotedProjects());
 
-                int tasa = 0;
+                double tasa = 0;
                 if (p3.size() == 0) tasa = 0;
-                else tasa = (p1.size() + p2.size())/p3.size();
+                else tasa = (double)(p1.size() + p2.size())/(double)p3.size();
                 notSorted.put(col, tasa);
 
             }
         }
 
-        LinkedHashMap<Collective, Integer> output = sortCollectives(notSorted);
+        LinkedHashMap<Collective, Double> output = sortCollectives(notSorted);
 
         // Pasar a string
 
         String result = "";
+
         int count = 1;
 
         for (Collective colec : output.keySet()) {
-            result = count + ". " + colec.getName() + ", " + output.get(colec) + "\n" + result;
+            result += count + ". " + colec.getName() + ", " + output.get(colec) + "\n" ;
             count ++;
           }
+
         return result;
 
     }
@@ -658,23 +656,23 @@ public class Application implements Serializable{
      * @param input HashMap a ordenar
      * @return HashMap con mismo contenido que input pero ordenado
      */
-    private LinkedHashMap<Collective,Integer> sortCollectives (HashMap<Collective, Integer> input){
+    private LinkedHashMap<Collective,Double> sortCollectives (HashMap<Collective, Double> input){
         List<Collective> mapKeys = new ArrayList<>(input.keySet());
-        List<Integer> mapValues = new ArrayList<>(input.values());
+        List<Double> mapValues = new ArrayList<>(input.values());
         //Collections.sort(mapValues);
         //Collections.sort(mapKeys);
 
-        LinkedHashMap<Collective, Integer> sortedMap = new LinkedHashMap<>();
+        LinkedHashMap<Collective, Double> sortedMap = new LinkedHashMap<>();
 
-        Iterator<Integer> valueIt = mapValues.iterator();
+        Iterator<Double> valueIt = mapValues.iterator();
         while (valueIt.hasNext()) {
-            Integer val = valueIt.next();
+            Double val = valueIt.next();
             Iterator<Collective> keyIt = mapKeys.iterator();
 
             while (keyIt.hasNext()) {
                 Collective key = keyIt.next();
-                Integer comp1 = input.get(key);
-                Integer comp2 = val;
+                Double comp1 = input.get(key);
+                Double comp2 = val;
 
                 if (comp1.equals(comp2)) {
                     keyIt.remove();
