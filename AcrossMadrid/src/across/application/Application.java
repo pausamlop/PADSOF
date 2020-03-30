@@ -182,6 +182,16 @@ public class Application implements Serializable{
     public void setLogOut(boolean lo){
         this.logOut = lo;
     }
+    
+    /**
+     * Devuelve los proyectos que esperan una respuesta
+     * del ayuntamiento, con su id de la solicitud
+     *
+     * @return hashmap de los proyectos con su id 
+     */
+    public HashMap<Project, String> getPendingFinance(){
+    	return this.pendingFinance;
+    }
 
 
     /**
