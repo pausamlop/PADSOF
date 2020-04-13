@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import across.notification.NotificationUser;
-import across.project.InfraestructureProject;
-import across.user.User;
+import across.model.notification.NotificationUser;
+import across.model.project.InfraestructureProject;
+import across.model.user.User;
 
 public class NotificationUserTest {
 	

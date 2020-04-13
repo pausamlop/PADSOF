@@ -1,9 +1,9 @@
 package tests;
 
-import across.application.Application;
-import across.enumerations.*;
-import across.project.*;
-import across.user.*;
+import across.model.application.Application;
+import across.model.enumerations.*;
+import across.model.project.*;
+import across.model.user.*;
 
 import static org.junit.Assert.*;
 

@@ -1,11 +1,11 @@
 package tests;
 
-import across.application.Application;
-import across.enumerations.projectState;
-import across.enumerations.typeSocial;
-import across.notification.*;
-import across.project.*;
-import across.user.*;
+import across.model.application.Application;
+import across.model.enumerations.projectState;
+import across.model.enumerations.typeSocial;
+import across.model.notification.*;
+import across.model.project.*;
+import across.model.user.*;
 
 import static org.junit.Assert.*;
 

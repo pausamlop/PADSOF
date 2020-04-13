@@ -1,7 +1,7 @@
 package tests;
 
-import across.application.*;
-import across.admin.*;
+import across.model.application.*;
+import across.model.admin.*;
 
 import static org.junit.Assert.*;
 

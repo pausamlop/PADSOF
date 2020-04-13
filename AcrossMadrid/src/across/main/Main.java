@@ -1,7 +1,7 @@
 package across.main;
 
 
-import across.application.*;
+import across.model.application.*;
 
 /**
  * Clase Main

@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 
-import across.application.*;
-import across.enumerations.typeSocial;
-import across.project.*;
-import across.user.Collective;
-import across.user.User;
+import across.model.application.*;
+import across.model.enumerations.typeSocial;
+import across.model.project.*;
+import across.model.user.Collective;
+import across.model.user.User;
 
 import org.junit.Test;
 

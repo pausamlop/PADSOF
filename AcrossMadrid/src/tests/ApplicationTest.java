@@ -4,12 +4,12 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 
-import across.application.*;
-import across.enumerations.projectState;
-import across.enumerations.typeSocial;
-import across.project.InfraestructureProject;
-import across.project.SocialProject;
-import across.user.*;
+import across.model.application.*;
+import across.model.enumerations.projectState;
+import across.model.enumerations.typeSocial;
+import across.model.project.InfraestructureProject;
+import across.model.project.SocialProject;
+import across.model.user.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -148,10 +148,10 @@ public class ApplicationTest {
 
       @Test
  	public void testSaveData() {
-         File before = new File("app.objectData");
+         File before = new File("data/app.objectData");
          Application.saveData(Application.getApplication());
 
-          File after = new File("app.objectData");
+          File after = new File("data/app.objectData");
          assertNotSame(before, after);
  	}
 

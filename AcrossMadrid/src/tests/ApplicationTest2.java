@@ -6,9 +6,9 @@ import org.junit.Before;
 
 import java.time.*;
 
-import across.application.*;
-import across.project.*;
-import across.user.User;
+import across.model.application.*;
+import across.model.project.*;
+import across.model.user.User;
 
 import org.junit.Test;
 

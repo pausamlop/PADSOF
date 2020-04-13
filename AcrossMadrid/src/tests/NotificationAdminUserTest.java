@@ -1,8 +1,8 @@
 package tests;
 
-import across.application.Application;
-import across.notification.*;
-import across.user.*;
+import across.model.application.Application;
+import across.model.notification.*;
+import across.model.user.*;
 
 import static org.junit.Assert.*;
 
