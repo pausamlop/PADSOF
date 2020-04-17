@@ -29,6 +29,8 @@ public class PanelLogin extends JPanel {
         centro.add(passwordLabel);
         centro.add(password);
 
+        setControlCheckAdmin();
+
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, title, 0, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, desc, 0, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, centro, -30, SpringLayout.HORIZONTAL_CENTER, this);
@@ -61,8 +63,17 @@ public class PanelLogin extends JPanel {
         return checkAdmin.isSelected();
     }
 
-    public void setControlCheckAdmin(ActionListener c){
-        checkAdmin.addActionListener(c);
+    public void setControlCheckAdmin(){
+        checkAdmin.addActionListener(e -> {
+            if(isAdmin()){
+                username.setText("administrador");
+                username.setEnabled(false);
+            }
+            else{
+                username.setText("");
+                username.setEnabled(true);
+            }
+        });
     }
 
     public void setControlContinuar(ActionListener c){

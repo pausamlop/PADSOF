@@ -8,6 +8,7 @@ public class Controlador {
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
     private ControladorLogin login;
+    private ControladorRegistro reg;
 
     private MainFrame frame;
     private Application model;
@@ -22,6 +23,7 @@ public class Controlador {
         inicioRegistro = new ControladorInicioRegistro(frame, model);
         inicioLogin = new ControladorInicioLogin(frame, model);
         login = new ControladorLogin(frame, model);
+        reg = new ControladorRegistro(frame, model);
     }
 
     public ControladorInicioRegistro getInicioRegistro(){
@@ -35,5 +37,11 @@ public class Controlador {
     public ControladorLogin getLogin(){
         return this.login;
     }
+    
+    public ControladorRegistro getRegistro(){
+        return this.reg;
+    }
+    
+    
 
 }

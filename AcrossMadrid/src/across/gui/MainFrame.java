@@ -25,6 +25,7 @@ public class MainFrame extends JFrame{
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
     private ControladorLogin contLogin;
+    private ControladorRegistro contRegistro;
 
     private JPanel contentPane;
 
@@ -80,7 +81,7 @@ public class MainFrame extends JFrame{
     public void setControlador(Controlador controlador){
 
         controladorInicio(controlador);
-        //controladorRegistro(controlador);
+        controladorRegistro(controlador);
         controladorLogin(controlador);
 
     }
@@ -95,5 +96,10 @@ public class MainFrame extends JFrame{
     private void controladorLogin(Controlador controlador){
         this.contLogin = controlador.getLogin();
         login.setControlContinuar(contLogin);
+    }
+    
+    private void controladorRegistro(Controlador controlador){
+        this.contRegistro = controlador.getRegistro();
+        registro.setControlContinuar(contRegistro);
     }
 }
