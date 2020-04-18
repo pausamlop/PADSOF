@@ -4,7 +4,6 @@ import across.model.application.Application;
 import across.gui.MainFrame;
 import across.control.start.*;
 import across.control.user.*;
-import across.control.admin.*;
 
 public class Controlador {
 
