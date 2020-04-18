@@ -1,10 +1,12 @@
-package across.gui;
+package across.gui.user;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import across.gui.EditFont;
 
 public class PanelNewCollective extends JPanel {
 	
@@ -38,10 +40,11 @@ public class PanelNewCollective extends JPanel {
         spring.putConstraint(SpringLayout.SOUTH, title, -80, SpringLayout.NORTH, centro);
         spring.putConstraint(SpringLayout.NORTH, button, 35, SpringLayout.SOUTH, centro);
 
-    
-    
 	    title = EditFont.setSize(title, 20);
-	    title = EditFont.bold(title);
+        title = EditFont.bold(title);
+        this.add(title);
+        this.add(centro);
+        this.add(button);
     }
     
     public String getName(){

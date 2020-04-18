@@ -1,21 +1,21 @@
-package across.gui;
+package across.gui.admin;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Clase PanelInicioUser de la interfaz
+ * Clase PanelInicioAdmin de la interfaz
  *
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@uam.es
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-public class PanelInicioUser extends JPanel{
+public class PanelInicioAdmin extends JPanel{
 
     
-    public PanelInicioUser(){
+    public PanelInicioAdmin(){
         
     }
     

@@ -1,4 +1,4 @@
-package across.control;
+package across.control.start;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import across.gui.MainFrame;
-import across.gui.PanelRegistro;
+import across.gui.start.PanelRegistro;
 import across.model.application.Application;
 
 public class ControladorRegistro implements ActionListener{

@@ -1,6 +1,9 @@
-package across.gui;
+package across.gui.start;
 
 import javax.swing.*;
+
+import across.gui.EditFont;
+
 import java.awt.*;
 import java.awt.event.*;
 

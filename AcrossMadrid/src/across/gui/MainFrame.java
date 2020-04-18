@@ -1,6 +1,13 @@
 package across.gui;
 
 import across.control.*;
+import across.control.start.*;
+import across.control.user.*;
+import across.control.admin.*;
+import across.gui.start.*;
+import across.gui.user.*;
+import across.gui.admin.*;
+import across.model.application.Application;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,11 +28,18 @@ public class MainFrame extends JFrame{
     private PanelLogin login = new PanelLogin();
     private PanelInicioUser inicioUser = new PanelInicioUser();
     private PanelInicioAdmin inicioAdmin = new PanelInicioAdmin();
+    private PanelNewCollective nuevoColectivo = new PanelNewCollective();
+    private PanelNewProject nuevoProyecto = new PanelNewProject();
 
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
     private ControladorLogin contLogin;
     private ControladorRegistro contRegistro;
+
+    private ControladorUserCrearProyecto contUserCrearProyecto;
+
+    private ControladorNewProject contNuevoProyecto;
+    private ControladorLoadImage contCargarImagen;
 
     private JPanel contentPane;
 
@@ -41,6 +55,7 @@ public class MainFrame extends JFrame{
     }
 
     public void showPanel(String carta) {
+        Application.saveData(Application.getApplication());
 		CardLayout layout = (CardLayout)contentPane.getLayout();
 		layout.show(contentPane, carta);
     }
@@ -52,6 +67,8 @@ public class MainFrame extends JFrame{
 
         /* PANELES DEL USUARIO */
         contentPane.add(inicioUser, "inicioUser");
+        contentPane.add(nuevoColectivo, "nuevoColectivo");
+        contentPane.add(nuevoProyecto, "nuevoProyecto");
 
         /* PANELES DEL ADMINISTRADOR */
         contentPane.add(inicioAdmin, "inicioAdmin");
@@ -78,11 +95,19 @@ public class MainFrame extends JFrame{
         return inicioAdmin;
     }
 
+    public PanelNewProject getNewProject(){
+        return nuevoProyecto;
+    }
+
     public void setControlador(Controlador controlador){
 
         controladorInicio(controlador);
         controladorRegistro(controlador);
         controladorLogin(controlador);
+
+        controladorUserCrearProyecto(controlador);
+        controladorNuevoProyecto(controlador);
+        controladorCargarImagen(controlador);
 
     }
     
@@ -101,5 +126,22 @@ public class MainFrame extends JFrame{
     private void controladorRegistro(Controlador controlador){
         this.contRegistro = controlador.getRegistro();
         registro.setControlContinuar(contRegistro);
+    }
+
+
+    private void controladorUserCrearProyecto(Controlador controlador){
+        this.contUserCrearProyecto = controlador.getUserCrearProyecto();
+        inicioUser.setControlCrearProyecto(contUserCrearProyecto);
+    }
+
+
+    private void controladorNuevoProyecto(Controlador controlador){
+        this.contNuevoProyecto = controlador.getNuevoProyecto();
+        nuevoProyecto.setControlProponerProyecto(contNuevoProyecto);
+    }
+
+    private void controladorCargarImagen(Controlador controlador){
+        this.contCargarImagen = controlador.getCargarImagen();
+        nuevoProyecto.setControlFoto(contCargarImagen);
     }
 }

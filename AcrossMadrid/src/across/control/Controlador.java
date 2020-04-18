@@ -2,6 +2,9 @@ package across.control;
 
 import across.model.application.Application;
 import across.gui.MainFrame;
+import across.control.start.*;
+import across.control.user.*;
+import across.control.admin.*;
 
 public class Controlador {
 
@@ -9,6 +12,11 @@ public class Controlador {
     private ControladorInicioLogin inicioLogin;
     private ControladorLogin login;
     private ControladorRegistro reg;
+
+    private ControladorUserCrearProyecto userCrearProyecto;
+
+    private ControladorNewProject nuevoProyecto;
+    private ControladorLoadImage cargarImagen;
 
     private MainFrame frame;
     private Application model;
@@ -24,6 +32,11 @@ public class Controlador {
         inicioLogin = new ControladorInicioLogin(frame, model);
         login = new ControladorLogin(frame, model);
         reg = new ControladorRegistro(frame, model);
+
+        userCrearProyecto = new ControladorUserCrearProyecto(frame, model);
+
+        nuevoProyecto = new ControladorNewProject(frame, model);
+        cargarImagen = new ControladorLoadImage(frame, model);
     }
 
     public ControladorInicioRegistro getInicioRegistro(){
@@ -40,6 +53,18 @@ public class Controlador {
     
     public ControladorRegistro getRegistro(){
         return this.reg;
+    }
+
+    public ControladorNewProject getNuevoProyecto(){
+        return nuevoProyecto;
+    }
+
+    public ControladorLoadImage getCargarImagen(){
+        return cargarImagen;
+    }
+
+    public ControladorUserCrearProyecto getUserCrearProyecto(){
+        return userCrearProyecto;
     }
     
     
