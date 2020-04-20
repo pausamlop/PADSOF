@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import across.gui.EditFont;
 import across.model.application.Application;
+import across.model.user.Collective;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -12,6 +14,9 @@ public class PanelNewProject extends JPanel {
     private int anchoTextField = 20;
 
     private JLabel title = new JLabel("Nuevo proyecto");
+    private JLabel crearComo = new JLabel("Crear proyecto como:");
+    private JRadioButton comoUser = new JRadioButton("Usuario");
+    private JRadioButton comoColectivo = new JRadioButton("Colectivo");
     private JLabel nombreLabel = new JLabel("Nombre:", SwingConstants.RIGHT);
     private JTextField nombre = new JTextField(anchoTextField);
     private JLabel tipoLabel = new JLabel("Tipo de proyecto:", SwingConstants.RIGHT);
@@ -23,24 +28,34 @@ public class PanelNewProject extends JPanel {
     private JTextArea desc = new JTextArea(4,anchoTextField);
     private JButton button = new JButton("Proponer proyecto");
     private JScrollPane descPane;
+
+    private JComboBox<Collective> colectivos;
     
     private JLabel grupoDistritoLabel = new JLabel(" ");
     private JPanel grupoDistrito = new JPanel(new CardLayout());
     private JPanel ambitoFoto = new JPanel(new CardLayout());
 
-    JComboBox<String> distritos;
-    JButton foto = new JButton("Cargar foto");
-    JTextField grupoSocial = new JTextField(anchoTextField);
-    JComboBox<String> ambito;
+    private JComboBox<String> distritos;
+    private JButton foto = new JButton("Cargar foto");
+    private JTextField grupoSocial = new JTextField(anchoTextField);
+    private JComboBox<String> ambito;
 
     private SpringLayout spring = new SpringLayout();
 
     public PanelNewProject(){
         setLayout(spring);
+
+        ButtonGroup buttonGroup1 = new ButtonGroup();
+        buttonGroup1.add(comoUser);
+        buttonGroup1.add(comoColectivo);
+        setControlUser();
+        setControlColectivo();
+        colectivos = new JComboBox<>();
+        colectivos.setVisible(false);
         
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(infr);
-        buttonGroup.add(social);
+        ButtonGroup buttonGroup2 = new ButtonGroup();
+        buttonGroup2.add(infr);
+        buttonGroup2.add(social);
         setControlInfr();
         setControlSocial();
 
@@ -55,6 +70,10 @@ public class PanelNewProject extends JPanel {
         title = EditFont.bold(title);
 
         this.add(title);
+        this.add(crearComo);
+        this.add(comoUser);
+        this.add(comoColectivo);
+        this.add(colectivos);
         this.add(nombre);
         this.add(nombreLabel);
         this.add(infr);
@@ -98,6 +117,8 @@ public class PanelNewProject extends JPanel {
     private void anadirRestricciones(){
         /* anadir restricciones de colocacion de los elementos */
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, title, 0, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.WEST, comoUser, -60, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.WEST, comoColectivo, -60, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.WEST, nombre, -60, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.WEST, infr, -60, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.EAST, grupoDistritoLabel, -70, SpringLayout.HORIZONTAL_CENTER, this);
@@ -106,15 +127,21 @@ public class PanelNewProject extends JPanel {
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, button, 0, SpringLayout.HORIZONTAL_CENTER, this);
         
         /* uniones verticales */
-        spring.putConstraint(SpringLayout.VERTICAL_CENTER, grupoDistritoLabel, -10, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, grupoDistritoLabel, 0, SpringLayout.VERTICAL_CENTER, this);
         spring.putConstraint(SpringLayout.SOUTH, infr, -10, SpringLayout.NORTH, grupoDistritoLabel);
         spring.putConstraint(SpringLayout.SOUTH, nombre, -10, SpringLayout.NORTH, infr);
-        spring.putConstraint(SpringLayout.SOUTH, title, -30, SpringLayout.NORTH, nombre);
+        spring.putConstraint(SpringLayout.SOUTH, comoColectivo, -10, SpringLayout.NORTH, nombre);
+        spring.putConstraint(SpringLayout.SOUTH, comoUser, -2, SpringLayout.NORTH, comoColectivo);
+        spring.putConstraint(SpringLayout.SOUTH, title, -30, SpringLayout.NORTH, comoUser);
         spring.putConstraint(SpringLayout.NORTH, coste, 10, SpringLayout.SOUTH, grupoDistritoLabel);
         spring.putConstraint(SpringLayout.NORTH, descPane, 10, SpringLayout.SOUTH, coste);
         spring.putConstraint(SpringLayout.NORTH, button, 30, SpringLayout.SOUTH, descPane);
         
         /* uniones horizontales */
+        spring.putConstraint(SpringLayout.EAST, crearComo, -10, SpringLayout.WEST, comoUser);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, crearComo, 0, SpringLayout.VERTICAL_CENTER, comoUser);
+        spring.putConstraint(SpringLayout.WEST, colectivos, 8, SpringLayout.EAST, comoColectivo);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, colectivos, 0, SpringLayout.VERTICAL_CENTER, comoColectivo);
         spring.putConstraint(SpringLayout.EAST, nombreLabel, -10, SpringLayout.WEST, nombre);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, nombreLabel, 0, SpringLayout.VERTICAL_CENTER, nombre);
         spring.putConstraint(SpringLayout.EAST, tipoLabel, -10, SpringLayout.WEST, infr);
@@ -131,6 +158,7 @@ public class PanelNewProject extends JPanel {
         spring.putConstraint(SpringLayout.NORTH, descLabel, 0, SpringLayout.NORTH, descPane);
     }
     
+
     public String getName() {
         return nombre.getText();
     }
@@ -153,6 +181,18 @@ public class PanelNewProject extends JPanel {
         return desc.getText();
     }
 
+    public boolean isUser(){
+        return comoUser.isSelected();
+    }
+
+    public boolean isColectivo(){
+        return comoColectivo.isSelected();
+    }
+
+    public Collective getColectivo(){
+        return (Collective)colectivos.getSelectedItem();
+    }
+
     public boolean isInfraestructura(){
         return infr.isSelected();
     }
@@ -169,6 +209,14 @@ public class PanelNewProject extends JPanel {
         return (String)ambito.getSelectedItem(); 
     }
     
+    public void setControlUser(){
+        comoUser.addActionListener(e -> colectivos.setVisible(false));
+    }
+
+    public void setControlColectivo(){
+        comoColectivo.addActionListener(e -> colectivos.setVisible(true));
+    }
+
     public void setControlInfr(){
         infr.addActionListener(e -> {
             grupoDistritoLabel.setText("Distrito:");

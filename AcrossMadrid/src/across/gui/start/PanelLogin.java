@@ -7,6 +7,14 @@ import across.gui.EditFont;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Clase PanelLogin
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 public class PanelLogin extends JPanel {
 
     private JLabel title = new JLabel("ACROSS MADRID");
@@ -18,6 +26,9 @@ public class PanelLogin extends JPanel {
     private JPasswordField password = new JPasswordField(15);
     private JButton button = new JButton("Continuar");
 
+    /**
+     * Constructor de la clase PanelLogin
+     */
     public PanelLogin(){
         SpringLayout spring = new SpringLayout();
         setLayout(spring);
@@ -58,18 +69,38 @@ public class PanelLogin extends JPanel {
 
     }
 
+    /**
+     * Devuelve el nombre de usuario introducido por usuario
+     * 
+     * @return nombre de usuario
+     */
     public String getUsername(){
         return username.getText();
     }
 
+    /**
+     * Devuelve la contrasena introducida por el usuario
+     * 
+     * @return contrasena
+     */
     public String getPassword(){
         return new String(password.getPassword());
     }
 
+    /**
+     * Devuelve si la opcion de administrador ha sido seleccionada
+     * 
+     * @return true si la opcion de administrador ha sido seleccionada, false en otro caso
+     */
     public boolean isAdmin(){
         return checkAdmin.isSelected();
     }
 
+    /**
+    * Establece el control de seleccionar o deseleccionar el checkbox
+    * 
+    * @param c accion que activa la casilla
+    */
     public void setControlCheckAdmin(){
         checkAdmin.addActionListener(e -> {
             if(isAdmin()){
@@ -83,6 +114,11 @@ public class PanelLogin extends JPanel {
         });
     }
 
+    /**
+     * Establece el control del boton de continuar
+     * 
+     * @param c accion que activa el boton
+     */
     public void setControlContinuar(ActionListener c){
         button.addActionListener(c);
     }

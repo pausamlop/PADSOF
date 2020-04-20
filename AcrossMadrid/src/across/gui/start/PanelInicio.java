@@ -21,6 +21,9 @@ public class PanelInicio extends JPanel{
     private JButton registro = new JButton("REGISTRO");
     private JButton login = new JButton("INICIAR SESION");
 
+    /**
+     * Constructor de la clase PanelInicio
+     */
     public PanelInicio(){
         SpringLayout spring = new SpringLayout();
         setLayout(spring);
@@ -42,10 +45,20 @@ public class PanelInicio extends JPanel{
         this.add(buttons);
     }
 
+    /**
+     * Establece el control del boton de registro
+     * 
+     * @param c accion que activa el boton
+     */
     public void setControlRegistro(ActionListener c){
         registro.addActionListener(c);
     }
 
+    /**
+     * Establece el control del boton de login
+     * 
+     * @param c accion que activa el boton
+     */
     public void setControlLogin(ActionListener c){
         login.addActionListener(c);
     }

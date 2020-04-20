@@ -1,8 +1,6 @@
 package across.gui.admin;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
 /**
  * Clase PanelInicioAdmin de la interfaz
@@ -14,7 +12,9 @@ import java.awt.event.*;
  */
 public class PanelInicioAdmin extends JPanel{
 
-    
+    /**
+     * Consructor de la clase PanelInicioAdmin
+     */
     public PanelInicioAdmin(){
         
     }

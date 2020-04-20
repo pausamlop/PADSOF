@@ -7,18 +7,37 @@ import across.gui.start.PanelLogin;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * Clase ControladorLogin
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 public class ControladorLogin implements ActionListener{
 
     private PanelLogin login;
     private MainFrame frame;
     private Application model;
 
+    /**
+     * Constructor de la clase ControladorLogin
+     * 
+     * @param frame pantalla principal de la aplicacion
+     * @param model aplicacion(funcionamiento)
+     */
     public ControladorLogin (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
         this.login = frame.getLogin();
     }
 
+    /**
+     * Accion que se realiza cuando se pulsa el boton de 'continuar' en el panel de iniciar sesion
+     * 
+     * @param e accion recibida
+     */
     @Override
     public void actionPerformed(ActionEvent e){
 
