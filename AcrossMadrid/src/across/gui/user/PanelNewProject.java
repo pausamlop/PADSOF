@@ -22,7 +22,8 @@ public class PanelNewProject extends JPanel {
     private JLabel descLabel = new JLabel("Descripcion:", SwingConstants.RIGHT);
     private JTextArea desc = new JTextArea(4,anchoTextField);
     private JButton button = new JButton("Proponer proyecto");
-
+    private JScrollPane descPane;
+    
     private JLabel grupoDistritoLabel = new JLabel(" ");
     private JPanel grupoDistrito = new JPanel(new CardLayout());
     private JPanel ambitoFoto = new JPanel(new CardLayout());
@@ -43,6 +44,9 @@ public class PanelNewProject extends JPanel {
         setControlInfr();
         setControlSocial();
 
+        desc.setLineWrap(true);
+        descPane = new JScrollPane(desc);
+
         crearPanelesTipo();
         anadirRestricciones();
 
@@ -61,7 +65,7 @@ public class PanelNewProject extends JPanel {
         this.add(coste);
         this.add(costeLabel);
         this.add(ambitoFoto);
-        this.add(desc);
+        this.add(descPane);
         this.add(descLabel);
         this.add(button);
 
@@ -94,11 +98,11 @@ public class PanelNewProject extends JPanel {
     private void anadirRestricciones(){
         /* anadir restricciones de colocacion de los elementos */
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, title, 0, SpringLayout.HORIZONTAL_CENTER, this);
-        spring.putConstraint(SpringLayout.WEST, nombre, -40, SpringLayout.HORIZONTAL_CENTER, this);
-        spring.putConstraint(SpringLayout.WEST, infr, -40, SpringLayout.HORIZONTAL_CENTER, this);
-        spring.putConstraint(SpringLayout.EAST, grupoDistritoLabel, -50, SpringLayout.HORIZONTAL_CENTER, this);
-        spring.putConstraint(SpringLayout.WEST, coste, -40, SpringLayout.HORIZONTAL_CENTER, this);
-        spring.putConstraint(SpringLayout.WEST, desc, -36, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.WEST, nombre, -60, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.WEST, infr, -60, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.EAST, grupoDistritoLabel, -70, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.WEST, coste, -60, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.WEST, descPane, -56, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, button, 0, SpringLayout.HORIZONTAL_CENTER, this);
         
         /* uniones verticales */
@@ -107,8 +111,8 @@ public class PanelNewProject extends JPanel {
         spring.putConstraint(SpringLayout.SOUTH, nombre, -10, SpringLayout.NORTH, infr);
         spring.putConstraint(SpringLayout.SOUTH, title, -30, SpringLayout.NORTH, nombre);
         spring.putConstraint(SpringLayout.NORTH, coste, 10, SpringLayout.SOUTH, grupoDistritoLabel);
-        spring.putConstraint(SpringLayout.NORTH, desc, 10, SpringLayout.SOUTH, coste);
-        spring.putConstraint(SpringLayout.NORTH, button, 30, SpringLayout.SOUTH, desc);
+        spring.putConstraint(SpringLayout.NORTH, descPane, 10, SpringLayout.SOUTH, coste);
+        spring.putConstraint(SpringLayout.NORTH, button, 30, SpringLayout.SOUTH, descPane);
         
         /* uniones horizontales */
         spring.putConstraint(SpringLayout.EAST, nombreLabel, -10, SpringLayout.WEST, nombre);
@@ -123,8 +127,8 @@ public class PanelNewProject extends JPanel {
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, costeLabel, 0, SpringLayout.VERTICAL_CENTER, coste);
         spring.putConstraint(SpringLayout.WEST, ambitoFoto, 12, SpringLayout.EAST, coste);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, ambitoFoto, 0, SpringLayout.VERTICAL_CENTER, coste);
-        spring.putConstraint(SpringLayout.EAST, descLabel, -10, SpringLayout.WEST, desc);
-        spring.putConstraint(SpringLayout.NORTH, descLabel, 0, SpringLayout.NORTH, desc);
+        spring.putConstraint(SpringLayout.EAST, descLabel, -10, SpringLayout.WEST, descPane);
+        spring.putConstraint(SpringLayout.NORTH, descLabel, 0, SpringLayout.NORTH, descPane);
     }
     
     public String getName() {
