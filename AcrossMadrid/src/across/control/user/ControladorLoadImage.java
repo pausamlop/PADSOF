@@ -5,7 +5,11 @@ import across.gui.*;
 import across.gui.user.PanelNewProject;
 
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -44,17 +48,20 @@ public class ControladorLoadImage implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        String sourcePath = null;
-        String destPath = "src/across/gui/images/" + String.valueOf(idImage);
+        BufferedImage image;
+        File dest = new File("src/across/gui/images/1.png");
 
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Imagenes", "jpg", "png", "gif"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Imagenes", "jpg", "jpeg", "png", "gif"));
         int opc = fileChooser.showOpenDialog(fileChooser);
-		if (opc == JFileChooser.APPROVE_OPTION)
-            sourcePath = fileChooser.getSelectedFile().getAbsolutePath();
-        
-        System.out.println("source = " + sourcePath);
-        System.out.println("dest = " + destPath);
+		if (opc == JFileChooser.APPROVE_OPTION){
+            try{
+                image = ImageIO.read(fileChooser.getSelectedFile());
+                ImageIO.write(image, "png", dest);
+            }catch(IOException exc){
+                exc.printStackTrace();
+            }
+        }
 
     }
 }

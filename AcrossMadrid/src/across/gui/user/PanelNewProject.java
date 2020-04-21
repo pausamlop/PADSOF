@@ -8,6 +8,7 @@ import across.model.user.Collective;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class PanelNewProject extends JPanel {
 
@@ -29,7 +30,7 @@ public class PanelNewProject extends JPanel {
     private JButton button = new JButton("Proponer proyecto");
     private JScrollPane descPane;
 
-    private JComboBox<Collective> colectivos;
+    private JComboBox<Collective> colectivos = new JComboBox<>();
     
     private JLabel grupoDistritoLabel = new JLabel(" ");
     private JPanel grupoDistrito = new JPanel(new CardLayout());
@@ -50,7 +51,6 @@ public class PanelNewProject extends JPanel {
         buttonGroup1.add(comoColectivo);
         setControlUser();
         setControlColectivo();
-        colectivos = new JComboBox<>();
         colectivos.setVisible(false);
         
         ButtonGroup buttonGroup2 = new ButtonGroup();
@@ -191,6 +191,11 @@ public class PanelNewProject extends JPanel {
 
     public Collective getColectivo(){
         return (Collective)colectivos.getSelectedItem();
+    }
+
+    public void setColectivos(Collection<Collective> col){
+        for (Collective c: col)
+            colectivos.addItem(c);
     }
 
     public boolean isInfraestructura(){

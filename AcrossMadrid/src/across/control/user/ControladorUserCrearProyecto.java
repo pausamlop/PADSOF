@@ -1,8 +1,9 @@
 package across.control.user;
 
 import across.model.application.Application;
+import across.model.user.Collective;
 import across.gui.*;
-import across.gui.start.PanelInicio;
+import across.gui.user.PanelInicioUser;
 
 import java.awt.event.*;
 
@@ -16,7 +17,7 @@ import java.awt.event.*;
  */
 public class ControladorUserCrearProyecto implements ActionListener{
 
-    private PanelInicio inicio;
+    private PanelInicioUser inicioUser;
     private MainFrame frame;
     private Application model;
 
@@ -29,7 +30,7 @@ public class ControladorUserCrearProyecto implements ActionListener{
     public ControladorUserCrearProyecto (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.inicio = frame.getInicio();
+        this.inicioUser = frame.getInicioUser();
     }
 
     /**
@@ -40,5 +41,7 @@ public class ControladorUserCrearProyecto implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         this.frame.showPanel("nuevoProyecto");
+        this.frame.getNewProject().setColectivos(Application.getApplication()
+                                                .getCurrentUser().getCreatedCollectives());
     }
 }

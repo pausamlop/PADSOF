@@ -53,12 +53,13 @@ public class ControladorNewProject implements ActionListener{
         /* TIPO DE CREADOR */
         if (panel.isUser())
             creator = model.getCurrentUser();
-        else if (panel.isColectivo())
+        else if (panel.isColectivo()){
             creator = panel.getColectivo();
             if (creator == null){
                 JOptionPane.showMessageDialog(frame, "No puede crear el proyecto como colectivo porque todavia no ha creado ningun colectivo", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+        }
         else
             JOptionPane.showMessageDialog(frame, "Debe seleccionar como desea crear el proyecto: como usuario o como colectivo", "Aviso", JOptionPane.WARNING_MESSAGE);
 

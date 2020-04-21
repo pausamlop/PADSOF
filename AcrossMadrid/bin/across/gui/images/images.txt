@@ -1,0 +1,1 @@
+En este directorio se guardan las imagenes asociadas a los proyectos de infraestructura
