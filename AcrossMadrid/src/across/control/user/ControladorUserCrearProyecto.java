@@ -1,7 +1,6 @@
 package across.control.user;
 
 import across.model.application.Application;
-import across.model.user.Collective;
 import across.gui.*;
 import across.gui.user.PanelInicioUser;
 

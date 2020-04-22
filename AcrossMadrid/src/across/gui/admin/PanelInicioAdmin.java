@@ -10,6 +10,7 @@ import javax.swing.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
+@SuppressWarnings("serial")
 public class PanelInicioAdmin extends JPanel{
 
     /**

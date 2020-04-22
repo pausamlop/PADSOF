@@ -1,7 +1,6 @@
 package across.gui.user;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 /**
@@ -12,6 +11,7 @@ import java.awt.event.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
+@SuppressWarnings("serial")
 public class PanelInicioUser extends JPanel{
 
     private JButton crearProyecto = new JButton("Crear Proyecto");

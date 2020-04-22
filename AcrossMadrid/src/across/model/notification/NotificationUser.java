@@ -14,7 +14,7 @@ import java.util.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-
+@SuppressWarnings("serial")
 public class NotificationUser extends Notification {
 
     private Project project;

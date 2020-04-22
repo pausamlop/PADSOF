@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -26,9 +27,7 @@ public class ControladorLoadImage implements ActionListener{
     private PanelNewProject panel;
     private MainFrame frame;
     private Application model;
-
-    private static long idImage = 1;
-
+    
     /**
      * Constructor de la clase ControladorLoadImage
      * 
@@ -49,15 +48,16 @@ public class ControladorLoadImage implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         BufferedImage image;
-        File dest = new File("src/across/gui/images/1.png");
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Imagenes", "jpg", "jpeg", "png", "gif"));
         int opc = fileChooser.showOpenDialog(fileChooser);
 		if (opc == JFileChooser.APPROVE_OPTION){
             try{
-                image = ImageIO.read(fileChooser.getSelectedFile());
-                ImageIO.write(image, "png", dest);
+                File f = fileChooser.getSelectedFile();
+                image = ImageIO.read(f);
+                panel.setImage(image);
+                JOptionPane.showMessageDialog(frame, "La imagen " + f.getName() + " se ha guardado correctamente", "Aviso", JOptionPane.WARNING_MESSAGE);
             }catch(IOException exc){
                 exc.printStackTrace();
             }

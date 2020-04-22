@@ -12,6 +12,7 @@ import across.model.user.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
+@SuppressWarnings("serial")
 public class InfraestructureProject extends Project {
     private String image;
     private String district;

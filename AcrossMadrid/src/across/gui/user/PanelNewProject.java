@@ -6,10 +6,20 @@ import across.gui.EditFont;
 import across.model.application.Application;
 import across.model.user.Collective;
 
+import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+/**
+ * Clase PanelNewProject
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
+@SuppressWarnings("serial")
 public class PanelNewProject extends JPanel {
 
     private int anchoTextField = 20;
@@ -43,6 +53,11 @@ public class PanelNewProject extends JPanel {
 
     private SpringLayout spring = new SpringLayout();
 
+    private BufferedImage infrImage = null;
+
+    /**
+     * Constructor de la clase PanelNewProject
+     */
     public PanelNewProject(){
         setLayout(spring);
 
@@ -90,6 +105,9 @@ public class PanelNewProject extends JPanel {
 
     }
 
+    /**
+     * Crea los diferentes paneles correspondientes a los 2 tipos de proyecto
+     */
     private void crearPanelesTipo(){
 
         JPanel panelDistritos = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -114,8 +132,11 @@ public class PanelNewProject extends JPanel {
         ambitoFoto.add(panelAmbito, "social");
     }
 
+    /**
+     * Estrablece las restricciones de colocacion de los elementos con una distribucion SpringLayout
+     */
     private void anadirRestricciones(){
-        /* anadir restricciones de colocacion de los elementos */
+        /* alineacion horizontal */
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, title, 0, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.WEST, comoUser, -60, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.WEST, comoColectivo, -60, SpringLayout.HORIZONTAL_CENTER, this);
@@ -158,15 +179,29 @@ public class PanelNewProject extends JPanel {
         spring.putConstraint(SpringLayout.NORTH, descLabel, 0, SpringLayout.NORTH, descPane);
     }
     
-
+    /**
+     * Devuelve la informacion introducida por el usuario en el campo de texto de nombre de proyecto
+     * 
+     * @return nombre del proyecto
+     */
     public String getName() {
         return nombre.getText();
     }
 
+    /**
+     * Devuelve la informacion introducida por el usuario en el campo de texto de nombre de grupo
+     * 
+     * @return grupo social al que va dirigido
+     */
     public String getGroup() {
         return grupoSocial.getText();
     }
 
+    /**
+     * Devuelve la informacion introducida por el usuario en el campo de texto de coste
+     * 
+     * @return coste del proyecto
+     */
     public double getCost(){
         double cost;
         try{
@@ -177,51 +212,123 @@ public class PanelNewProject extends JPanel {
         return cost;
     }
 
+    /**
+     * Devuelve la informacion introducida por el usuario en el campo de texto de descripcion de proyecto
+     * 
+     * @return descripcion del proyecto
+     */
     public String getDescription(){
         return desc.getText();
     }
 
+    /**
+     * Devuelve si el proyecto ha sido creado por un usuario individual
+     * 
+     * @return true si es creado por un usuario, false en otro caso
+     */
     public boolean isUser(){
         return comoUser.isSelected();
     }
 
+    /**
+     * Devuelve si el proyecto ha sido creado por un colectivo
+     * 
+     * @return true si es creado por un colectivo, false en otro caso
+     */
     public boolean isColectivo(){
         return comoColectivo.isSelected();
     }
 
+    /**
+     * Devuelve el colectivo creador del proyecto 
+     * 
+     * @return colectivo creador del proyecto, null si el creador es un usuario individual
+     */
     public Collective getColectivo(){
         return (Collective)colectivos.getSelectedItem();
     }
 
+    /**
+     * Establece el contenido del JComboBox de los colectivos creador por el usuario actual
+     * 
+     * @param col colectivos creados por el usuario actual
+     */
     public void setColectivos(Collection<Collective> col){
         for (Collective c: col)
             colectivos.addItem(c);
     }
 
+    /**
+     * Devuelve si el proyecto a crear es de tipo infraestructura
+     * 
+     * @return true si es infraestructura, false en otro caso
+     */
     public boolean isInfraestructura(){
         return infr.isSelected();
     }
 
+    /**
+     * Devuelve el distrito en el que se desea llevar a cabo el proyecto de infraestructura
+     * 
+     * @return distrito
+     */
     public String getDistrito(){
         return (String)distritos.getSelectedItem();
     }
 
+    /**
+     * Devuelve si el proyecto a crear es de tipo social
+     * 
+     * @return true si es social, false en otro caso
+     */
     public boolean isSocial(){
         return social.isSelected();
     }
 
+    /**
+     * Devuelve el ambito del proyecto social
+     * 
+     * @return ambito
+     */
     public String getAmbito(){
         return (String)ambito.getSelectedItem(); 
     }
+
+    /**
+     * Devuelve la imagen asociada al proyecto de infraestructura cargada anteriormente
+     * 
+     * @return imagen cargada, null si no se ha cargado ninguna imagen
+     */
+    public BufferedImage getImage(){
+        return infrImage;
+    }
+
+    /**
+     * Establece la imagen del proyecto como la imagen cargada y pasada como argumento
+     * 
+     * @param img imagen cargada
+     */
+    public void setImage(BufferedImage img){
+        this.infrImage = img;
+    }
     
+    /**
+     * Establece el control de la seleccion del RadioButton usuario
+     */
     public void setControlUser(){
         comoUser.addActionListener(e -> colectivos.setVisible(false));
     }
 
+    /**
+     * Establece el control de la seleccion del RadioButton colectivo
+     */
     public void setControlColectivo(){
         comoColectivo.addActionListener(e -> colectivos.setVisible(true));
     }
 
+    /**
+     * Establece el control de la seleccion del RadioButton infraestructura
+     */
     public void setControlInfr(){
         infr.addActionListener(e -> {
             grupoDistritoLabel.setText("Distrito:");
@@ -230,6 +337,9 @@ public class PanelNewProject extends JPanel {
         });
     }
 
+    /**
+     * Establece el control de la seleccion del RadioButton social
+     */
     public void setControlSocial(){
         social.addActionListener(e -> {
             grupoDistritoLabel.setText("Grupo social al que va dirigido:");
@@ -238,10 +348,20 @@ public class PanelNewProject extends JPanel {
         });
     }
 
+    /**
+     * Establece el control del boton de cargar imagen
+     * 
+     * @param c accion que activa el boton
+     */
     public void setControlFoto(ActionListener c){
         foto.addActionListener(c);
     }
 
+    /**
+     * Establece el control del boton de proponer proyecto
+     * 
+     * @param c accion que activa el boton
+     */
     public void setControlProponerProyecto(ActionListener c){
         button.addActionListener(c);
     }

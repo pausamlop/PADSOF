@@ -13,6 +13,7 @@ import java.io.*;
  * @author Paula Samlop paula.samper@estudiante.uam.es
  *
  */
+@SuppressWarnings("serial")
 public abstract class UserCollective implements Serializable {
 
     private ArrayList<Project> createdProjects = new ArrayList<Project>();

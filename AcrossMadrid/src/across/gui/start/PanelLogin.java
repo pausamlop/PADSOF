@@ -15,6 +15,7 @@ import java.awt.event.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
+@SuppressWarnings("serial")
 public class PanelLogin extends JPanel {
 
     private JLabel title = new JLabel("ACROSS MADRID");

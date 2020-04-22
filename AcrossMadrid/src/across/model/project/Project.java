@@ -20,6 +20,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
+@SuppressWarnings("serial")
 public abstract class Project implements Serializable, Comparable<Project>{
     private String name;
     private String dcp;

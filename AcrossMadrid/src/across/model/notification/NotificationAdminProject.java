@@ -13,7 +13,7 @@ import across.model.application.Application;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-
+@SuppressWarnings("serial")
 public class NotificationAdminProject extends Notification {
 
     private Project project;

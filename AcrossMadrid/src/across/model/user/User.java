@@ -16,7 +16,7 @@ import across.model.notification.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-
+@SuppressWarnings("serial")
 public class User extends UserCollective {
 
     private String username;

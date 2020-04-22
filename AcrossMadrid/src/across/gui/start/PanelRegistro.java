@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import across.gui.EditFont;
 
+@SuppressWarnings("serial")
 public class PanelRegistro extends JPanel {
 	
     private JLabel title = new JLabel("ACROSS MADRID");

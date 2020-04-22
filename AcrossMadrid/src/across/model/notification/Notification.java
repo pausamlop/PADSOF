@@ -10,7 +10,7 @@ import java.io.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-
+@SuppressWarnings("serial")
 public abstract class Notification implements Serializable{
 
     private String message;

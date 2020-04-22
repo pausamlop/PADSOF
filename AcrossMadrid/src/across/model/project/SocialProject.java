@@ -13,6 +13,7 @@ import across.model.user.*;
  * @author Paula Samlop paula.samper@estudiante.uam.es
  *
  */
+@SuppressWarnings("serial")
 public class SocialProject extends Project {
     private String group;
     private typeSocial type;

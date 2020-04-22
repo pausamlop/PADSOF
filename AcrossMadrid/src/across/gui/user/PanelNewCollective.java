@@ -1,6 +1,5 @@
 package across.gui.user;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
@@ -8,6 +7,15 @@ import javax.swing.*;
 
 import across.gui.EditFont;
 
+/**
+ * Clase PanelNewColective
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
+@SuppressWarnings("serial")
 public class PanelNewCollective extends JPanel {
 	
     private JLabel title = new JLabel("Nuevo colectivo");

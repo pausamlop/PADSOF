@@ -9,7 +9,11 @@ import across.gui.*;
 import across.gui.user.PanelNewProject;
 
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -74,8 +78,11 @@ public class ControladorNewProject implements ActionListener{
         /* TIPO DE PROYECTO */
         else if (panel.isInfraestructura()){
             String distrito = panel.getDistrito();
-            // foto
-            model.addNewProject(new InfraestructureProject(name, desc, cost, "/src/across/gui/images/prueba.png", distrito, creator));
+            String imgPath = "src/across/gui/images/" + name + ".png";
+
+            if (!saveImage(imgPath)) return;
+            
+            model.addNewProject(new InfraestructureProject(name, desc, cost, imgPath, distrito, creator));
             JOptionPane.showMessageDialog(frame, "Su propuesta de proyecto se ha enviado al adminstrador.\nUna vez validado estara disponible para ser votado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             frame.showPanel("inicioUser");
         }
@@ -97,4 +104,29 @@ public class ControladorNewProject implements ActionListener{
             JOptionPane.showMessageDialog(frame, "Debe elegir tipo de proyecto: de infraestructura o social", "Aviso", JOptionPane.WARNING_MESSAGE);
 
     }
+
+    /**
+     * Guarda la imagen cargada en el panel alteriormente en el directorio parado como argumento
+     * 
+     * @param path directorio donde almacenar la imagen
+     * @return true si la imagen se ha guardado correctamente, false en caso contrario
+     */
+    private boolean saveImage(String path){
+        BufferedImage img = panel.getImage();
+        File dest = new File(path);
+
+        if (img != null){
+            try{
+                ImageIO.write(img, "png", dest);
+                return true;
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+        else 
+            JOptionPane.showMessageDialog(frame, "Debe seleccionar una imagen o maqueta del proyecto", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+        return false;
+    }
 }
+

@@ -20,6 +20,7 @@ import java.awt.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame{
 
     private PanelInicio inicio = new PanelInicio();
