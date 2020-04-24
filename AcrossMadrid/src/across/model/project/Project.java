@@ -480,18 +480,19 @@ public abstract class Project implements Serializable, Comparable<Project>{
     }
 
     public String toString(){
-        String resumen = "";
-        resumen += "Nombre: " + name;
-        resumen += ", descripcion: " + dcp;
-        if (creator instanceof Collective)
-            resumen += "\n      Creado por colectivo " + ((Collective)creator).getName();
-        else   
-            resumen += "\n      Creado por " + ((User)creator).getUsername();
-        resumen += "\n      Estado: " + state.name();
-        resumen += "\n      Votos: " + votes + "/" + Application.getApplication().getMinVotes(); 
-        resumen += "\n      Coste: " + String.format("%.2f €", cost);
-        resumen += "\n      Ultimo voto (fecha): " + lastVote;
-        return resumen;
+//        String resumen = "";
+//        resumen += "Nombre: " + name;
+//        resumen += ", descripcion: " + dcp;
+//        if (creator instanceof Collective)
+//            resumen += "\n      Creado por colectivo " + ((Collective)creator).getName();
+//        else   
+//            resumen += "\n      Creado por " + ((User)creator).getUsername();
+//        resumen += "\n      Estado: " + state.name();
+//        resumen += "\n      Votos: " + votes + "/" + Application.getApplication().getMinVotes(); 
+//        resumen += "\n      Coste: " + String.format("%.2f €", cost);
+//        resumen += "\n      Ultimo voto (fecha): " + lastVote;
+//        return resumen;
+    	return name;
     }
 
 }

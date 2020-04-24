@@ -84,6 +84,7 @@ public class ControladorNewProject implements ActionListener{
             
             model.addNewProject(new InfraestructureProject(name, desc, cost, imgPath, distrito, creator));
             JOptionPane.showMessageDialog(frame, "Su propuesta de proyecto se ha enviado al adminstrador.\nUna vez validado estara disponible para ser votado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            panel.emptyFields();
             frame.showPanel("inicioUser");
         }
         else if (panel.isSocial()){
@@ -97,6 +98,7 @@ public class ControladorNewProject implements ActionListener{
                 typeSocial tipo = (ambitoStr.equals("Nacional"))?typeSocial.NACIONAL:typeSocial.INTERNACIONAL;
                 model.addNewProject(new SocialProject(name, desc, cost, grupo, tipo, creator));
                 JOptionPane.showMessageDialog(frame, "Su propuesta de proyecto se ha enviado al adminstrador.\nUna vez validado estara disponible para ser votado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                panel.emptyFields();
                 frame.showPanel("inicioUser");
             }
         }
@@ -106,10 +108,12 @@ public class ControladorNewProject implements ActionListener{
     }
 
     /**
-     * Guarda la imagen cargada en el panel alteriormente en el directorio parado como argumento
+     * Guarda la imagen cargada en el panel alteriormente en el directorio parado
+     * como argumento
      * 
      * @param path directorio donde almacenar la imagen
-     * @return true si la imagen se ha guardado correctamente, false en caso contrario
+     * @return true si la imagen se ha guardado correctamente, false en caso
+     *         contrario
      */
     private boolean saveImage(String path){
         BufferedImage img = panel.getImage();

@@ -40,8 +40,8 @@ public class PanelInicio extends JPanel{
         spring.putConstraint(SpringLayout.NORTH, buttons, 0, SpringLayout.VERTICAL_CENTER, this);
         spring.putConstraint(SpringLayout.SOUTH, title, -50, SpringLayout.NORTH, buttons);
         
-        title = EditFont.setSize(title, 32);
-        title = EditFont.bold(title);
+        EditFont.setSize(title, 32);
+        EditFont.bold(title);
         this.add(title);
         this.add(buttons);
     }

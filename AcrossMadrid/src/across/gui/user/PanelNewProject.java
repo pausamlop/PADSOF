@@ -26,11 +26,13 @@ public class PanelNewProject extends JPanel {
 
     private JLabel title = new JLabel("Nuevo proyecto");
     private JLabel crearComo = new JLabel("Crear proyecto como:");
+    ButtonGroup buttonGroup1;
     private JRadioButton comoUser = new JRadioButton("Usuario");
     private JRadioButton comoColectivo = new JRadioButton("Colectivo");
     private JLabel nombreLabel = new JLabel("Nombre:", SwingConstants.RIGHT);
     private JTextField nombre = new JTextField(anchoTextField);
     private JLabel tipoLabel = new JLabel("Tipo de proyecto:", SwingConstants.RIGHT);
+    ButtonGroup buttonGroup2;
     private JRadioButton infr = new JRadioButton("Infraestructura");
     private JRadioButton social = new JRadioButton("Social");
     private JLabel costeLabel = new JLabel("Coste aproximado:", SwingConstants.RIGHT);
@@ -61,14 +63,14 @@ public class PanelNewProject extends JPanel {
     public PanelNewProject(){
         setLayout(spring);
 
-        ButtonGroup buttonGroup1 = new ButtonGroup();
+        buttonGroup1 = new ButtonGroup();
         buttonGroup1.add(comoUser);
         buttonGroup1.add(comoColectivo);
         setControlUser();
         setControlColectivo();
         colectivos.setVisible(false);
         
-        ButtonGroup buttonGroup2 = new ButtonGroup();
+        buttonGroup2 = new ButtonGroup();
         buttonGroup2.add(infr);
         buttonGroup2.add(social);
         setControlInfr();
@@ -81,8 +83,8 @@ public class PanelNewProject extends JPanel {
         anadirRestricciones();
 
         /* modificacion de fuentes */
-        title = EditFont.setSize(title, 24);
-        title = EditFont.bold(title);
+        EditFont.setSize(title, 24);
+        EditFont.bold(title);
 
         this.add(title);
         this.add(crearComo);
@@ -365,5 +367,21 @@ public class PanelNewProject extends JPanel {
     public void setControlProponerProyecto(ActionListener c){
         button.addActionListener(c);
     }
+
+    /**
+     * Vacia los campos de texto para que la proxima vez que se cree un proyecto,
+     * estos aparezan vacios
+     */
+	public void emptyFields() {
+        buttonGroup1.clearSelection();
+        colectivos.setVisible(false);
+        buttonGroup2.clearSelection();
+        ((CardLayout)grupoDistrito.getLayout()).show(grupoDistrito,"nada");
+        ((CardLayout)ambitoFoto.getLayout()).show(ambitoFoto,"nada");
+        nombre.setText("");
+        coste.setText("");
+        desc.setText("");
+        infrImage = null;
+	}
 
 }

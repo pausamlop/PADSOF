@@ -6,6 +6,7 @@ import across.control.user.*;
 import across.gui.start.*;
 import across.gui.user.*;
 import across.gui.admin.*;
+import across.gui.general.*;
 import across.model.application.Application;
 
 import javax.swing.*;
@@ -30,6 +31,8 @@ public class MainFrame extends JFrame{
     private PanelInicioAdmin inicioAdmin = new PanelInicioAdmin();
     private PanelNewCollective nuevoColectivo = new PanelNewCollective();
     private PanelNewProject nuevoProyecto = new PanelNewProject();
+    
+    private PanelDisplayProject displayProject = new PanelDisplayProject();
 
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
@@ -37,6 +40,7 @@ public class MainFrame extends JFrame{
     private ControladorRegistro contRegistro;
 
     private ControladorUserCrearProyecto contUserCrearProyecto;
+    private ControladorUserDisplayProject contUserDisplayProject;
 
     private ControladorNewProject contNuevoProyecto;
     private ControladorLoadImage contCargarImagen;
@@ -81,6 +85,7 @@ public class MainFrame extends JFrame{
         contentPane.add(inicioUser, "inicioUser");
         contentPane.add(nuevoColectivo, "nuevoColectivo");
         contentPane.add(nuevoProyecto, "nuevoProyecto");
+        contentPane.add(displayProject, "displayProject");
 
         /* PANELES DEL ADMINISTRADOR */
         contentPane.add(inicioAdmin, "inicioAdmin");
@@ -139,6 +144,15 @@ public class MainFrame extends JFrame{
      */
     public PanelNewProject getNewProject(){
         return nuevoProyecto;
+    }
+    
+    /**
+     * Devuelve el panel de visualizar proyecto
+     * 
+     * @return panel de visualizar proyecto
+     */
+    public PanelDisplayProject getDisplayProject(){
+        return displayProject;
     }
 
     /**
@@ -199,6 +213,9 @@ public class MainFrame extends JFrame{
     private void controladorUser(Controlador controlador){
         this.contUserCrearProyecto = controlador.getUserCrearProyecto();
         inicioUser.setControlCrearProyecto(contUserCrearProyecto);
+        
+        this.contUserDisplayProject = controlador.getUserDisplayProject();
+        inicioUser.setControlVerProyecto(contUserDisplayProject);
     }
 
     /**

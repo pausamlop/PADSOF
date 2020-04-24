@@ -48,8 +48,8 @@ public class PanelNewCollective extends JPanel {
         spring.putConstraint(SpringLayout.SOUTH, title, -80, SpringLayout.NORTH, centro);
         spring.putConstraint(SpringLayout.NORTH, button, 35, SpringLayout.SOUTH, centro);
 
-	    title = EditFont.setSize(title, 20);
-        title = EditFont.bold(title);
+	    EditFont.setSize(title, 20);
+        EditFont.bold(title);
         this.add(title);
         this.add(centro);
         this.add(button);

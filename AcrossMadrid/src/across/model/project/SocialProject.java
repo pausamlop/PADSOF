@@ -67,11 +67,11 @@ public class SocialProject extends Project {
 
     @Override
     public String toString(){
-        String resumen = super.toString();
-        resumen += "\n      PROYECTO TIPO SOCIAL";
-        resumen += "\n      + Ambito: " + type.name();
-        resumen += "\n      + Dirigido a: " + group;
-        return resumen;
+//        String resumen = super.toString();
+//        resumen += "\n      PROYECTO TIPO SOCIAL";
+//        resumen += "\n      + Ambito: " + type.name();
+//        resumen += "\n      + Dirigido a: " + group;
+        return super.toString();
     }
 
 }

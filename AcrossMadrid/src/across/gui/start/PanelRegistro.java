@@ -45,9 +45,9 @@ public class PanelRegistro extends JPanel {
         spring.putConstraint(SpringLayout.NORTH, desc, 10, SpringLayout.SOUTH, title);
         spring.putConstraint(SpringLayout.NORTH, button, 35, SpringLayout.SOUTH, centro);
         
-        title = EditFont.setSize(title, 32);
-        title = EditFont.bold(title);
-        desc = EditFont.setSize(desc, 20);
+        EditFont.setSize(title, 32);
+        EditFont.bold(title);
+        EditFont.setSize(desc, 20);
         this.add(title);
         this.add(desc);
         this.add(centro);

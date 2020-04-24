@@ -21,6 +21,7 @@ public class Controlador {
     private ControladorRegistro reg;
 
     private ControladorUserCrearProyecto userCrearProyecto;
+    private ControladorUserDisplayProject userDisplayProject;
 
     private ControladorNewProject nuevoProyecto;
     private ControladorLoadImage cargarImagen;
@@ -50,6 +51,7 @@ public class Controlador {
         reg = new ControladorRegistro(frame, model);
 
         userCrearProyecto = new ControladorUserCrearProyecto(frame, model);
+        userDisplayProject = new ControladorUserDisplayProject(frame, model);
 
         nuevoProyecto = new ControladorNewProject(frame, model);
         cargarImagen = new ControladorLoadImage(frame, model);
@@ -118,6 +120,14 @@ public class Controlador {
         return userCrearProyecto;
     }
     
+    /**
+     * Devuelve el controlador que lleva del panel inicial del usuario al de visualizar proyecto
+     * 
+     * @return controlador de inicio a visualizar proyecto
+     */
+    public ControladorUserDisplayProject getUserDisplayProject(){
+        return userDisplayProject;
+    }
     
 
 }
