@@ -25,6 +25,9 @@ public class Controlador {
 
     private ControladorNewProject nuevoProyecto;
     private ControladorLoadImage cargarImagen;
+    
+    private ControladorNewCollective nuevoColectivo;
+    private ControladorUserCrearColectivo userCrearColectivo;
 
     private MainFrame frame;
     private Application model;
@@ -55,6 +58,9 @@ public class Controlador {
 
         nuevoProyecto = new ControladorNewProject(frame, model);
         cargarImagen = new ControladorLoadImage(frame, model);
+        
+        userCrearColectivo = new ControladorUserCrearColectivo(frame, model);
+        nuevoColectivo = new ControladorNewCollective(frame, model);
     }
 
     /**
@@ -129,5 +135,22 @@ public class Controlador {
         return userDisplayProject;
     }
     
+    /**
+     * Devuelve el controlador que maneja la creacion de un proyecto nuevo
+     * 
+     * @return controlador para crear proyectos
+     */
+    public ControladorNewCollective getNuevoColectivo(){
+        return nuevoColectivo;
+    }
+    
+    /**
+     * Devuelve el controlador que lleva del panel inicial del usuario al de crear proyecto
+     * 
+     * @return controlador de inicio a crear proyecto
+     */
+    public ControladorUserCrearColectivo getUserCrearColectivo(){
+        return userCrearColectivo;
+    }
 
 }
