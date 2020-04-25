@@ -19,6 +19,7 @@ import java.awt.event.*;
 public class PanelInicioUser extends JPanel{
 
     private JButton crearProyecto = new JButton("Crear proyecto");
+    private JButton crearColectivo = new JButton("Crear Colectivo");
     
     //para probar
     private JComboBox<Project> proyectos; 
@@ -30,11 +31,16 @@ public class PanelInicioUser extends JPanel{
     	this.add(verProyecto);
     	
         this.add(crearProyecto);
+        this.add(crearColectivo);
         
     }
     
     public void setControlCrearProyecto(ActionListener c){
         crearProyecto.addActionListener(c);
+    }
+    
+    public void setControlCrearColectivo(ActionListener c){
+        crearColectivo.addActionListener(c);
     }
     
     public void setControlVerProyecto(ActionListener c){
