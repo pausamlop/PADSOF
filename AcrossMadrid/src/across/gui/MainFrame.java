@@ -44,6 +44,9 @@ public class MainFrame extends JFrame{
 
     private ControladorNewProject contNuevoProyecto;
     private ControladorLoadImage contCargarImagen;
+    
+    private ControladorNewCollective contNuevoColectivo;
+    private ControladorUserCrearColectivo contUserCrearColectivo;
 
     private JPanel contentPane;
 
@@ -147,6 +150,15 @@ public class MainFrame extends JFrame{
     }
     
     /**
+     * Devuelve el panel de crear colectivo
+     * 
+     * @return panel de crear colectivo
+     */
+    public PanelNewCollective getNewCollective(){
+        return nuevoColectivo;
+    }
+    
+    /**
      * Devuelve el panel de visualizar proyecto
      * 
      * @return panel de visualizar proyecto
@@ -170,6 +182,8 @@ public class MainFrame extends JFrame{
         controladorUser(controlador);
         controladorNuevoProyecto(controlador);
         controladorCargarImagen(controlador);
+        
+        controladorNuevoColectivo(controlador);
 
     }
     
@@ -214,6 +228,9 @@ public class MainFrame extends JFrame{
         this.contUserCrearProyecto = controlador.getUserCrearProyecto();
         inicioUser.setControlCrearProyecto(contUserCrearProyecto);
         
+        this.contUserCrearColectivo = controlador.getUserCrearColectivo();
+        inicioUser.setControlCrearColectivo(contUserCrearColectivo);
+        
         this.contUserDisplayProject = controlador.getUserDisplayProject();
         inicioUser.setControlVerProyecto(contUserDisplayProject);
     }
@@ -236,5 +253,15 @@ public class MainFrame extends JFrame{
     private void controladorCargarImagen(Controlador controlador){
         this.contCargarImagen = controlador.getCargarImagen();
         nuevoProyecto.setControlFoto(contCargarImagen);
+    }
+    
+    /**
+     * Establece los controladors del panel de crear proyecto
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorNuevoColectivo(Controlador controlador){
+        this.contNuevoColectivo = controlador.getNuevoColectivo();
+        nuevoColectivo.setControlCreateCollective(contNuevoColectivo);
     }
 }
