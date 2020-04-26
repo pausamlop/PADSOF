@@ -2,6 +2,9 @@ package across.control;
 
 import across.model.application.Application;
 import across.gui.MainFrame;
+import across.control.admin.ControladorAdminConfig;
+import across.control.admin.ControladorAdminProyectos;
+import across.control.admin.ControladorAdminUsuarios;
 import across.control.start.*;
 import across.control.user.*;
 
@@ -22,12 +25,13 @@ public class Controlador {
 
     private ControladorUserCrearProyecto userCrearProyecto;
     private ControladorUserDisplayProject userDisplayProject;
+    
+    private ControladorAdminUsuarios adminUsuarios;
+    private ControladorAdminConfig adminConfig;
+    private ControladorAdminProyectos adminProyectos;
 
     private ControladorNewProject nuevoProyecto;
     private ControladorLoadImage cargarImagen;
-    
-    private ControladorNewCollective nuevoColectivo;
-    private ControladorUserCrearColectivo userCrearColectivo;
 
     private MainFrame frame;
     private Application model;
@@ -55,12 +59,13 @@ public class Controlador {
 
         userCrearProyecto = new ControladorUserCrearProyecto(frame, model);
         userDisplayProject = new ControladorUserDisplayProject(frame, model);
+        
+        adminUsuarios = new ControladorAdminUsuarios(frame, model);
+        adminConfig = new ControladorAdminConfig(frame, model);
+        adminProyectos = new ControladorAdminProyectos(frame, model);
 
         nuevoProyecto = new ControladorNewProject(frame, model);
         cargarImagen = new ControladorLoadImage(frame, model);
-        
-        userCrearColectivo = new ControladorUserCrearColectivo(frame, model);
-        nuevoColectivo = new ControladorNewCollective(frame, model);
     }
 
     /**
@@ -136,21 +141,26 @@ public class Controlador {
     }
     
     /**
-     * Devuelve el controlador que maneja la creacion de un proyecto nuevo
+     * Devuelve el controladro que lleva de la pantalla inicial del admin a la pantalla de gestion de usuarios
      * 
-     * @return controlador para crear proyectos
+     * @return controlador de inicioadmin a adminUsuarios
      */
-    public ControladorNewCollective getNuevoColectivo(){
-        return nuevoColectivo;
+    public ControladorAdminUsuarios getAdminUsuarios() {
+    	return adminUsuarios;
     }
     
     /**
-     * Devuelve el controlador que lleva del panel inicial del usuario al de crear proyecto
+     * Devuelve el controladro que lleva de la pantalla inicial del admin a la pantalla de configuracion
      * 
-     * @return controlador de inicio a crear proyecto
+     * @return controlador de inicioadmin a adminConfig
      */
-    public ControladorUserCrearColectivo getUserCrearColectivo(){
-        return userCrearColectivo;
+    public ControladorAdminConfig getAdminConfig() {
+    	return adminConfig;
     }
+    
+    public ControladorAdminProyectos getAdminProyectos() {
+    	return adminProyectos;
+    }
+    
 
 }

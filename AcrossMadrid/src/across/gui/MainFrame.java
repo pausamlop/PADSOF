@@ -1,6 +1,9 @@
 package across.gui;
 
 import across.control.*;
+import across.control.admin.ControladorAdminConfig;
+import across.control.admin.ControladorAdminProyectos;
+import across.control.admin.ControladorAdminUsuarios;
 import across.control.start.*;
 import across.control.user.*;
 import across.gui.start.*;
@@ -33,6 +36,9 @@ public class MainFrame extends JFrame{
     private PanelNewProject nuevoProyecto = new PanelNewProject();
     
     private PanelDisplayProject displayProject = new PanelDisplayProject();
+    
+    private PanelAdminUsuarios adminUsuarios = new PanelAdminUsuarios();
+    private PanelAdminConfig adminConfig = new PanelAdminConfig();
 
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
@@ -41,12 +47,13 @@ public class MainFrame extends JFrame{
 
     private ControladorUserCrearProyecto contUserCrearProyecto;
     private ControladorUserDisplayProject contUserDisplayProject;
-
+    
+    private ControladorAdminUsuarios contAdminUsuarios;
+    private ControladorAdminConfig contAdminConfig;
+    private ControladorAdminProyectos contAdminProyectos;
+    
     private ControladorNewProject contNuevoProyecto;
     private ControladorLoadImage contCargarImagen;
-    
-    private ControladorNewCollective contNuevoColectivo;
-    private ControladorUserCrearColectivo contUserCrearColectivo;
 
     private JPanel contentPane;
 
@@ -92,7 +99,8 @@ public class MainFrame extends JFrame{
 
         /* PANELES DEL ADMINISTRADOR */
         contentPane.add(inicioAdmin, "inicioAdmin");
-
+        contentPane.add(adminUsuarios, "adminUsuarios");
+        contentPane.add(adminConfig, "adminConfig");
     }
 
     /**
@@ -139,6 +147,24 @@ public class MainFrame extends JFrame{
     public PanelInicioAdmin getInicioAdmin(){
         return inicioAdmin;
     }
+    
+    /**
+     * Devuelve el panel de usuarios del administrador
+     * 
+     * @return panel de usuarios del admin
+     */
+    public PanelAdminUsuarios getAdminUsuarios(){
+        return adminUsuarios;
+    }
+    
+    /**
+     * Devuelve el panel de configuracion del administrador
+     * 
+     * @return panel de configuracion del admin
+     */
+    public PanelAdminConfig getAdminConfig(){
+        return adminConfig;
+    }
 
     /**
      * Devuelve el panel de crear proyecto
@@ -147,15 +173,6 @@ public class MainFrame extends JFrame{
      */
     public PanelNewProject getNewProject(){
         return nuevoProyecto;
-    }
-    
-    /**
-     * Devuelve el panel de crear colectivo
-     * 
-     * @return panel de crear colectivo
-     */
-    public PanelNewCollective getNewCollective(){
-        return nuevoColectivo;
     }
     
     /**
@@ -180,10 +197,12 @@ public class MainFrame extends JFrame{
         controladorLogin(controlador);
 
         controladorUser(controlador);
+        
+        controladorAdmin(controlador);
+        controladorAdminConfig(controlador);
+        
         controladorNuevoProyecto(controlador);
         controladorCargarImagen(controlador);
-        
-        controladorNuevoColectivo(controlador);
 
     }
     
@@ -228,11 +247,30 @@ public class MainFrame extends JFrame{
         this.contUserCrearProyecto = controlador.getUserCrearProyecto();
         inicioUser.setControlCrearProyecto(contUserCrearProyecto);
         
-        this.contUserCrearColectivo = controlador.getUserCrearColectivo();
-        inicioUser.setControlCrearColectivo(contUserCrearColectivo);
-        
         this.contUserDisplayProject = controlador.getUserDisplayProject();
         inicioUser.setControlVerProyecto(contUserDisplayProject);
+    }
+    
+    /**
+     * Establece los controladores del panel inicial de usuario
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorAdmin(Controlador controlador){
+        this.contAdminUsuarios = controlador.getAdminUsuarios();
+        inicioAdmin.setControlAdminUsuarios(contAdminUsuarios);
+        
+        this.contAdminConfig = controlador.getAdminConfig();
+        inicioAdmin.setControlAdminConfig(contAdminConfig);
+    }
+    
+    private void controladorAdminConfig(Controlador controlador) {
+    	this.contAdminUsuarios = controlador.getAdminUsuarios();
+    	adminConfig.setControlAdminUsuarios(contAdminUsuarios);
+    	
+    	this.contAdminProyectos = controlador.getAdminProyectos();
+    	adminConfig.setControlAdminProyectos(contAdminProyectos);
+    	
     }
 
     /**
@@ -253,15 +291,5 @@ public class MainFrame extends JFrame{
     private void controladorCargarImagen(Controlador controlador){
         this.contCargarImagen = controlador.getCargarImagen();
         nuevoProyecto.setControlFoto(contCargarImagen);
-    }
-    
-    /**
-     * Establece los controladors del panel de crear proyecto
-     * 
-     * @param controlador objeto controlador general
-     */
-    private void controladorNuevoColectivo(Controlador controlador){
-        this.contNuevoColectivo = controlador.getNuevoColectivo();
-        nuevoColectivo.setControlCreateCollective(contNuevoColectivo);
     }
 }
