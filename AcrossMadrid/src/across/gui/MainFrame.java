@@ -1,11 +1,11 @@
 package across.gui;
 
 import across.control.*;
-import across.control.admin.ControladorAdminConfig;
-import across.control.admin.ControladorAdminProyectos;
-import across.control.admin.ControladorAdminUsuarios;
+import across.control.admin.*;
+import across.control.menu.*;
 import across.control.start.*;
 import across.control.user.*;
+import across.control.user.project.*;
 import across.gui.start.*;
 import across.gui.user.*;
 import across.gui.admin.*;
@@ -27,33 +27,47 @@ import java.awt.*;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
 
+    private UserMenu userMenu = new UserMenu();
+
+    /****************** PANELES ******************/
     private PanelInicio inicio = new PanelInicio();
     private PanelRegistro registro = new PanelRegistro();
     private PanelLogin login = new PanelLogin();
+    /* user */
     private PanelInicioUser inicioUser = new PanelInicioUser();
-    private PanelInicioAdmin inicioAdmin = new PanelInicioAdmin();
     private PanelNewCollective nuevoColectivo = new PanelNewCollective();
     private PanelNewProject nuevoProyecto = new PanelNewProject();
-    
-    private PanelDisplayProject displayProject = new PanelDisplayProject();
-    
+    /* admin */
+    private PanelInicioAdmin inicioAdmin = new PanelInicioAdmin();
     private PanelAdminUsuarios adminUsuarios = new PanelAdminUsuarios();
     private PanelAdminConfig adminConfig = new PanelAdminConfig();
-
+    /* generales */
+    private PanelDisplayProject displayProject = new PanelDisplayProject();
+    
+    /*************** CONTROLADORES ***************/
+    /* inicio */
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
     private ControladorLogin contLogin;
     private ControladorRegistro contRegistro;
-
+    /* menu user */
+    private ControladorToInicio contToInicio;
+    private ControladorToPerfil contToPerfil;
+    /* inicio user */
     private ControladorUserCrearProyecto contUserCrearProyecto;
     private ControladorUserDisplayProject contUserDisplayProject;
-    
+    /* crear proyecto */
+    private ControladorNewProject contNuevoProyecto;
+    private ControladorLoadImage contCargarImagen;
+    /* display proyecto */
+    private ControladorVotar contVotar;
+    private ControladorSeguir contSeguir;
+    private ControladorDejarSeguir contDejarSeguir;
+    /* inicio admin */
     private ControladorAdminUsuarios contAdminUsuarios;
     private ControladorAdminConfig contAdminConfig;
     private ControladorAdminProyectos contAdminProyectos;
-    
-    private ControladorNewProject contNuevoProyecto;
-    private ControladorLoadImage contCargarImagen;
+
 
     private JPanel contentPane;
 
@@ -196,13 +210,13 @@ public class MainFrame extends JFrame{
         controladorRegistro(controlador);
         controladorLogin(controlador);
 
+        controladorMenuUser(controlador);
         controladorUser(controlador);
+        controladorNuevoProyecto(controlador);
         
         controladorAdmin(controlador);
         controladorAdminConfig(controlador);
         
-        controladorNuevoProyecto(controlador);
-        controladorCargarImagen(controlador);
 
     }
     
@@ -250,6 +264,19 @@ public class MainFrame extends JFrame{
         this.contUserDisplayProject = controlador.getUserDisplayProject();
         inicioUser.setControlVerProyecto(contUserDisplayProject);
     }
+
+    /**
+     * Establece los controladors del menu del usuario
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorMenuUser(Controlador controlador){
+        this.contToInicio = controlador.getToInicio();
+        userMenu.setControlToInicio(contToInicio);
+        
+        this.contToPerfil = controlador.getToPerfil();
+        userMenu.setControlToPerfil(contToPerfil);
+    }
     
     /**
      * Establece los controladores del panel inicial de usuario
@@ -279,17 +306,25 @@ public class MainFrame extends JFrame{
      * @param controlador objeto controlador general
      */
     private void controladorNuevoProyecto(Controlador controlador){
+        this.contCargarImagen = controlador.getCargarImagen();
+        nuevoProyecto.setControlFoto(contCargarImagen);
+
         this.contNuevoProyecto = controlador.getNuevoProyecto();
         nuevoProyecto.setControlProponerProyecto(contNuevoProyecto);
     }
 
     /**
-     * Establece los controladors de cargar imagen del panel crear proyecto 
+     * Establece los controladors del panel DisplayProject
      * 
      * @param controlador objeto controlador general
      */
-    private void controladorCargarImagen(Controlador controlador){
-        this.contCargarImagen = controlador.getCargarImagen();
-        nuevoProyecto.setControlFoto(contCargarImagen);
+    private void controladorDisplayProject(Controlador controlador) {
+        this.contVotar = controlador.getVotar();
+        displayProject.setControlVotar(contVotar);
+        this.contSeguir = controlador.getSeguir();
+        displayProject.setControlSeguir(contSeguir);
+        this.contDejarSeguir = controlador.getDejarSeguir();
+        displayProject.setControlDejarSeguir(contDejarSeguir);
     }
+
 }

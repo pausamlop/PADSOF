@@ -11,6 +11,7 @@ import across.model.project.*;
 import across.model.user.User;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -173,6 +174,15 @@ public class PanelDisplayProject extends JPanel{
 
         spring.putConstraint(SpringLayout.EAST, image, -10, SpringLayout.WEST, descLabel);
     }
+
+    /**
+     * Devuelve el proyecto asociado al panel
+     * 
+     * @return proyecto
+     */
+    public Project getProject() {
+		return project;
+	}
     
     /**
      * Establece el proyecto a visualizar en este panel
@@ -180,7 +190,14 @@ public class PanelDisplayProject extends JPanel{
      * @param project proyecto a visualizar
      */
     public void setProject(Project project) {
-    	this.project = project;
+        this.project = project;
+        update();
+    }
+
+    /**
+     * Actualiza el panel
+     */
+    public void update(){
     	updateButtons();
     	updateProjectInfo();
     }
@@ -204,7 +221,7 @@ public class PanelDisplayProject extends JPanel{
     		if (user.getVotedProjects().contains(project))
     			votar.setEnabled(false);
     		else
-    			votar.setEnabled(false);		
+    			votar.setEnabled(true);		
         }
         else{
             ((CardLayout)buttons.getLayout()).show(buttons,"admin");
@@ -259,6 +276,51 @@ public class PanelDisplayProject extends JPanel{
 		tipo.setText(tipoInfo);
 		
 		desc.setText(project.getDescription());
-	}
+    }
+    
+    /**
+     * Establece el control del boton de votar
+     * 
+     * @param c accion que activa el boton
+     */
+    public void setControlVotar(ActionListener c){
+        votar.addActionListener(c);
+    }
+
+    /**
+     * Establece el control del boton de seguir
+     * 
+     * @param c accion que activa el boton
+     */
+    public void setControlSeguir(ActionListener c){
+        seguir.addActionListener(c);
+    }
+
+    /**
+     * Establece el control del boton de dejar de seguir
+     * 
+     * @param c accion que activa el boton
+     */
+    public void setControlDejarSeguir(ActionListener c){
+        dejarSeguir.addActionListener(c);
+    }
+
+    /**
+     * Establece el control del boton de aceptar
+     * 
+     * @param c accion que activa el boton
+     */
+    public void setControlDejarAceptar(ActionListener c){
+        aceptar.addActionListener(c);
+    }
+
+    /**
+     * Establece el control del boton de rechazar
+     * 
+     * @param c accion que activa el boton
+     */
+    public void setControlRechazar(ActionListener c){
+        rechazar.addActionListener(c);
+    }
 
 }

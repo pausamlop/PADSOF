@@ -2,11 +2,13 @@ package across.control;
 
 import across.model.application.Application;
 import across.gui.MainFrame;
+import across.control.menu.*;
 import across.control.admin.ControladorAdminConfig;
 import across.control.admin.ControladorAdminProyectos;
 import across.control.admin.ControladorAdminUsuarios;
 import across.control.start.*;
 import across.control.user.*;
+import across.control.user.project.*;
 
 /**
  * Clase Controlador
@@ -18,20 +20,34 @@ import across.control.user.*;
  */
 public class Controlador {
 
+    /* inicio de la app */
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
     private ControladorLogin login;
     private ControladorRegistro reg;
 
+    /* menu de user */
+    private ControladorToInicio toInicio;
+    private ControladorToPerfil toPerfil;
+
+    /* inicio de User */
     private ControladorUserCrearProyecto userCrearProyecto;
     private ControladorUserDisplayProject userDisplayProject;
     
+    /* control nuevo proyecto */
+    private ControladorNewProject nuevoProyecto;
+    private ControladorLoadImage cargarImagen;
+
+    /* botones de DisplayProject */
+    private ControladorVotar votar;
+    private ControladorSeguir seguir;
+    private ControladorDejarSeguir dejarSeguir;
+
+    /* inicio de admin */
     private ControladorAdminUsuarios adminUsuarios;
     private ControladorAdminConfig adminConfig;
     private ControladorAdminProyectos adminProyectos;
 
-    private ControladorNewProject nuevoProyecto;
-    private ControladorLoadImage cargarImagen;
 
     private MainFrame frame;
     private Application model;
@@ -52,18 +68,31 @@ public class Controlador {
      * Crea todos los controladores de la aplicacion
      */
     private void setupControladores(){
+        /* inicio de la app */
         inicioRegistro = new ControladorInicioRegistro(frame, model);
         inicioLogin = new ControladorInicioLogin(frame, model);
         login = new ControladorLogin(frame, model);
         reg = new ControladorRegistro(frame, model);
 
+        /* menu user */
+        toInicio = new ControladorToInicio(frame, model);
+        toPerfil = new ControladorToPerfil(frame, model);
+
+        /* inicio de user */
         userCrearProyecto = new ControladorUserCrearProyecto(frame, model);
         userDisplayProject = new ControladorUserDisplayProject(frame, model);
-        
+
+        /* display proyecto */
+        votar = new ControladorVotar(frame, model);
+        seguir = new ControladorSeguir(frame, model);
+        dejarSeguir = new ControladorDejarSeguir(frame, model);
+
+        /* inicio de admin */
         adminUsuarios = new ControladorAdminUsuarios(frame, model);
         adminConfig = new ControladorAdminConfig(frame, model);
         adminProyectos = new ControladorAdminProyectos(frame, model);
 
+        /* nuevo proyecto */
         nuevoProyecto = new ControladorNewProject(frame, model);
         cargarImagen = new ControladorLoadImage(frame, model);
     }
@@ -105,6 +134,24 @@ public class Controlador {
     }
 
     /**
+     * Devuelve el controlador que lleva a la pantalla principal de usuario
+     * 
+     * @return controlador de inicio
+     */
+    public ControladorToInicio getToInicio(){
+        return this.toInicio;
+    }
+
+    /**
+     * Devuelve el controlador que lleva al perfil del usuario
+     * 
+     * @return controlador de perfil
+     */
+    public ControladorToPerfil getToPerfil(){
+        return this.toPerfil;
+    }
+
+    /**
      * Devuelve el controlador que maneja la creacion de un proyecto nuevo
      * 
      * @return controlador para crear proyectos
@@ -138,6 +185,33 @@ public class Controlador {
      */
     public ControladorUserDisplayProject getUserDisplayProject(){
         return userDisplayProject;
+    }
+
+    /**
+     * Devuelve el controlador que permite votar un proyecto
+     * 
+     * @return controlador de votar proyecto
+     */
+    public ControladorVotar getVotar(){
+        return votar;
+    }
+
+    /**
+     * Devuelve el controlador que permite seguir un proyecto
+     * 
+     * @return controlador de votar proyecto
+     */
+    public ControladorSeguir getSeguir(){
+        return seguir;
+    }
+
+    /**
+     * Devuelve el controlador que permite votar un proyecto
+     * 
+     * @return controlador de votar proyecto
+     */
+    public ControladorDejarSeguir getDejarSeguir(){
+        return dejarSeguir;
     }
     
     /**
