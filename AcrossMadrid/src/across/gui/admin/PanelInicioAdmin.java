@@ -25,7 +25,11 @@ public class PanelInicioAdmin extends JPanel{
     	JRadioButton usuarios = new JRadioButton("Usuarios");
     	JRadioButton config = new JRadioButton("Configuracion");
     	
+    	JTable aux;
+    	
     	ButtonGroup grupo = new ButtonGroup();
+    	
+    	JButton guardarCambios = new JButton("Guardar"); 
     	
     	JLabel adminIni = new JLabel("Administrador");
     	JLabel proyectsPanel = new JLabel("Proyectos");
@@ -50,7 +54,7 @@ public class PanelInicioAdmin extends JPanel{
         
     		/*Tablas*/
         	
-            JTable aux = new JTable(new TablaProyectos());
+            aux = new JTable(new TablaProyectos());
             aux.setPreferredScrollableViewportSize(new Dimension(450, 70));
             aux.setFillsViewportHeight(true);
 
@@ -74,6 +78,9 @@ public class PanelInicioAdmin extends JPanel{
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, config, 75, SpringLayout.VERTICAL_CENTER, this);
     		layout.putConstraint(SpringLayout.WEST, config, 5, SpringLayout.WEST, this);
     		
+    		layout.putConstraint(SpringLayout.EAST, guardarCambios, 0, SpringLayout.EAST, table);
+    		layout.putConstraint(SpringLayout.NORTH, guardarCambios, 20, SpringLayout.SOUTH, table);
+    		
     		/*Tabla*/
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, table, 0, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, table, 0, SpringLayout.VERTICAL_CENTER, this);
@@ -84,6 +91,7 @@ public class PanelInicioAdmin extends JPanel{
     		this.add(proyectos);
     		this.add(usuarios);
     		this.add(config);
+    		this.add(guardarCambios);
     		
     		this.add(table);
     		
@@ -126,6 +134,14 @@ public class PanelInicioAdmin extends JPanel{
     
     public void setControlAdminConfig(ActionListener c){
         config.addActionListener(c);
+    }
+    
+    public void setControlAdminGuardar(ActionListener c){
+        guardarCambios.addActionListener(c);
+    }
+    
+    public void setProyectosButton() {
+    	proyectos.setSelected(true);
     }
     	
     

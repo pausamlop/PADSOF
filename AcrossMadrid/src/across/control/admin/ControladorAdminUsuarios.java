@@ -31,6 +31,7 @@ public class ControladorAdminUsuarios implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
+    	frame.getAdminUsuarios().setUsuariosButton();
         this.frame.showPanel("adminUsuarios");
     }
 }

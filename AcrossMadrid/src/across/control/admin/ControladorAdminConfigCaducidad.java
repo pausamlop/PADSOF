@@ -4,11 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import across.gui.MainFrame;
-import across.gui.admin.PanelInicioAdmin;
+import across.gui.admin.PanelAdminConfig;
 import across.model.application.Application;
 
-public class ControladorAdminConfig implements ActionListener{
-	private PanelInicioAdmin inicioAdmin;
+public class ControladorAdminConfigCaducidad implements ActionListener{
+	private PanelAdminConfig adminConfig;
     private MainFrame frame;
     private Application model;
 
@@ -18,10 +18,10 @@ public class ControladorAdminConfig implements ActionListener{
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
      */
-    public ControladorAdminConfig (MainFrame frame, Application model){
+    public ControladorAdminConfigCaducidad(MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.inicioAdmin = frame.getInicioAdmin();
+        this.adminConfig = frame.getAdminConfig();
     }
 
     /**
@@ -31,8 +31,14 @@ public class ControladorAdminConfig implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
+    	
+    	Integer newMinVotes = Integer.parseInt(adminConfig.getCaducidad().trim());
+    	
+    	Application.getApplication().setDaysExpiration(newMinVotes);
+    	
+    	//frame.setPanelAdminConfig(new PanelAdminConfig());
+    	
     	frame.getAdminConfig().setConfigButton();
         this.frame.showPanel("adminConfig");
     }
 }
-

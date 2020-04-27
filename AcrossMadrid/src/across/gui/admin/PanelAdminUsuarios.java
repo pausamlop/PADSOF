@@ -2,6 +2,7 @@ package across.gui.admin;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -53,7 +54,6 @@ public class PanelAdminUsuarios extends JPanel{
     		grupo.add(proyectos);
     		grupo.add(usuarios);
     		grupo.add(config);
-        	usuarios.setSelected(true);
         	
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, proyectos, -75, SpringLayout.VERTICAL_CENTER, this);
     		layout.putConstraint(SpringLayout.WEST, proyectos, 5, SpringLayout.WEST, this);
@@ -128,5 +128,18 @@ public class PanelAdminUsuarios extends JPanel{
         	filtro = buscador.getText();
         	trsfiltro.setRowFilter(RowFilter.regexFilter(buscador.getText(), 0));
         	}
-    
+        
+        public void setControlAdminConfig(ActionListener c){
+        	usuarios.setSelected(true);
+            config.addActionListener(c);
+        }
+    	
+    	public void setControlAdminProyectos(ActionListener c){
+    		usuarios.setSelected(true);
+            proyectos.addActionListener(c);
+        }
+    	
+    	public void setUsuariosButton() {
+    		usuarios.setSelected(true);
+    	}
 }

@@ -4,10 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import across.gui.MainFrame;
+import across.gui.admin.PanelAdminConfig;
 import across.gui.admin.PanelInicioAdmin;
 import across.model.application.Application;
 
-public class ControladorAdminConfig implements ActionListener{
+public class ControladorAdminProyectosGuardar implements ActionListener{
 	private PanelInicioAdmin inicioAdmin;
     private MainFrame frame;
     private Application model;
@@ -18,7 +19,7 @@ public class ControladorAdminConfig implements ActionListener{
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
      */
-    public ControladorAdminConfig (MainFrame frame, Application model){
+    public ControladorAdminProyectosGuardar(MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
         this.inicioAdmin = frame.getInicioAdmin();
@@ -31,8 +32,8 @@ public class ControladorAdminConfig implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-    	frame.getAdminConfig().setConfigButton();
-        this.frame.showPanel("adminConfig");
+    	
+    	frame.getInicioAdmin().setProyectosButton();
+        this.frame.showPanel("inicioAdmin");
     }
 }
-

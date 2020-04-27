@@ -50,7 +50,7 @@ public class TablaUsuarios extends AbstractTableModel{
 				
 				validar.add(true);
 				
-			}
+			} 
 		}
 
 	}

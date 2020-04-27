@@ -199,6 +199,18 @@ public class Application implements Serializable{
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
+    
+    public Project getProjectByName(String name) {
+    	for(Project aux : nonValidatedProjects) {
+    		if(aux.getName().equals(name)) {
+    			return aux;
+    		}
+    	}
+    	
+    	
+    	
+    	return null;
+    }
 
     /**
      * Metodo para añadir un usuario en cuestion al array de usuarios registrados de la app

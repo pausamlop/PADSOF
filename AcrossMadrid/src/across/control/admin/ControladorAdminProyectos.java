@@ -32,6 +32,7 @@ public class ControladorAdminProyectos implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
+    	frame.getInicioAdmin().setProyectosButton();
         this.frame.showPanel("inicioAdmin");
     }
 }

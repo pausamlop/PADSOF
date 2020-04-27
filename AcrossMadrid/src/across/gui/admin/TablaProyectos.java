@@ -17,6 +17,8 @@ public class TablaProyectos extends AbstractTableModel{
 	private ArrayList<String> validar = new ArrayList<>();
 	private String[] titulos = {"Proyectos", "Nº de votos", "Estado", "Validar"};
 	
+	private Application app = Application.getApplication();
+	
 	
 	public TablaProyectos() {
 		
@@ -72,8 +74,21 @@ public class TablaProyectos extends AbstractTableModel{
 	
 	public void setValueAt(Object value, int row, int col) {	
 		if(col == 3) {
-			validar.set(row,(String)value);
-			fireTableCellUpdated(row, col);
+			Project aux = app.getProjectByName(nombres.get(row));
+			
+			if(((String)value).equals("Validar")) {
+				aux.validate();
+				
+				estado.set(row, aux.getProjectState());
+				validar.set(row,"Validado");
+				fireTableCellUpdated(row, col);
+			}else {
+				aux.reject();
+				
+				estado.set(row, aux.getProjectState());
+				validar.set(row,"Rechazado");
+				fireTableCellUpdated(row, col);
+			}
 		}
     }
 	

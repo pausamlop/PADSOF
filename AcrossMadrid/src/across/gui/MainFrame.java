@@ -2,10 +2,10 @@ package across.gui;
 
 import across.control.*;
 import across.control.admin.*;
-import across.control.menu.*;
+//import across.control.menu.*;
 import across.control.start.*;
 import across.control.user.*;
-import across.control.user.project.*;
+//import across.control.user.project.*;
 import across.gui.start.*;
 import across.gui.user.*;
 import across.gui.admin.*;
@@ -27,7 +27,7 @@ import java.awt.*;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
 
-    private UserMenu userMenu = new UserMenu();
+    //private UserMenu userMenu = new UserMenu();
 
     /****************** PANELES ******************/
     private PanelInicio inicio = new PanelInicio();
@@ -51,8 +51,8 @@ public class MainFrame extends JFrame{
     private ControladorLogin contLogin;
     private ControladorRegistro contRegistro;
     /* menu user */
-    private ControladorToInicio contToInicio;
-    private ControladorToPerfil contToPerfil;
+    /*private ControladorToInicio contToInicio;
+    private ControladorToPerfil contToPerfil;*/
     /* inicio user */
     private ControladorUserCrearProyecto contUserCrearProyecto;
     private ControladorUserDisplayProject contUserDisplayProject;
@@ -60,13 +60,16 @@ public class MainFrame extends JFrame{
     private ControladorNewProject contNuevoProyecto;
     private ControladorLoadImage contCargarImagen;
     /* display proyecto */
-    private ControladorVotar contVotar;
+    /*private ControladorVotar contVotar;
     private ControladorSeguir contSeguir;
-    private ControladorDejarSeguir contDejarSeguir;
+    private ControladorDejarSeguir contDejarSeguir;*/
     /* inicio admin */
     private ControladorAdminUsuarios contAdminUsuarios;
     private ControladorAdminConfig contAdminConfig;
     private ControladorAdminProyectos contAdminProyectos;
+    private ControladorAdminConfigVotes contAdminConfigVotes;
+    private ControladorAdminConfigCaducidad contAdminConfigCaducidad;
+    private ControladorAdminProyectosGuardar contAdminProyectosGuardar;
 
 
     private JPanel contentPane;
@@ -197,6 +200,10 @@ public class MainFrame extends JFrame{
     public PanelDisplayProject getDisplayProject(){
         return displayProject;
     }
+    
+    public void setPanelAdminConfig(PanelAdminConfig panel) {
+    	adminConfig = panel;
+    }
 
     /**
      * Establece los controlador de los diferentes paneles mediante el uso de metodos
@@ -210,13 +217,13 @@ public class MainFrame extends JFrame{
         controladorRegistro(controlador);
         controladorLogin(controlador);
 
-        controladorMenuUser(controlador);
+        //controladorMenuUser(controlador);
         controladorUser(controlador);
         controladorNuevoProyecto(controlador);
         
         controladorAdmin(controlador);
         controladorAdminConfig(controlador);
-        
+        controladorAdminUsuarios(controlador);
 
     }
     
@@ -270,13 +277,13 @@ public class MainFrame extends JFrame{
      * 
      * @param controlador objeto controlador general
      */
-    private void controladorMenuUser(Controlador controlador){
+    /*private void controladorMenuUser(Controlador controlador){
         this.contToInicio = controlador.getToInicio();
         userMenu.setControlToInicio(contToInicio);
         
         this.contToPerfil = controlador.getToPerfil();
         userMenu.setControlToPerfil(contToPerfil);
-    }
+    }*/
     
     /**
      * Establece los controladores del panel inicial de usuario
@@ -289,6 +296,9 @@ public class MainFrame extends JFrame{
         
         this.contAdminConfig = controlador.getAdminConfig();
         inicioAdmin.setControlAdminConfig(contAdminConfig);
+        
+        this.contAdminProyectosGuardar = controlador.getAdminProyectosGuardar();
+        inicioAdmin.setControlAdminGuardar(contAdminProyectosGuardar);
     }
     
     private void controladorAdminConfig(Controlador controlador) {
@@ -297,6 +307,20 @@ public class MainFrame extends JFrame{
     	
     	this.contAdminProyectos = controlador.getAdminProyectos();
     	adminConfig.setControlAdminProyectos(contAdminProyectos);
+    	
+    	this.contAdminConfigVotes = controlador.getAdminConfigVotes();
+    	adminConfig.setControlAdminConfigVotes(contAdminConfigVotes);
+    	
+    	this.contAdminConfigCaducidad = controlador.getAdminConfigCaducidad();
+    	adminConfig.setControlAdminConfigCaducidad(contAdminConfigCaducidad);
+    }
+    
+    private void controladorAdminUsuarios(Controlador controlador) {
+    	this.contAdminConfig = controlador.getAdminConfig();
+    	adminUsuarios.setControlAdminConfig(contAdminConfig);
+    	
+    	this.contAdminProyectos = controlador.getAdminProyectos();
+    	adminUsuarios.setControlAdminProyectos(contAdminProyectos);
     	
     }
 
@@ -318,13 +342,13 @@ public class MainFrame extends JFrame{
      * 
      * @param controlador objeto controlador general
      */
-    private void controladorDisplayProject(Controlador controlador) {
+    /*private void controladorDisplayProject(Controlador controlador) {
         this.contVotar = controlador.getVotar();
         displayProject.setControlVotar(contVotar);
         this.contSeguir = controlador.getSeguir();
         displayProject.setControlSeguir(contSeguir);
         this.contDejarSeguir = controlador.getDejarSeguir();
         displayProject.setControlDejarSeguir(contDejarSeguir);
-    }
+    }*/
 
 }
