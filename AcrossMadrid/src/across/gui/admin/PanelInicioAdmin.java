@@ -4,6 +4,7 @@ import across.gui.EditFont;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -20,7 +21,8 @@ import javax.swing.table.*;
  */
 @SuppressWarnings("serial")
 public class PanelInicioAdmin extends JPanel{
-    	
+		
+		private JButton logout = new JButton();
     	JRadioButton proyectos = new JRadioButton("Proyectos");
     	JRadioButton usuarios = new JRadioButton("Usuarios");
     	JRadioButton config = new JRadioButton("Configuracion");
@@ -42,10 +44,15 @@ public class PanelInicioAdmin extends JPanel{
          * Consructor de la clase PanelInicioAdmin
         */
     	public PanelInicioAdmin(){
-    		
     		SpringLayout layout = new SpringLayout();
     		this.setLayout(layout);
-    		
+			
+			/* boton logout */
+			ImageIcon icon = new ImageIcon("icons/logout.png");
+			Image img = icon.getImage();
+			Image scaled = img.getScaledInstance(20,30,Image.SCALE_SMOOTH);
+			logout.setIcon(new ImageIcon(scaled));
+			
     		/*Botones*/
     		grupo.add(proyectos);
     		grupo.add(usuarios);
@@ -72,7 +79,10 @@ public class PanelInicioAdmin extends JPanel{
     		/*Titulos*/
     		EditFont.setSize(adminIni,25);
     		EditFont.setSize(proyectsPanel,15);
-    		
+			
+			layout.putConstraint(SpringLayout.WEST, logout, 10, SpringLayout.WEST, this);
+			layout.putConstraint(SpringLayout.NORTH, logout, 10, SpringLayout.NORTH, this);
+
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, adminIni, 0, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, proyectsPanel, 0, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.NORTH, proyectsPanel, 30, SpringLayout.NORTH, adminIni);
@@ -91,6 +101,8 @@ public class PanelInicioAdmin extends JPanel{
     		/*Tabla*/
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, table, 10, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, table, 0, SpringLayout.VERTICAL_CENTER, this);
+
+			this.add(logout);
 
     		this.add(adminIni);
     		this.add(proyectsPanel);
@@ -133,6 +145,10 @@ public class PanelInicioAdmin extends JPanel{
 
             return editor.getTableCellEditorComponent(table, value, isSelected, row, column);
         }
+	}
+	
+	public void setControlLogout(ActionListener c){
+        logout.addActionListener(c);
     }
     
     public void setControlAdminUsuarios(ActionListener c){

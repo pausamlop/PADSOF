@@ -1,4 +1,4 @@
-package across.control.user;
+package across.control.user.project;
 
 import across.model.application.Application;
 import across.gui.*;

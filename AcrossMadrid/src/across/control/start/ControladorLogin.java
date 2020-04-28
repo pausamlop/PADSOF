@@ -47,8 +47,10 @@ public class ControladorLogin implements ActionListener{
         if (login.isAdmin()){
             if (password.equals(""))
                 JOptionPane.showMessageDialog(frame, "Introduzca contraseña", "Aviso", JOptionPane.WARNING_MESSAGE);
-            else if (model.getAdmin().login(password))
+            else if (model.getAdmin().login(password)){
+                login.emptyFields();
                 this.frame.showPanel("inicioAdmin");
+            }
             else
                 JOptionPane.showMessageDialog(frame, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -57,8 +59,10 @@ public class ControladorLogin implements ActionListener{
                 JOptionPane.showMessageDialog(frame, "Introduzca nombre de usuario válido", "Aviso", JOptionPane.WARNING_MESSAGE);
             else if (password.equals(""))
                 JOptionPane.showMessageDialog(frame, "Introduzca contraseña", "Aviso", JOptionPane.WARNING_MESSAGE);
-            else if (model.login(username, password))
+            else if (model.login(username, password)){
+                login.emptyFields();
                 this.frame.showPanel("inicioUser");
+            }
             else
                 JOptionPane.showMessageDialog(frame, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         }

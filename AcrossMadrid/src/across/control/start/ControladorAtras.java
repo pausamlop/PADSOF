@@ -1,45 +1,43 @@
-package across.control.user;
+package across.control.start;
 
 import across.model.application.Application;
 import across.gui.*;
-import across.gui.user.PanelInicioUser;
+import across.gui.start.PanelInicio;
 
 import java.awt.event.*;
 
 /**
- * Clase ControladorUserDisplayProject
+ * Clase ControladorAtras
  *
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@uam.es
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-public class ControladorUserDisplayProject implements ActionListener{
+public class ControladorAtras implements ActionListener{
 
-    private PanelInicioUser inicioUser;
     private MainFrame frame;
     private Application model;
 
     /**
-     * Constructor de la clase ControladorUserCrearProyecto
+     * Constructor de la clase ControladorAtras
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
      */
-    public ControladorUserDisplayProject (MainFrame frame, Application model){
+    public ControladorAtras (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.inicioUser = frame.getInicioUser();
+        
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'crear proyecto' en el panel inicial del usuario
+     * Accion que se realiza cuando se pulsa el boton de 'registro' en el panel de inicio
      * 
      * @param e accion recibida
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        this.frame.showPanel("displayProject");
-        this.frame.getDisplayProject().setProject(inicioUser.getProject());
+        this.frame.showPanel("inicio");
     }
 }

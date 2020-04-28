@@ -2,20 +2,12 @@ package across.control;
 
 import across.model.application.Application;
 import across.gui.MainFrame;
-//import across.control.menu.*;
-import across.control.admin.ControladorAdminConfig;
-import across.control.admin.ControladorAdminConfigCaducidad;
-import across.control.admin.ControladorAdminConfigVotes;
-import across.control.admin.ControladorAdminProyectos;
-import across.control.admin.ControladorAdminProyectosGuardar;
-import across.control.admin.ControladorAdminUsuarios;
-import across.control.menu.ControladorToInicio;
-import across.control.menu.ControladorToPerfil;
+import across.control.admin.*;
+import across.control.admin.menu.ControladorToInicioAdmin;
 import across.control.start.*;
 import across.control.user.*;
-import across.control.user.project.ControladorDejarSeguir;
-import across.control.user.project.ControladorSeguir;
-import across.control.user.project.ControladorVotar;
+import across.control.user.menu.*;
+import across.control.user.project.*;
 //import across.control.user.project.*;
 
 /**
@@ -28,15 +20,18 @@ import across.control.user.project.ControladorVotar;
  */
 public class Controlador {
 
+    private ControladorLogout logout;
     /* inicio de la app */
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
     private ControladorLogin login;
     private ControladorRegistro reg;
+    private ControladorAtras atras;
 
-    /* menu de user */
+    /* menu user */
     private ControladorToInicio toInicio;
     private ControladorToPerfil toPerfil;
+
     /* inicio de User */
     private ControladorUserCrearProyecto userCrearProyecto;
     private ControladorUserDisplayProject userDisplayProject;
@@ -52,6 +47,7 @@ public class Controlador {
     private ControladorDejarSeguir dejarSeguir;
 
     /* inicio de admin */
+    private ControladorToInicioAdmin toInicioAdmin;
     private ControladorAdminUsuarios adminUsuarios;
     private ControladorAdminConfig adminConfig;
     private ControladorAdminProyectos adminProyectos;
@@ -78,16 +74,18 @@ public class Controlador {
      * Crea todos los controladores de la aplicacion
      */
     private void setupControladores(){
+        logout = new ControladorLogout(frame, model);
         /* inicio de la app */
         inicioRegistro = new ControladorInicioRegistro(frame, model);
         inicioLogin = new ControladorInicioLogin(frame, model);
         login = new ControladorLogin(frame, model);
         reg = new ControladorRegistro(frame, model);
+        atras = new ControladorAtras(frame, model);
 
         /* menu user */
         toInicio = new ControladorToInicio(frame, model);
         toPerfil = new ControladorToPerfil(frame, model);
-		/*
+
         /* inicio de user */
         userCrearProyecto = new ControladorUserCrearProyecto(frame, model);
         userDisplayProject = new ControladorUserDisplayProject(frame, model);
@@ -99,6 +97,7 @@ public class Controlador {
         dejarSeguir = new ControladorDejarSeguir(frame, model);
          
         /* inicio de admin */
+        toInicioAdmin = new ControladorToInicioAdmin(frame, model);
         adminUsuarios = new ControladorAdminUsuarios(frame, model);
         adminConfig = new ControladorAdminConfig(frame, model);
         adminProyectos = new ControladorAdminProyectos(frame, model);
@@ -109,6 +108,15 @@ public class Controlador {
         /* nuevo proyecto */
         nuevoProyecto = new ControladorNewProject(frame, model);
         cargarImagen = new ControladorLoadImage(frame, model);
+    }
+
+    /**
+     * Devuelve el controlador que permite el cierre de sesion
+     * 
+     * @return controlador de logout
+     */
+    public ControladorLogout getLogout(){
+        return this.logout;
     }
 
     /**
@@ -148,7 +156,16 @@ public class Controlador {
     }
 
     /**
-     * Devuelve el controlador que lleva a la pantalla principal de usuario
+     * Devuelve el controlador que lleva de registro o de login al inicio
+     * 
+     * @return controlador de registro
+     */
+    public ControladorAtras getAtras(){
+        return this.atras;
+    }
+
+    /**
+     * Devuelve el controlador que lleva a la pantalla inicial del usuario
      * 
      * @return controlador de inicio
      */
@@ -164,6 +181,7 @@ public class Controlador {
     public ControladorToPerfil getToPerfil(){
         return this.toPerfil;
     }
+
 
     /**
      * Devuelve el controlador que maneja la creacion de un proyecto nuevo
@@ -227,6 +245,16 @@ public class Controlador {
     public ControladorDejarSeguir getDejarSeguir(){
         return dejarSeguir;
     }
+
+    /**
+     * Devuelve el controlador que lleva a la pantalla principal del administrador
+     * 
+     * @return controlador de votar proyecto
+     */
+    public ControladorToInicioAdmin getToInicioAdmin(){
+        return toInicioAdmin;
+    }
+
     
     /**
      * Devuelve el controladro que lleva de la pantalla inicial del admin a la pantalla de gestion de usuarios

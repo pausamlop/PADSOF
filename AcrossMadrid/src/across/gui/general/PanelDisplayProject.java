@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import across.gui.EditFont;
+import across.gui.user.HomeUser;
 import across.model.application.Application;
 import across.model.enumerations.projectState;
 import across.model.enumerations.typeSocial;
@@ -25,43 +26,42 @@ import java.io.IOException;
  *
  */
 @SuppressWarnings("serial")
-public class PanelDisplayProject extends JPanel{
+public class PanelDisplayProject extends HomeUser{
 	
 	Project project;
 
-    protected JLabel nombre = new JLabel();
-    protected JLabel estado = new JLabel();
-    protected JLabel votos = new JLabel();
-    protected JLabel costeLabel = new JLabel("Coste:");
-    protected JLabel coste = new JLabel();
-    protected JLabel tipoLabel = new JLabel("Tipo:");
-    protected JLabel tipo = new JLabel();
-    protected JLabel distritoGrupoLabel = new JLabel();
-    protected JLabel distritoGrupo = new JLabel();
-    protected JLabel descLabel = new JLabel("Descripcion:");
-    protected JTextArea desc = new JTextArea(5,25);
-    protected JLabel image = new JLabel();
+    private JLabel nombre = new JLabel();
+    private JLabel estado = new JLabel();
+    private JLabel votos = new JLabel();
+    private JLabel costeLabel = new JLabel("Coste:");
+    private JLabel coste = new JLabel();
+    private JLabel tipoLabel = new JLabel("Tipo:");
+    private JLabel tipo = new JLabel();
+    private JLabel distritoGrupoLabel = new JLabel();
+    private JLabel distritoGrupo = new JLabel();
+    private JLabel descLabel = new JLabel("Descripcion:");
+    private JTextArea desc = new JTextArea(5,25);
+    private JLabel image = new JLabel();
 
     private JPanel buttons = new JPanel(new CardLayout());
     /* botones usuario */
-    protected JButton votar = new JButton("Votar");
-    protected JPanel seguirPanel;
-    protected JButton seguir = new JButton("Seguir");
-    protected JButton dejarSeguir = new JButton("Dejar de seguir");
+    private JButton votar = new JButton("Votar");
+    private JPanel seguirPanel;
+    private JButton seguir = new JButton("Seguir");
+    private JButton dejarSeguir = new JButton("Dejar de seguir");
     /* botones admin */
-    protected JButton aceptar = new JButton("Aceptar");
-    protected JButton rechazar = new JButton("Rechazar");
+    private JButton aceptar = new JButton("Aceptar");
+    private JButton rechazar = new JButton("Rechazar");
     
-    protected SpringLayout spring = new SpringLayout();
+    //private SpringLayout spring = new SpringLayout();
 
 
     /**
      * Constructor de la clase PanelDisplayProject
      */
     public PanelDisplayProject(){
-    	setLayout(spring);
-    	
-    	//UserMenu.install(this);
+        super();
+    	//setLayout(spring);
     	
     	createButtonsPanel();
         descProperties();
@@ -141,7 +141,7 @@ public class PanelDisplayProject extends JPanel{
     /**
      * Estrablece las restricciones de colocacion de los elementos con una distribucion SpringLayout
      */
-    protected void anadirRestricciones(int desplIzq){
+    private void anadirRestricciones(int desplIzq){
         /* alineacion horizontal */
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, nombre, -60, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.WEST, coste, -desplIzq, SpringLayout.HORIZONTAL_CENTER, this);

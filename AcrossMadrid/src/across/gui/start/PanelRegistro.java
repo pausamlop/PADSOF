@@ -8,7 +8,7 @@ import javax.swing.*;
 import across.gui.EditFont;
 
 @SuppressWarnings("serial")
-public class PanelRegistro extends JPanel {
+public class PanelRegistro extends HomeStart {
 	
     private JLabel title = new JLabel("ACROSS MADRID");
     private JLabel desc = new JLabel("Registro");
@@ -21,8 +21,9 @@ public class PanelRegistro extends JPanel {
     private JButton button = new JButton("Continuar");
 
     public PanelRegistro(){
-        SpringLayout spring = new SpringLayout();
-        setLayout(spring);
+        super();
+        // SpringLayout spring = new SpringLayout();
+        // setLayout(spring);
 
         JPanel centro = new JPanel(new GridLayout(4,2,10,5));
         
@@ -75,6 +76,14 @@ public class PanelRegistro extends JPanel {
         button.addActionListener(c);
     }
     
-    
+    /**
+     * Vacia los campos de texto para que la proxima vez que acceda al panel,
+     * estos aparezan vacios
+     */
+	public void emptyFields() {
+        username.setText("");
+        nif.setText("");
+        password.setText("");
+	}
     
 }

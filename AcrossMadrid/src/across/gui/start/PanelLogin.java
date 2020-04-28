@@ -16,7 +16,7 @@ import java.awt.event.*;
  *
  */
 @SuppressWarnings("serial")
-public class PanelLogin extends JPanel {
+public class PanelLogin extends HomeStart {
 
     private JLabel title = new JLabel("ACROSS MADRID");
     private JLabel desc = new JLabel("Iniciar sesión");
@@ -31,8 +31,9 @@ public class PanelLogin extends JPanel {
      * Constructor de la clase PanelLogin
      */
     public PanelLogin(){
-        SpringLayout spring = new SpringLayout();
-        setLayout(spring);
+        super();
+        // SpringLayout spring = new SpringLayout();
+        // setLayout(spring);
 
         JPanel centro = new JPanel(new GridLayout(4,2,10,5));
         centro.add(usernameLabel);
@@ -123,5 +124,16 @@ public class PanelLogin extends JPanel {
     public void setControlContinuar(ActionListener c){
         button.addActionListener(c);
     }
+
+    /**
+     * Vacia los campos de texto para que la proxima vez que acceda al panel,
+     * estos aparezan vacios
+     */
+	public void emptyFields() {
+        username.setText("");
+        username.setEnabled(true);
+        checkAdmin.setSelected(false);
+        password.setText("");
+	}
 
 }

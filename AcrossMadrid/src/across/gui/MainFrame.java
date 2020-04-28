@@ -2,14 +2,11 @@ package across.gui;
 
 import across.control.*;
 import across.control.admin.*;
-import across.control.menu.ControladorToInicio;
-import across.control.menu.ControladorToPerfil;
-//import across.control.menu.*;
+import across.control.admin.menu.*;
 import across.control.start.*;
 import across.control.user.*;
-import across.control.user.project.ControladorDejarSeguir;
-import across.control.user.project.ControladorSeguir;
-import across.control.user.project.ControladorVotar;
+import across.control.user.menu.*;
+import across.control.user.project.*;
 //import across.control.user.project.*;
 import across.gui.start.*;
 import across.gui.user.*;
@@ -32,14 +29,13 @@ import java.awt.*;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
 
-    private UserMenu userMenu = new UserMenu();
-
     /****************** PANELES ******************/
     private PanelInicio inicio = new PanelInicio();
     private PanelRegistro registro = new PanelRegistro();
     private PanelLogin login = new PanelLogin();
     /* user */
     private PanelInicioUser inicioUser = new PanelInicioUser();
+    private PanelPerfil perfil = new PanelPerfil();
     private PanelNewCollective nuevoColectivo = new PanelNewCollective();
     private PanelNewProject nuevoProyecto = new PanelNewProject();
     /* admin */
@@ -50,14 +46,15 @@ public class MainFrame extends JFrame{
     private PanelDisplayProject displayProject = new PanelDisplayProject();
     
     /*************** CONTROLADORES ***************/
+    private ControladorLogout contLogout;
+    private ControladorToInicio contToInicio;
+    private ControladorToPerfil contToPerfil;
     /* inicio */
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
     private ControladorLogin contLogin;
     private ControladorRegistro contRegistro;
-    /* menu user */
-    private ControladorToInicio contToInicio;
-    private ControladorToPerfil contToPerfil;
+    private ControladorAtras contAtras;
     /* inicio user */
     private ControladorUserCrearProyecto contUserCrearProyecto;
     private ControladorUserCrearColectivo contUserCrearColectivo;
@@ -70,6 +67,7 @@ public class MainFrame extends JFrame{
     private ControladorSeguir contSeguir;
     private ControladorDejarSeguir contDejarSeguir;
     /* inicio admin */
+    private ControladorToInicioAdmin contToInicioAdmin;
     private ControladorAdminUsuarios contAdminUsuarios;
     private ControladorAdminConfig contAdminConfig;
     private ControladorAdminProyectos contAdminProyectos;
@@ -104,6 +102,21 @@ public class MainFrame extends JFrame{
 		CardLayout layout = (CardLayout)contentPane.getLayout();
 		layout.show(contentPane, carta);
     }
+
+    /**
+     * Devuelve el panel que se muestra actualmente en la aplicacion
+     * 
+     * @return panel actual
+     */
+    public JPanel getCurrentPanel(){
+        JPanel card = null;
+        for (Component comp : contentPane.getComponents()) {
+            if (comp.isVisible() == true) {
+                return card;
+            }
+        }
+        return null;
+    }
     
     /**
      * Rellena el contenedor del panel de la ventana principal con todos los paneles 
@@ -116,6 +129,7 @@ public class MainFrame extends JFrame{
 
         /* PANELES DEL USUARIO */
         contentPane.add(inicioUser, "inicioUser");
+        contentPane.add(perfil, "perfil");
         contentPane.add(nuevoColectivo, "nuevoColectivo");
         contentPane.add(nuevoProyecto, "nuevoProyecto");
         contentPane.add(displayProject, "displayProject");
@@ -151,6 +165,15 @@ public class MainFrame extends JFrame{
      */
     public PanelLogin getLogin(){
         return login;
+    }
+
+    /**
+     * Devuelve el panel de perfil del usuario
+     * 
+     * @return panel de perfil del usuario
+     */
+    public PanelPerfil getPerfil(){
+        return perfil;
     }
 
     /**
@@ -219,20 +242,34 @@ public class MainFrame extends JFrame{
      */
     public void setControlador(Controlador controlador){
 
+        controladorLogout(controlador);
         controladorInicio(controlador);
         controladorRegistro(controlador);
         controladorLogin(controlador);
+        controladorAtras(controlador);
 
-        controladorMenuUser(controlador);
+        controladorHomeUser(controlador);
         controladorUser(controlador);
         controladorNuevoProyecto(controlador);
         
         controladorAdmin(controlador);
+        controladorHomeAdmin(controlador);
         controladorAdminConfig(controlador);
         controladorAdminUsuarios(controlador);
 
     }
     
+    /**
+     * Establece el controlador de cierre de sesion
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorLogout(Controlador controlador){
+        this.contLogout = controlador.getLogout();
+        inicioUser.setControlLogout(contLogout);
+        inicioAdmin.setControlLogout(contLogout);
+    }
+
     /**
      * Establece los controladors del panel de inicio
      * 
@@ -266,6 +303,36 @@ public class MainFrame extends JFrame{
     }
 
     /**
+     * Establece el control de volver a inicio desde registro o login
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorAtras(Controlador controlador){
+        this.contAtras = controlador.getAtras();
+        registro.setControlAtras(contAtras);
+        login.setControlAtras(contAtras);
+    }
+
+    /**
+     * Establece los controladores de inicio y perfil de usuario
+     * 
+     * @param controlador
+     */
+    private void controladorHomeUser(Controlador controlador){
+        this.contToInicio = controlador.getToInicio();
+        nuevoColectivo.setControlToInicio(contToInicio);
+        nuevoProyecto.setControlToInicio(contToInicio);
+        perfil.setControlToInicio(contToInicio);
+        //display
+
+        this.contToPerfil = controlador.getToPerfil();
+        inicioUser.setControlToPefil(contToPerfil);
+        nuevoColectivo.setControlToPefil(contToPerfil);
+        nuevoProyecto.setControlToPefil(contToPerfil);
+        //display
+    }
+
+    /**
      * Establece los controladors del panel inicial de usuario
      * 
      * @param controlador objeto controlador general
@@ -282,19 +349,6 @@ public class MainFrame extends JFrame{
     }
 
     /**
-     * Establece los controladors del menu del usuario
-     * 
-     * @param controlador objeto controlador general
-     */
-    private void controladorMenuUser(Controlador controlador){
-        this.contToInicio = controlador.getToInicio();
-        userMenu.setControlToInicio(contToInicio);
-        
-        this.contToPerfil = controlador.getToPerfil();
-        userMenu.setControlToPerfil(contToPerfil);
-    }
-    
-    /**
      * Establece los controladores del panel inicial de usuario
      * 
      * @param controlador objeto controlador general
@@ -309,6 +363,12 @@ public class MainFrame extends JFrame{
         this.contAdminProyectosGuardar = controlador.getAdminProyectosGuardar();
         inicioAdmin.setControlAdminGuardar(contAdminProyectosGuardar);
     }
+
+    private void controladorHomeAdmin(Controlador controlador){
+        this.contToInicioAdmin = controlador.getToInicioAdmin();
+        adminConfig.setControlToInicio(contToInicioAdmin);
+        adminUsuarios.setControlToInicio(contToInicioAdmin);
+    }
     
     private void controladorAdminConfig(Controlador controlador) {
     	this.contAdminUsuarios = controlador.getAdminUsuarios();
@@ -321,7 +381,7 @@ public class MainFrame extends JFrame{
     	adminConfig.setControlAdminConfigVotes(contAdminConfigVotes);
     	
     	this.contAdminConfigCaducidad = controlador.getAdminConfigCaducidad();
-    	adminConfig.setControlAdminConfigCaducidad(contAdminConfigCaducidad);
+        adminConfig.setControlAdminConfigCaducidad(contAdminConfigCaducidad);
     }
     
     private void controladorAdminUsuarios(Controlador controlador) {
