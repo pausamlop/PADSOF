@@ -253,7 +253,6 @@ public class MainFrame extends JFrame{
         controladorNuevoProyecto(controlador);
         
         controladorAdmin(controlador);
-        controladorHomeAdmin(controlador);
         controladorAdminConfig(controlador);
         controladorAdminUsuarios(controlador);
 
@@ -362,12 +361,6 @@ public class MainFrame extends JFrame{
         
         this.contAdminProyectosGuardar = controlador.getAdminProyectosGuardar();
         inicioAdmin.setControlAdminGuardar(contAdminProyectosGuardar);
-    }
-
-    private void controladorHomeAdmin(Controlador controlador){
-        this.contToInicioAdmin = controlador.getToInicioAdmin();
-        adminConfig.setControlToInicio(contToInicioAdmin);
-        adminUsuarios.setControlToInicio(contToInicioAdmin);
     }
     
     private void controladorAdminConfig(Controlador controlador) {
