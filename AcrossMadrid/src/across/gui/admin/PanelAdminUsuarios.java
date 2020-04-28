@@ -33,6 +33,9 @@ public class PanelAdminUsuarios extends JPanel{
     	JTextField buscador = new JTextField(20);
     	JLabel etiquetaBuscador = new JLabel("Buscar: ");
     	
+    	JTextField bloqMensaje = new JTextField(20);
+    	JLabel bloq = new JLabel("Introduce un mensaje de bloqueo");
+    	
     	JTable aux;
     	TableRowSorter trsfiltro;
     	String filtro;
@@ -64,14 +67,16 @@ public class PanelAdminUsuarios extends JPanel{
     		
     		/*Tablas*/
         	
-            aux = new JTable(new TablaUsuarios());
-            aux.setPreferredScrollableViewportSize(new Dimension(450, 70));
+            aux = new JTable(new TablaUsuarios(this));
+            aux.setPreferredScrollableViewportSize(new Dimension(450, 200));
             aux.setFillsViewportHeight(true);
+            aux.setOpaque(false);
             
             trsfiltro = new TableRowSorter(aux.getModel());
    		 	aux.setRowSorter(trsfiltro);
 
             JScrollPane table = new JScrollPane(aux);
+            table.setOpaque(false);
             
             
             layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, table, 0, SpringLayout.HORIZONTAL_CENTER, this);
@@ -100,10 +105,16 @@ public class PanelAdminUsuarios extends JPanel{
             	});
             
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, buscador, -70, SpringLayout.HORIZONTAL_CENTER, this);
-    		layout.putConstraint(SpringLayout.VERTICAL_CENTER, buscador, -100, SpringLayout.VERTICAL_CENTER, this);
+    		layout.putConstraint(SpringLayout.VERTICAL_CENTER, buscador, -140, SpringLayout.VERTICAL_CENTER, this);
     		
     		layout.putConstraint(SpringLayout.EAST, etiquetaBuscador, -5, SpringLayout.WEST, buscador);
-    		layout.putConstraint(SpringLayout.VERTICAL_CENTER, etiquetaBuscador, -100, SpringLayout.VERTICAL_CENTER, this);
+    		layout.putConstraint(SpringLayout.VERTICAL_CENTER, etiquetaBuscador, -140, SpringLayout.VERTICAL_CENTER, this);
+    		
+    		/*Bloqueo de usuarios*/
+    		/*layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, bloqMensaje, -70, SpringLayout.HORIZONTAL_CENTER, this);
+    		layout.putConstraint(SpringLayout.VERTICAL_CENTER, bloqMensaje, -100, SpringLayout.VERTICAL_CENTER, this);
+    		layout.putConstraint(SpringLayout.EAST, bloq, -10, SpringLayout.WEST, bloqMensaje);
+    		layout.putConstraint(SpringLayout.VERTICAL_CENTER, bloq, -100, SpringLayout.VERTICAL_CENTER, this);*/
     		
     		
     		/*Inclusiones*/
@@ -130,16 +141,23 @@ public class PanelAdminUsuarios extends JPanel{
         	}
         
         public void setControlAdminConfig(ActionListener c){
-        	usuarios.setSelected(true);
             config.addActionListener(c);
         }
     	
     	public void setControlAdminProyectos(ActionListener c){
-    		usuarios.setSelected(true);
-            proyectos.addActionListener(c);
+    		proyectos.addActionListener(c);
         }
     	
     	public void setUsuariosButton() {
     		usuarios.setSelected(true);
+    	}
+    	
+    	public void setFUsuariosButton() {
+    		usuarios.setSelected(false);
+    	}
+    	
+    	public void addBloqMensaje() {
+    		this.add(bloqMensaje);
+    		this.add(bloq);
     	}
 }

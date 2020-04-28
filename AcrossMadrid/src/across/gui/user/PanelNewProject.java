@@ -3,6 +3,7 @@ package across.gui.user;
 import javax.swing.*;
 
 import across.gui.EditFont;
+import across.gui.general.UserMenu;
 import across.model.application.Application;
 import across.model.user.Collective;
 
@@ -20,7 +21,7 @@ import java.util.*;
  *
  */
 @SuppressWarnings("serial")
-public class PanelNewProject extends JPanel {
+public class PanelNewProject extends JPanel{
 
     private int anchoTextField = 20;
 
@@ -55,6 +56,7 @@ public class PanelNewProject extends JPanel {
 
     private SpringLayout spring = new SpringLayout();
 
+
     private BufferedImage infrImage = null;
 
     /**
@@ -62,6 +64,8 @@ public class PanelNewProject extends JPanel {
      */
     public PanelNewProject(){
         setLayout(spring);
+        
+        //UserMenu.install(this);
 
         buttonGroup1 = new ButtonGroup();
         buttonGroup1.add(comoUser);

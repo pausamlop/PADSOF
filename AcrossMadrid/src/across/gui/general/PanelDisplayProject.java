@@ -61,6 +61,8 @@ public class PanelDisplayProject extends JPanel{
     public PanelDisplayProject(){
     	setLayout(spring);
     	
+    	//UserMenu.install(this);
+    	
     	createButtonsPanel();
         descProperties();
         

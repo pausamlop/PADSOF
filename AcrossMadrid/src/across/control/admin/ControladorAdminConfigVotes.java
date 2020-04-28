@@ -40,7 +40,7 @@ public class ControladorAdminConfigVotes implements ActionListener{
     	
     	//frame.setPanelAdminConfig(new PanelAdminConfig());
     	
-    	frame.getAdminConfig().setConfigButton();
-        this.frame.showPanel("adminConfig");
+    	//frame.getAdminConfig().setConfigButton();
+        //this.frame.showPanel("adminConfig");
     }
 }

@@ -55,10 +55,17 @@ public class PanelInicioAdmin extends JPanel{
     		/*Tablas*/
         	
             aux = new JTable(new TablaProyectos());
-            aux.setPreferredScrollableViewportSize(new Dimension(450, 70));
+            aux.setPreferredScrollableViewportSize(new Dimension(450, 250));
             aux.setFillsViewportHeight(true);
+            
+            aux.setOpaque(false);
+            //aux.setShowGrid(false);
+            //((DefaultTableCellRenderer)aux.getDefaultRenderer(Object.class)).setOpaque(false);
 
             JScrollPane table = new JScrollPane(aux);
+            
+            table.setOpaque(false);
+            //table.getViewport().setOpaque(false);
             
             aux.getColumnModel().getColumn(3).setCellEditor(new CustomTableCellEditor());
     		
@@ -82,7 +89,7 @@ public class PanelInicioAdmin extends JPanel{
     		layout.putConstraint(SpringLayout.NORTH, guardarCambios, 20, SpringLayout.SOUTH, table);
     		
     		/*Tabla*/
-    		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, table, 0, SpringLayout.HORIZONTAL_CENTER, this);
+    		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, table, 10, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, table, 0, SpringLayout.VERTICAL_CENTER, this);
 
     		this.add(adminIni);

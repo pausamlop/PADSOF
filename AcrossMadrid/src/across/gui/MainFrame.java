@@ -2,9 +2,14 @@ package across.gui;
 
 import across.control.*;
 import across.control.admin.*;
+import across.control.menu.ControladorToInicio;
+import across.control.menu.ControladorToPerfil;
 //import across.control.menu.*;
 import across.control.start.*;
 import across.control.user.*;
+import across.control.user.project.ControladorDejarSeguir;
+import across.control.user.project.ControladorSeguir;
+import across.control.user.project.ControladorVotar;
 //import across.control.user.project.*;
 import across.gui.start.*;
 import across.gui.user.*;
@@ -27,7 +32,7 @@ import java.awt.*;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame{
 
-    //private UserMenu userMenu = new UserMenu();
+    private UserMenu userMenu = new UserMenu();
 
     /****************** PANELES ******************/
     private PanelInicio inicio = new PanelInicio();
@@ -51,18 +56,19 @@ public class MainFrame extends JFrame{
     private ControladorLogin contLogin;
     private ControladorRegistro contRegistro;
     /* menu user */
-    /*private ControladorToInicio contToInicio;
-    private ControladorToPerfil contToPerfil;*/
+    private ControladorToInicio contToInicio;
+    private ControladorToPerfil contToPerfil;
     /* inicio user */
     private ControladorUserCrearProyecto contUserCrearProyecto;
+    private ControladorUserCrearColectivo contUserCrearColectivo;
     private ControladorUserDisplayProject contUserDisplayProject;
     /* crear proyecto */
     private ControladorNewProject contNuevoProyecto;
     private ControladorLoadImage contCargarImagen;
     /* display proyecto */
-    /*private ControladorVotar contVotar;
+    private ControladorVotar contVotar;
     private ControladorSeguir contSeguir;
-    private ControladorDejarSeguir contDejarSeguir;*/
+    private ControladorDejarSeguir contDejarSeguir;
     /* inicio admin */
     private ControladorAdminUsuarios contAdminUsuarios;
     private ControladorAdminConfig contAdminConfig;
@@ -217,7 +223,7 @@ public class MainFrame extends JFrame{
         controladorRegistro(controlador);
         controladorLogin(controlador);
 
-        //controladorMenuUser(controlador);
+        controladorMenuUser(controlador);
         controladorUser(controlador);
         controladorNuevoProyecto(controlador);
         
@@ -270,6 +276,9 @@ public class MainFrame extends JFrame{
         
         this.contUserDisplayProject = controlador.getUserDisplayProject();
         inicioUser.setControlVerProyecto(contUserDisplayProject);
+        
+        this.contUserCrearColectivo = controlador.getUserCrearColectivo();
+        inicioUser.setControlCrearColectivo(contUserCrearColectivo);
     }
 
     /**
@@ -277,13 +286,13 @@ public class MainFrame extends JFrame{
      * 
      * @param controlador objeto controlador general
      */
-    /*private void controladorMenuUser(Controlador controlador){
+    private void controladorMenuUser(Controlador controlador){
         this.contToInicio = controlador.getToInicio();
         userMenu.setControlToInicio(contToInicio);
         
         this.contToPerfil = controlador.getToPerfil();
         userMenu.setControlToPerfil(contToPerfil);
-    }*/
+    }
     
     /**
      * Establece los controladores del panel inicial de usuario
@@ -342,13 +351,13 @@ public class MainFrame extends JFrame{
      * 
      * @param controlador objeto controlador general
      */
-    /*private void controladorDisplayProject(Controlador controlador) {
+    private void controladorDisplayProject(Controlador controlador) {
         this.contVotar = controlador.getVotar();
         displayProject.setControlVotar(contVotar);
         this.contSeguir = controlador.getSeguir();
         displayProject.setControlSeguir(contSeguir);
         this.contDejarSeguir = controlador.getDejarSeguir();
         displayProject.setControlDejarSeguir(contDejarSeguir);
-    }*/
+    }
 
 }

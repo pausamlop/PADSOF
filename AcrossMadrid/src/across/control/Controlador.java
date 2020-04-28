@@ -9,8 +9,13 @@ import across.control.admin.ControladorAdminConfigVotes;
 import across.control.admin.ControladorAdminProyectos;
 import across.control.admin.ControladorAdminProyectosGuardar;
 import across.control.admin.ControladorAdminUsuarios;
+import across.control.menu.ControladorToInicio;
+import across.control.menu.ControladorToPerfil;
 import across.control.start.*;
 import across.control.user.*;
+import across.control.user.project.ControladorDejarSeguir;
+import across.control.user.project.ControladorSeguir;
+import across.control.user.project.ControladorVotar;
 //import across.control.user.project.*;
 
 /**
@@ -30,22 +35,22 @@ public class Controlador {
     private ControladorRegistro reg;
 
     /* menu de user */
-    /*private ControladorToInicio toInicio;
+    private ControladorToInicio toInicio;
     private ControladorToPerfil toPerfil;
-     */
     /* inicio de User */
     private ControladorUserCrearProyecto userCrearProyecto;
     private ControladorUserDisplayProject userDisplayProject;
+    private ControladorUserCrearColectivo userCrearColectivo;
     
     /* control nuevo proyecto */
     private ControladorNewProject nuevoProyecto;
     private ControladorLoadImage cargarImagen;
 
     /* botones de DisplayProject */
-    /*private ControladorVotar votar;
+    private ControladorVotar votar;
     private ControladorSeguir seguir;
     private ControladorDejarSeguir dejarSeguir;
-*/
+
     /* inicio de admin */
     private ControladorAdminUsuarios adminUsuarios;
     private ControladorAdminConfig adminConfig;
@@ -80,18 +85,19 @@ public class Controlador {
         reg = new ControladorRegistro(frame, model);
 
         /* menu user */
-        /*toInicio = new ControladorToInicio(frame, model);
+        toInicio = new ControladorToInicio(frame, model);
         toPerfil = new ControladorToPerfil(frame, model);
 		/*
         /* inicio de user */
         userCrearProyecto = new ControladorUserCrearProyecto(frame, model);
         userDisplayProject = new ControladorUserDisplayProject(frame, model);
+        userCrearColectivo = new ControladorUserCrearColectivo(frame,model);
 
         /* display proyecto */
-        /*votar = new ControladorVotar(frame, model);
+        votar = new ControladorVotar(frame, model);
         seguir = new ControladorSeguir(frame, model);
         dejarSeguir = new ControladorDejarSeguir(frame, model);
-         */
+         
         /* inicio de admin */
         adminUsuarios = new ControladorAdminUsuarios(frame, model);
         adminConfig = new ControladorAdminConfig(frame, model);
@@ -146,18 +152,18 @@ public class Controlador {
      * 
      * @return controlador de inicio
      */
-    /*public ControladorToInicio getToInicio(){
+    public ControladorToInicio getToInicio(){
         return this.toInicio;
-    }*/
+    }
 
     /**
      * Devuelve el controlador que lleva al perfil del usuario
      * 
      * @return controlador de perfil
      */
-    /*public ControladorToPerfil getToPerfil(){
+    public ControladorToPerfil getToPerfil(){
         return this.toPerfil;
-    }*/
+    }
 
     /**
      * Devuelve el controlador que maneja la creacion de un proyecto nuevo
@@ -200,27 +206,27 @@ public class Controlador {
      * 
      * @return controlador de votar proyecto
      */
-    /*public ControladorVotar getVotar(){
+    public ControladorVotar getVotar(){
         return votar;
-    }*/
+    }
 
     /**
      * Devuelve el controlador que permite seguir un proyecto
      * 
      * @return controlador de votar proyecto
      */
-    /*public ControladorSeguir getSeguir(){
+    public ControladorSeguir getSeguir(){
         return seguir;
-    }*/
+    }
 
     /**
      * Devuelve el controlador que permite votar un proyecto
      * 
      * @return controlador de votar proyecto
      */
-    /*public ControladorDejarSeguir getDejarSeguir(){
+    public ControladorDejarSeguir getDejarSeguir(){
         return dejarSeguir;
-    }*/
+    }
     
     /**
      * Devuelve el controladro que lleva de la pantalla inicial del admin a la pantalla de gestion de usuarios
@@ -254,6 +260,10 @@ public class Controlador {
     
     public ControladorAdminProyectosGuardar getAdminProyectosGuardar() {
     	return adminProyectosGuardar;
+    }
+    
+    public ControladorUserCrearColectivo getUserCrearColectivo() {
+    	return userCrearColectivo;
     }
 
 }

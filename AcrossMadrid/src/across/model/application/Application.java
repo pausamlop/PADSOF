@@ -395,6 +395,21 @@ public class Application implements Serializable{
     	return pendingFinance;
     }
     
+    public User getUserByName(String name) {
+    	for(User aux : users) {
+    		if(aux.getUsername().equals(name)) {
+    			return aux;
+    		}
+    	}
+    	
+    	for(User aux : nonValidatedUsers) {
+    		if(aux.getUsername().equals(name)) {
+    			return aux;
+    		}
+    	}
+    	return null;
+    }
+    
     /**
      * Lee del archivo de texto "Distritos.txt" los distritos de Madrid y los guarda en un array
      * 

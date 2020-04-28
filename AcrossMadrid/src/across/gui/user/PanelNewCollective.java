@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import across.gui.EditFont;
+import across.gui.general.UserMenu;
 
 /**
  * Clase PanelNewColective
@@ -16,7 +17,7 @@ import across.gui.EditFont;
  *
  */
 @SuppressWarnings("serial")
-public class PanelNewCollective extends JPanel {
+public class PanelNewCollective extends JPanel{
 	
     private JLabel title = new JLabel("Nuevo colectivo");
     private JLabel nameLabel = new JLabel("NIF:", SwingConstants.RIGHT);
@@ -28,8 +29,10 @@ public class PanelNewCollective extends JPanel {
     
     public PanelNewCollective(){
     	
-        SpringLayout spring = new SpringLayout();
-        setLayout(spring);
+    	SpringLayout spring = new SpringLayout();
+		this.setLayout(spring);
+		
+		//UserMenu.install(this);
 
         JPanel centro = new JPanel(new GridLayout(4,2,10,5));
         
