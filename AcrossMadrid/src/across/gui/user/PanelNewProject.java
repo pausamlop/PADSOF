@@ -376,11 +376,14 @@ public class PanelNewProject extends HomeUser{
      * estos aparezan vacios
      */
 	public void emptyFields() {
+	colectivos.removeAllItems();
         buttonGroup1.clearSelection();
         colectivos.setVisible(false);
         buttonGroup2.clearSelection();
         ((CardLayout)grupoDistrito.getLayout()).show(grupoDistrito,"nada");
         ((CardLayout)ambitoFoto.getLayout()).show(ambitoFoto,"nada");
+	grupoSocial.setText("");
+        ambito.setSelectedItem("Ambito");
         nombre.setText("");
         coste.setText("");
         desc.setText("");
