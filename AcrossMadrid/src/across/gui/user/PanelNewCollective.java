@@ -206,7 +206,8 @@ public class PanelNewCollective extends HomeUser{
      */
 	public void emptyFields() {
         buttonGroup.clearSelection();
-        c.setVisible(false);
+        c.removeAllItems();
+        colectivos.setVisible(false);
         name.setText("");
         description.setText("");
 	}
