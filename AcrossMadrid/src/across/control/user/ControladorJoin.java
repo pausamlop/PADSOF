@@ -1,4 +1,4 @@
-package across.control.user.project;
+package across.control.user;
 
 import across.model.application.Application;
 import across.gui.*;
@@ -8,44 +8,53 @@ import across.gui.general.PanelDisplayProject;
 import java.awt.event.*; 
 
 /**
- * Clase ControladorVotar
+ * Clase ControladorJoin
  *
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@uam.es
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-public class ControladorVotar implements ActionListener{
-
-    private PanelDisplayProject panel;
+public class ControladorJoin implements ActionListener{
+	
+    private PanelDisplayCollective panel;
     private MainFrame frame;
     private Application model;
-    
+	
 
     
-    
-    
     /**
-     * Constructor de la clase ControladorVotar
+     * Constructor de la clase ControladorJoin
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
      */
-    public ControladorVotar(MainFrame frame, Application model){
+    public ControladorJoin (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.panel = frame.getDisplayProject();
+        this.panel = frame.getDisplayCollective();
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'votar' en el panel de visalizar proyecto
+     * Accion que se realiza cuando se pulsa el boton de 'unirse' en el panel de visalizar colectivo
      * 
      * @param e accion recibida
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        panel.getProject().vote(model.getCurrentUser());
+        panel.getCollective().join(model.getCurrentUser());
         panel.update();
     }
-
+    
+    
+    
 }
+
+
+
+
+
+
+
+
+

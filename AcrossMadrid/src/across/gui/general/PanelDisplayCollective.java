@@ -14,6 +14,7 @@ import across.model.user.Collective;
 import across.model.user.User;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -98,12 +99,19 @@ public class PanelDisplayCollective extends HomeUser{
         	DefaultMutableTreeNode n = new DefaultMutableTreeNode(aux.getName());
         	node.add(n);
         	setTree(aux, n);
-        	
         }
         
         return;
 		   
 	}
+	
+    /**
+     * Actualiza el panel
+     */
+    public void update(){
+    	updateButtons();
+    	updateCollectiveInfo();
+    }
     
     
     
@@ -119,6 +127,20 @@ public class PanelDisplayCollective extends HomeUser{
         desc.setWrapStyleWord(true);
     }
     
+    /**
+     * Actualiza el panel de botones segun el usuario que visualiza el proyecto
+     */
+	private void updateButtons() {
+        User user = Application.getApplication().getCurrentUser(); 
+        
+		/* boton votar */
+		if (user.getMemberCollectives().contains(collective))
+			join.setEnabled(false);
+		else
+			join.setEnabled(true);		
+
+    }
+    
     
     /**
      * Establece el colectivo a visualizar en este panel
@@ -129,9 +151,18 @@ public class PanelDisplayCollective extends HomeUser{
 
     	this.collective = col;
     	updateCollectiveInfo();
-    	//updateButtons();
+    	updateButtons();
 
     }
+    
+    /**   
+    * Devuelve el colectivo asociado al panel
+    * 
+    * @return colectivo
+    */
+   public Collective getCollective() {
+		return collective;
+	}
     
     
     /**
@@ -150,6 +181,15 @@ public class PanelDisplayCollective extends HomeUser{
         setTree(c, n);
 
 	    }
+	
+    /**
+     * Establece el control del boton de unirse
+     * 
+     * @param c accion que activa el boton
+     */
+    public void setControlJoin(ActionListener c){
+        join.addActionListener(c);
+    }
 	
 
 }

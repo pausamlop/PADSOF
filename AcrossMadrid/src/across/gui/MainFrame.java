@@ -63,6 +63,8 @@ public class MainFrame extends JFrame{
     private ControladorUserDisplayCollective contUserDisplayCollective;
     /* crear colectivo */
     private ControladorNewCollective contNuevoColectivo;
+    /* displaycolectivo */
+    private ControladorJoin contJoin;
     /* crear proyecto */
     private ControladorNewProject contNuevoProyecto;
     private ControladorLoadImage contCargarImagen;
@@ -357,8 +359,8 @@ public class MainFrame extends JFrame{
         nuevoProyecto.setControlToPefil(contToPerfil);
         //display
         
-        this.contUserDisplayCollective = controlador.getUserDisplayCollective();
-        inicioUser.setControlVerColectivo(contUserDisplayCollective);
+        //this.contUserDisplayCollective = controlador.getUserDisplayCollective();
+        //inicioUser.setControlVerColectivo(contUserDisplayCollective);
     }
 
     /**
@@ -375,6 +377,9 @@ public class MainFrame extends JFrame{
         
         this.contUserCrearColectivo = controlador.getUserCrearColectivo();
         inicioUser.setControlCrearColectivo(contUserCrearColectivo);
+        
+        this.contUserDisplayCollective = controlador.getUserDisplayCollective();
+        inicioUser.setControlVerColectivo(contUserDisplayCollective);
     }
 
     /**
@@ -451,6 +456,17 @@ public class MainFrame extends JFrame{
     private void controladorNuevoColectivo(Controlador controlador){
         this.contNuevoColectivo = controlador.getNuevoColectivo();
         nuevoColectivo.setControlCreateCollective(contNuevoColectivo);
+    }
+    
+    /**
+     * Establece los controladors del panel DisplayCollective
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorDisplayCollective(Controlador controlador) {
+        this.contJoin = controlador.getJoin();
+        displayCollective.setControlJoin(contJoin);
+
     }
 
 }

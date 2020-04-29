@@ -49,6 +49,9 @@ public class Controlador {
     private ControladorVotar votar;
     private ControladorSeguir seguir;
     private ControladorDejarSeguir dejarSeguir;
+    
+    /* botones de DisplayCollective*/
+    private ControladorJoin join;
 
     /* inicio de admin */
     private ControladorToInicioAdmin toInicioAdmin;
@@ -100,6 +103,9 @@ public class Controlador {
         votar = new ControladorVotar(frame, model);
         seguir = new ControladorSeguir(frame, model);
         dejarSeguir = new ControladorDejarSeguir(frame, model);
+        
+        /* display colectivo */
+        join = new ControladorJoin(frame, model);
          
         /* inicio de admin */
         toInicioAdmin = new ControladorToInicioAdmin(frame, model);
@@ -253,6 +259,16 @@ public class Controlador {
     public ControladorUserDisplayCollective getUserDisplayCollective(){
         return userDisplayCollective;
     }
+    
+    /**
+     * Devuelve el controlador que permite unirse a un colectivo
+     * 
+     * @return controlador de unirse a un colectivo
+     */
+    public ControladorJoin getJoin(){
+        return join;
+    }
+
     
 
     /**
