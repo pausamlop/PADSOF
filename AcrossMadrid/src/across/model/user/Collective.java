@@ -107,6 +107,18 @@ public class Collective extends UserCollective {
     public String getDescription() {
         return description;
     }
+    
+    
+    /**
+     * Devuelve el padre
+     * 
+     * @return description
+     */
+	public Collective getParent() {
+
+		return parent;
+	}
+
 
     /**
      * Devuelve un ArrayList de los colectivos hijos

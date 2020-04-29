@@ -4,8 +4,10 @@ import javax.swing.*;
 
 import across.model.application.Application;
 import across.model.project.Project;
+import across.model.user.Collective;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.awt.Image;
 
 /**
@@ -27,6 +29,9 @@ public class PanelInicioUser extends HomeUser{
     private JComboBox<Project> proyectos; 
     private JButton verProyecto = new JButton("Ver proyecto");
     
+    private JComboBox<Collective> colectivos; 
+    private JButton verColectivo = new JButton("Ver colectivo");
+    
     public PanelInicioUser(){
 		super();
 		toInicio.setVisible(false);
@@ -41,6 +46,15 @@ public class PanelInicioUser extends HomeUser{
         logout.setIcon(new ImageIcon(scaled));
 		
     	proyectos = new JComboBox<>(Application.getApplication().searchProject("").toArray(new Project[0]));
+    	colectivos = new JComboBox<>();
+    	
+        ArrayList<Collective> output = new ArrayList<Collective>();
+		
+        for (Collective aux: Application.getApplication().getCollectives()) {
+        	if (!output.contains(aux)) output.add(aux);
+        }
+        
+        for (Collective aux: output) colectivos.addItem(aux);
     	
 		/*Botones*/
 		spring.putConstraint(SpringLayout.WEST, logout, 10, SpringLayout.WEST, this);
@@ -57,7 +71,14 @@ public class PanelInicioUser extends HomeUser{
 		spring.putConstraint(SpringLayout.VERTICAL_CENTER, verProyecto, 0, SpringLayout.VERTICAL_CENTER, this);
 		spring.putConstraint(SpringLayout.WEST, verProyecto, 10, SpringLayout.EAST, proyectos);
 		
-		this.add(logout);		
+		spring.putConstraint(SpringLayout.VERTICAL_CENTER, colectivos, 75, SpringLayout.VERTICAL_CENTER, this);
+		spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, colectivos, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		spring.putConstraint(SpringLayout.VERTICAL_CENTER, verColectivo, 75, SpringLayout.VERTICAL_CENTER, this);
+		spring.putConstraint(SpringLayout.WEST, verColectivo, 10, SpringLayout.EAST, proyectos);
+		
+		this.add(logout);	
+    	this.add(colectivos);
+    	this.add(verColectivo);
     	this.add(crearColectivo);
     	this.add(proyectos);
     	this.add(verProyecto);
@@ -82,6 +103,14 @@ public class PanelInicioUser extends HomeUser{
 
 	public Project getProject() {
 		return (Project)proyectos.getSelectedItem();
+	}
+	
+    public void setControlVerColectivo(ActionListener c){
+        verColectivo.addActionListener(c);
+    }
+    
+	public Collective getCollective() {
+		return (Collective)colectivos.getSelectedItem();
 	}
 	
 }

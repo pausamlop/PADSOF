@@ -36,6 +36,10 @@ public class Controlador {
     private ControladorUserCrearProyecto userCrearProyecto;
     private ControladorUserDisplayProject userDisplayProject;
     private ControladorUserCrearColectivo userCrearColectivo;
+    private ControladorUserDisplayCollective userDisplayCollective;
+    
+    /* control nuevo colectivo */
+    private ControladorNewCollective nuevoColectivo;
     
     /* control nuevo proyecto */
     private ControladorNewProject nuevoProyecto;
@@ -90,6 +94,7 @@ public class Controlador {
         userCrearProyecto = new ControladorUserCrearProyecto(frame, model);
         userDisplayProject = new ControladorUserDisplayProject(frame, model);
         userCrearColectivo = new ControladorUserCrearColectivo(frame,model);
+        userDisplayCollective = new ControladorUserDisplayCollective(frame, model);
 
         /* display proyecto */
         votar = new ControladorVotar(frame, model);
@@ -108,6 +113,9 @@ public class Controlador {
         /* nuevo proyecto */
         nuevoProyecto = new ControladorNewProject(frame, model);
         cargarImagen = new ControladorLoadImage(frame, model);
+        
+        /* nuevo colectivo */
+        nuevoColectivo = new ControladorNewCollective(frame, model);
     }
 
     /**
@@ -218,6 +226,34 @@ public class Controlador {
     public ControladorUserDisplayProject getUserDisplayProject(){
         return userDisplayProject;
     }
+    
+    /**
+     * Devuelve el controlador que maneja la creacion de un proyecto nuevo
+     * 
+     * @return controlador para crear proyectos
+     */
+    public ControladorNewCollective getNuevoColectivo(){
+        return nuevoColectivo;
+    }
+    
+    /**
+     * Devuelve el controlador que lleva del panel inicial del usuario al de crear colectivo
+     * 
+     * @return controlador de inicio a crear colectivo
+     */
+    public ControladorUserCrearColectivo getUserCrearColectivo(){
+        return userCrearColectivo;
+    }
+    
+    /**
+     * Devuelve el controlador que lleva del panel inicial del usuario al de visualizar colectivo
+     * 
+     * @return controlador de inicio a visualizar colectivo
+     */
+    public ControladorUserDisplayCollective getUserDisplayCollective(){
+        return userDisplayCollective;
+    }
+    
 
     /**
      * Devuelve el controlador que permite votar un proyecto
@@ -290,8 +326,6 @@ public class Controlador {
     	return adminProyectosGuardar;
     }
     
-    public ControladorUserCrearColectivo getUserCrearColectivo() {
-    	return userCrearColectivo;
-    }
+
 
 }

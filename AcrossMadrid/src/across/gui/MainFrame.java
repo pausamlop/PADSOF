@@ -44,6 +44,7 @@ public class MainFrame extends JFrame{
     private PanelAdminConfig adminConfig = new PanelAdminConfig();
     /* generales */
     private PanelDisplayProject displayProject = new PanelDisplayProject();
+    private PanelDisplayCollective displayCollective = new PanelDisplayCollective();
     
     /*************** CONTROLADORES ***************/
     private ControladorLogout contLogout;
@@ -59,6 +60,9 @@ public class MainFrame extends JFrame{
     private ControladorUserCrearProyecto contUserCrearProyecto;
     private ControladorUserCrearColectivo contUserCrearColectivo;
     private ControladorUserDisplayProject contUserDisplayProject;
+    private ControladorUserDisplayCollective contUserDisplayCollective;
+    /* crear colectivo */
+    private ControladorNewCollective contNuevoColectivo;
     /* crear proyecto */
     private ControladorNewProject contNuevoProyecto;
     private ControladorLoadImage contCargarImagen;
@@ -133,6 +137,7 @@ public class MainFrame extends JFrame{
         contentPane.add(nuevoColectivo, "nuevoColectivo");
         contentPane.add(nuevoProyecto, "nuevoProyecto");
         contentPane.add(displayProject, "displayProject");
+        contentPane.add(displayCollective, "displayCollective");
 
         /* PANELES DEL ADMINISTRADOR */
         contentPane.add(inicioAdmin, "inicioAdmin");
@@ -222,6 +227,15 @@ public class MainFrame extends JFrame{
     }
     
     /**
+     * Devuelve el panel de crear colectivo
+     * 
+     * @return panel de crear colectivo
+     */
+    public PanelNewCollective getNewCollective(){
+        return nuevoColectivo;
+    }
+    
+    /**
      * Devuelve el panel de visualizar proyecto
      * 
      * @return panel de visualizar proyecto
@@ -230,9 +244,21 @@ public class MainFrame extends JFrame{
         return displayProject;
     }
     
+    /**
+     * Devuelve el panel de visualizar proyecto
+     * 
+     * @return panel de visualizar proyecto
+     */
+    public PanelDisplayCollective getDisplayCollective(){
+        return displayCollective;
+    }
+    
     public void setPanelAdminConfig(PanelAdminConfig panel) {
     	adminConfig = panel;
     }
+    
+
+
 
     /**
      * Establece los controlador de los diferentes paneles mediante el uso de metodos
@@ -251,6 +277,7 @@ public class MainFrame extends JFrame{
         controladorHomeUser(controlador);
         controladorUser(controlador);
         controladorNuevoProyecto(controlador);
+        controladorNuevoColectivo(controlador);
         
         controladorAdmin(controlador);
         controladorAdminConfig(controlador);
@@ -329,6 +356,9 @@ public class MainFrame extends JFrame{
         nuevoColectivo.setControlToPefil(contToPerfil);
         nuevoProyecto.setControlToPefil(contToPerfil);
         //display
+        
+        this.contUserDisplayCollective = controlador.getUserDisplayCollective();
+        inicioUser.setControlVerColectivo(contUserDisplayCollective);
     }
 
     /**
@@ -411,6 +441,16 @@ public class MainFrame extends JFrame{
         displayProject.setControlSeguir(contSeguir);
         this.contDejarSeguir = controlador.getDejarSeguir();
         displayProject.setControlDejarSeguir(contDejarSeguir);
+    }
+    
+    /**
+     * Establece los controladors del panel de crear proyecto
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorNuevoColectivo(Controlador controlador){
+        this.contNuevoColectivo = controlador.getNuevoColectivo();
+        nuevoColectivo.setControlCreateCollective(contNuevoColectivo);
     }
 
 }
