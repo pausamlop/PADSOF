@@ -46,14 +46,15 @@ public class ControladorUserCrearColectivo implements ActionListener{
         this.frame.showPanel("nuevoColectivo");
         
         
-        /*ArrayList<Collective> output = new ArrayList<Collective>();
+        
+        ArrayList<Collective> output = new ArrayList<Collective>();
         		
         for (Collective aux: Application.getApplication().getCollectives()) {
         	if (!output.contains(aux)) output.add(aux);
         	
         }
         
-        this.frame.getNewCollective().setColectivos(output);*/
+        this.frame.getNewCollective().setColectivos(output);
 
     }
 }

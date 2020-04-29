@@ -41,7 +41,7 @@ public class PanelNewCollective extends HomeUser{
     private JScrollPane descPane;
     private JPanel colectivos = new JPanel(new CardLayout());
     
-    private SpringLayout spring = new SpringLayout();
+
 
     
     public PanelNewCollective(){
