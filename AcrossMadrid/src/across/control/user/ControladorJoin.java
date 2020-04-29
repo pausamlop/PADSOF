@@ -5,7 +5,9 @@ import across.gui.*;
 import across.gui.general.PanelDisplayCollective;
 import across.gui.general.PanelDisplayProject;
 
-import java.awt.event.*; 
+import java.awt.event.*;
+
+import javax.swing.JOptionPane; 
 
 /**
  * Clase ControladorJoin
@@ -43,7 +45,10 @@ public class ControladorJoin implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         panel.getCollective().join(model.getCurrentUser());
+        System.out.println(model.getCurrentUser() + "se ha unido al colectivo");
+        JOptionPane.showMessageDialog(frame, "Se ha unido al colectivo", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         panel.update();
+        frame.showPanel("inicioUser");
     }
     
     

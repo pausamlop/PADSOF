@@ -3,6 +3,7 @@ package across.control.user.menu;
 import java.awt.event.*;
 
 import across.gui.MainFrame;
+import across.gui.user.*;
 import across.model.application.Application;
 
 /**
@@ -36,6 +37,7 @@ public class ControladorToPerfil implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
+		frame.getPerfil().updateData();
         this.frame.showPanel("perfil");
     }
 
