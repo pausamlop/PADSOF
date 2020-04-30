@@ -3,11 +3,9 @@ package across.control;
 import across.model.application.Application;
 import across.gui.MainFrame;
 import across.control.admin.*;
-import across.control.admin.menu.ControladorToInicioAdmin;
+import across.control.menu.*;
 import across.control.start.*;
 import across.control.user.*;
-import across.control.user.menu.*;
-import across.control.user.project.*;
 import across.control.user.project.*;
 
 /**
@@ -54,7 +52,6 @@ public class Controlador {
     private ControladorJoin join;
 
     /* inicio de admin */
-    private ControladorToInicioAdmin toInicioAdmin;
     private ControladorAdminUsuarios adminUsuarios;
     private ControladorAdminConfig adminConfig;
     private ControladorAdminProyectos adminProyectos;
@@ -108,7 +105,6 @@ public class Controlador {
         join = new ControladorJoin(frame, model);
          
         /* inicio de admin */
-        toInicioAdmin = new ControladorToInicioAdmin(frame, model);
         adminUsuarios = new ControladorAdminUsuarios(frame, model);
         adminConfig = new ControladorAdminConfig(frame, model);
         adminProyectos = new ControladorAdminProyectos(frame, model);
@@ -297,16 +293,6 @@ public class Controlador {
     public ControladorDejarSeguir getDejarSeguir(){
         return dejarSeguir;
     }
-
-    /**
-     * Devuelve el controlador que lleva a la pantalla principal del administrador
-     * 
-     * @return controlador de votar proyecto
-     */
-    public ControladorToInicioAdmin getToInicioAdmin(){
-        return toInicioAdmin;
-    }
-
     
     /**
      * Devuelve el controladro que lleva de la pantalla inicial del admin a la pantalla de gestion de usuarios

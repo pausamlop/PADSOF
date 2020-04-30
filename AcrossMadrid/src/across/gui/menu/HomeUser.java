@@ -1,4 +1,4 @@
-package across.gui.user;
+package across.gui.menu;
 
 import java.awt.Image;
 import java.awt.event.*;

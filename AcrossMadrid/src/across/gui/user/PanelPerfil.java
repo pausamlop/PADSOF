@@ -13,6 +13,7 @@ import javax.swing.SpringLayout;
 import javax.swing.table.TableRowSorter;
 
 import across.gui.EditFont;
+import across.gui.menu.HomeUser;
 import across.gui.user.tablasPerfil.TablaColectivosCreados;
 import across.gui.user.tablasPerfil.TablaColectivosMiembros;
 import across.gui.user.tablasPerfil.TablaProyectosApoyados;

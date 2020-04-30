@@ -8,6 +8,7 @@ import java.util.Collection;
 import javax.swing.*;
 
 import across.gui.EditFont;
+import across.gui.menu.HomeUser;
 import across.model.user.Collective;
 
 /**

@@ -1,9 +1,9 @@
-package across.control.user.menu;
+package across.control.menu;
 
 import java.awt.event.*;
 
 import across.gui.MainFrame;
-import across.gui.user.HomeUser;
+import across.gui.menu.HomeUser;
 import across.model.application.Application;
 
 /**

@@ -1,42 +1,44 @@
-package across.control.admin.menu;
+package across.control.menu;
 
 import java.awt.event.*;
 
 import across.gui.MainFrame;
+import across.gui.user.*;
 import across.model.application.Application;
 
 /**
- * Clase ControladorToInicioAdmin
+ * Clase ControladorToPerfil
  *
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@uam.es
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-public class ControladorToInicioAdmin implements ActionListener{
+public class ControladorToPerfil implements ActionListener{
 
     private MainFrame frame;
     private Application model;
     
     /**
-     * Constructor de la clase ControladorToInicio
+     * Constructor de la clase ControladorToPerfil
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
      */
-    public ControladorToInicioAdmin (MainFrame frame, Application model){
+    public ControladorToPerfil (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'inicio'
+     * Accion que se realiza cuando se pulsa el boton de 'perfil'
      * 
      * @param e accion recibida
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        this.frame.showPanel("inicioAdmin");
+		frame.getPerfil().updateData();
+        this.frame.showPanel("perfil");
     }
 
 }

@@ -2,6 +2,7 @@ package across.gui.user;
 
 import javax.swing.*;
 
+import across.gui.menu.HomeUser;
 import across.model.application.Application;
 import across.model.project.Project;
 import across.model.user.Collective;

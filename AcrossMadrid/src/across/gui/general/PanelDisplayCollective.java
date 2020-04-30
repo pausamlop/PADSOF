@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import across.gui.EditFont;
-import across.gui.user.HomeUser;
+import across.gui.menu.HomeUser;
 import across.model.application.Application;
 import across.model.user.Collective;
 import across.model.user.User;

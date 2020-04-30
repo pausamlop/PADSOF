@@ -2,16 +2,15 @@ package across.gui;
 
 import across.control.*;
 import across.control.admin.*;
-import across.control.admin.menu.*;
+import across.control.menu.*;
 import across.control.start.*;
 import across.control.user.*;
-import across.control.user.menu.*;
 import across.control.user.project.*;
-import across.control.user.project.*;
-import across.gui.start.*;
-import across.gui.user.*;
 import across.gui.admin.*;
 import across.gui.general.*;
+import across.gui.menu.*;
+import across.gui.start.*;
+import across.gui.user.*;
 import across.model.application.Application;
 
 import javax.swing.*;
@@ -73,7 +72,6 @@ public class MainFrame extends JFrame{
     private ControladorSeguir contSeguir;
     private ControladorDejarSeguir contDejarSeguir;
     /* inicio admin */
-    private ControladorToInicioAdmin contToInicioAdmin;
     private ControladorAdminUsuarios contAdminUsuarios;
     private ControladorAdminConfig contAdminConfig;
     private ControladorAdminProyectos contAdminProyectos;

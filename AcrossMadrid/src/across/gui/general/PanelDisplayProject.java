@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import across.gui.EditFont;
-import across.gui.user.HomeUser;
+import across.gui.menu.HomeUser;
 import across.model.application.Application;
 import across.model.enumerations.projectState;
 import across.model.enumerations.typeSocial;
