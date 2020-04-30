@@ -85,6 +85,14 @@ public class PanelInicioUser extends HomeUser{
         this.add(crearProyecto);
     }
 	
+	public Project getProject() {
+		return (Project)proyectos.getSelectedItem();
+	}
+	
+	public Collective getCollective() {
+		return (Collective)colectivos.getSelectedItem();
+	}
+	
 	public void setControlLogout(ActionListener c){
         logout.addActionListener(c);
     }
@@ -94,23 +102,15 @@ public class PanelInicioUser extends HomeUser{
     }
     
     public void setControlVerProyecto(ActionListener c){
-        verProyecto.addActionListener(c);
+		verProyecto.addActionListener(c);
     }
     
     public void setControlCrearColectivo(ActionListener c) {
     	crearColectivo.addActionListener(c);
     }
 
-	public Project getProject() {
-		return (Project)proyectos.getSelectedItem();
-	}
-	
     public void setControlVerColectivo(ActionListener c){
-        verColectivo.addActionListener(c);
+		verColectivo.addActionListener(c);
     }
-    
-	public Collective getCollective() {
-		return (Collective)colectivos.getSelectedItem();
-	}
 	
 }

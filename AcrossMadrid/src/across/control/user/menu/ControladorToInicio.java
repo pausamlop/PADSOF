@@ -37,7 +37,10 @@ public class ControladorToInicio implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        this.frame.showPanel("inicioUser");
+        if (model.getCurrentUser() != null)
+            this.frame.showPanel("inicioUser");
+        else
+            this.frame.showPanel("inicioAdmin");
     }
 
 }

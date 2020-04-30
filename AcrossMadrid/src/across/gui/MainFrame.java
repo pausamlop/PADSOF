@@ -7,7 +7,7 @@ import across.control.start.*;
 import across.control.user.*;
 import across.control.user.menu.*;
 import across.control.user.project.*;
-//import across.control.user.project.*;
+import across.control.user.project.*;
 import across.gui.start.*;
 import across.gui.user.*;
 import across.gui.admin.*;
@@ -280,6 +280,8 @@ public class MainFrame extends JFrame{
         controladorUser(controlador);
         controladorNuevoProyecto(controlador);
         controladorNuevoColectivo(controlador);
+        controladorDisplayProject(controlador);
+        controladorDisplayCollective(controlador);
         
         controladorAdmin(controlador);
         controladorAdminConfig(controlador);
@@ -351,13 +353,15 @@ public class MainFrame extends JFrame{
         nuevoColectivo.setControlToInicio(contToInicio);
         nuevoProyecto.setControlToInicio(contToInicio);
         perfil.setControlToInicio(contToInicio);
-        //display
+        displayProject.setControlToInicio(contToInicio);
+        displayCollective.setControlToInicio(contToInicio);
 
         this.contToPerfil = controlador.getToPerfil();
         inicioUser.setControlToPefil(contToPerfil);
         nuevoColectivo.setControlToPefil(contToPerfil);
         nuevoProyecto.setControlToPefil(contToPerfil);
-        //display
+        displayProject.setControlToPefil(contToPerfil);
+        displayCollective.setControlToPefil(contToPerfil);
         
         //this.contUserDisplayCollective = controlador.getUserDisplayCollective();
         //inicioUser.setControlVerColectivo(contUserDisplayCollective);

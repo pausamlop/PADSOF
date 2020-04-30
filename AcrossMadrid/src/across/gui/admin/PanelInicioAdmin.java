@@ -80,13 +80,15 @@ public class PanelInicioAdmin extends JPanel{
     		EditFont.setSize(adminIni,25);
     		EditFont.setSize(proyectsPanel,15);
 			
-			layout.putConstraint(SpringLayout.WEST, logout, 10, SpringLayout.WEST, this);
-			layout.putConstraint(SpringLayout.NORTH, logout, 10, SpringLayout.NORTH, this);
-
+			
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, adminIni, 0, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, proyectsPanel, 0, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.NORTH, proyectsPanel, 30, SpringLayout.NORTH, adminIni);
-    		
+			
+			/* boton logout */
+			layout.putConstraint(SpringLayout.WEST, logout, 10, SpringLayout.WEST, this);
+			layout.putConstraint(SpringLayout.NORTH, logout, 10, SpringLayout.NORTH, this);
+
     		/*Botones*/
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, proyectos, -75, SpringLayout.VERTICAL_CENTER, this);
     		layout.putConstraint(SpringLayout.WEST, proyectos, 5, SpringLayout.WEST, this);
@@ -96,7 +98,7 @@ public class PanelInicioAdmin extends JPanel{
     		layout.putConstraint(SpringLayout.WEST, config, 5, SpringLayout.WEST, this);
     		
     		layout.putConstraint(SpringLayout.EAST, guardarCambios, 0, SpringLayout.EAST, table);
-    		layout.putConstraint(SpringLayout.NORTH, guardarCambios, 20, SpringLayout.SOUTH, table);
+			layout.putConstraint(SpringLayout.NORTH, guardarCambios, 20, SpringLayout.SOUTH, table);
     		
     		/*Tabla*/
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, table, 10, SpringLayout.HORIZONTAL_CENTER, this);
@@ -165,6 +167,10 @@ public class PanelInicioAdmin extends JPanel{
     
     public void setProyectosButton() {
     	proyectos.setSelected(true);
+	}
+	
+	public void setControlClickProject(MouseAdapter m){
+        aux.addMouseListener(m);
     }
     	
     

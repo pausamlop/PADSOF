@@ -1,7 +1,6 @@
 package across.gui.user;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.ButtonGroup;
@@ -14,14 +13,12 @@ import javax.swing.SpringLayout;
 import javax.swing.table.TableRowSorter;
 
 import across.gui.EditFont;
-import across.gui.admin.TablaUsuarios;
 import across.gui.user.tablasPerfil.TablaColectivosCreados;
 import across.gui.user.tablasPerfil.TablaColectivosMiembros;
 import across.gui.user.tablasPerfil.TablaProyectosApoyados;
 import across.gui.user.tablasPerfil.TablaProyectosCreados;
 import across.gui.user.tablasPerfil.TablaProyectosSeguidos;
 import across.model.application.Application;
-import across.model.user.User;
 
 /**
  * Clase PanelPerfil
