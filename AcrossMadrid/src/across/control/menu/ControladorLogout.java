@@ -1,8 +1,7 @@
-package across.control.start;
+package across.control.menu;
 
 import across.model.application.Application;
 import across.gui.*;
-import across.gui.start.PanelInicio;
 
 import java.awt.event.*;
 
@@ -37,6 +36,7 @@ public class ControladorLogout implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
+        model.logout();
         this.frame.showPanel("inicio");
     }
 }

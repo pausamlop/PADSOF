@@ -29,6 +29,7 @@ public class Controlador {
     /* menu user */
     private ControladorToInicio toInicio;
     private ControladorToPerfil toPerfil;
+    private ControladorToNotif toNotif;
 
     /* inicio de User */
     private ControladorUserCrearProyecto userCrearProyecto;
@@ -89,6 +90,7 @@ public class Controlador {
         /* menu user */
         toInicio = new ControladorToInicio(frame, model);
         toPerfil = new ControladorToPerfil(frame, model);
+        toNotif = new ControladorToNotif(frame, model);
 
         /* inicio de user */
         userCrearProyecto = new ControladorUserCrearProyecto(frame, model);
@@ -192,6 +194,14 @@ public class Controlador {
         return this.toPerfil;
     }
 
+    /**
+     * Devuelve el controlador que lleva a las notificaciones
+     * 
+     * @return controlador de notificaciones
+     */
+    public ControladorToNotif getToNotif(){
+        return this.toNotif;
+    }
 
     /**
      * Devuelve el controlador que maneja la creacion de un proyecto nuevo

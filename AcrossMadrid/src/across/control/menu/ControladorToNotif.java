@@ -1,30 +1,32 @@
 package across.control.menu;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import across.gui.MainFrame;
 import across.model.application.Application;
+import across.model.notification.Notification;
 
 /**
- * Clase ControladorToPerfil
+ * Clase ControladorToNotif
  *
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@uam.es
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-public class ControladorToPerfil implements ActionListener{
+public class ControladorToNotif implements ActionListener{
 
     private MainFrame frame;
     private Application model;
     
     /**
-     * Constructor de la clase ControladorToPerfil
+     * Constructor de la clase ControladorToNotif
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
      */
-    public ControladorToPerfil (MainFrame frame, Application model){
+    public ControladorToNotif (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
     }
@@ -36,8 +38,14 @@ public class ControladorToPerfil implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-		frame.getPerfil().updateData();
-        this.frame.showPanel("perfil");
+        this.frame.showPanel("notif");
+        ArrayList<Notification> newNotif;
+        if (Application.getApplication().getCurrentUser() != null){
+            newNotif = Application.getApplication().getCurrentUser().getNotifications();
+        }else{
+            newNotif = Application.getApplication().getAdmin().getNotifications();
+        }
+        frame.getNotif().setNotifications(newNotif);
     }
 
 }

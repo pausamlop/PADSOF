@@ -2,13 +2,9 @@ package across.gui.admin;
 
 import java.util.ArrayList;
 
-import javax.swing.JTextField;
 import javax.swing.table.*;
 
-import across.gui.MainFrame;
 import across.model.application.Application;
-import across.model.enumerations.projectState;
-import across.model.project.Project;
 import across.model.user.User;
 
 @SuppressWarnings("serial")

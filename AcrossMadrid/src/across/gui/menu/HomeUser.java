@@ -4,8 +4,6 @@ import java.awt.Image;
 import java.awt.event.*;
 import javax.swing.*;
 
-import across.gui.*;
-
 /**
  * Clase abstracta HomeUser
  *

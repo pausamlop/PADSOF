@@ -2,7 +2,6 @@ package across.control.start;
 
 import across.model.application.Application;
 import across.gui.*;
-import across.gui.start.PanelInicio;
 
 import java.awt.event.*;
 

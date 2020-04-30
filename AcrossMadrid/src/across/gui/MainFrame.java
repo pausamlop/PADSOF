@@ -8,14 +8,13 @@ import across.control.user.*;
 import across.control.user.project.*;
 import across.gui.admin.*;
 import across.gui.general.*;
-import across.gui.menu.*;
+import across.gui.notif.PanelNotifications;
 import across.gui.start.*;
 import across.gui.user.*;
 import across.model.application.Application;
 
 import javax.swing.*;
 import java.awt.*;
-
 
 /**
  * Clase MainFrame de la interfaz
@@ -26,7 +25,7 @@ import java.awt.*;
  *
  */
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame {
 
     /****************** PANELES ******************/
     private PanelInicio inicio = new PanelInicio();
@@ -35,6 +34,7 @@ public class MainFrame extends JFrame{
     /* user */
     private PanelInicioUser inicioUser = new PanelInicioUser();
     private PanelPerfil perfil = new PanelPerfil();
+    private PanelNotifications notif = new PanelNotifications();
     private PanelNewCollective nuevoColectivo = new PanelNewCollective();
     private PanelNewProject nuevoProyecto = new PanelNewProject();
     /* admin */
@@ -55,6 +55,8 @@ public class MainFrame extends JFrame{
     private ControladorLogin contLogin;
     private ControladorRegistro contRegistro;
     private ControladorAtras contAtras;
+
+    private ControladorToNotif contNotif;
     /* inicio user */
     private ControladorUserCrearProyecto contUserCrearProyecto;
     private ControladorUserCrearColectivo contUserCrearColectivo;
@@ -62,7 +64,7 @@ public class MainFrame extends JFrame{
     private ControladorUserDisplayCollective contUserDisplayCollective;
     /* crear colectivo */
     private ControladorNewCollective contNuevoColectivo;
-    /* displaycolectivo */
+    /* display colectivo */
     private ControladorJoin contJoin;
     /* crear proyecto */
     private ControladorNewProject contNuevoProyecto;
@@ -133,7 +135,8 @@ public class MainFrame extends JFrame{
 
         /* PANELES DEL USUARIO */
         contentPane.add(inicioUser, "inicioUser");
-        contentPane.add(perfil, "perfil");
+        //contentPane.add(perfil, "perfil");
+        contentPane.add(notif, "notif");
         contentPane.add(nuevoColectivo, "nuevoColectivo");
         contentPane.add(nuevoProyecto, "nuevoProyecto");
         contentPane.add(displayProject, "displayProject");
@@ -179,6 +182,15 @@ public class MainFrame extends JFrame{
      */
     public PanelPerfil getPerfil(){
         return perfil;
+    }
+
+    /**
+     * Devuelve el panel de notificaciones 
+     * 
+     * @return panel de notificaciones
+     */
+    public PanelNotifications getNotif(){
+        return notif;
     }
 
     /**
@@ -274,7 +286,7 @@ public class MainFrame extends JFrame{
         controladorLogin(controlador);
         controladorAtras(controlador);
 
-        controladorHomeUser(controlador);
+        controladorHome(controlador);
         controladorUser(controlador);
         controladorNuevoProyecto(controlador);
         controladorNuevoColectivo(controlador);
@@ -346,23 +358,32 @@ public class MainFrame extends JFrame{
      * 
      * @param controlador
      */
-    private void controladorHomeUser(Controlador controlador){
+    private void controladorHome(Controlador controlador){
         this.contToInicio = controlador.getToInicio();
+        displayCollective.setControlToInicio(contToInicio);
+        displayProject.setControlToInicio(contToInicio);
+        notif.setControlToInicio(contToInicio);
         nuevoColectivo.setControlToInicio(contToInicio);
         nuevoProyecto.setControlToInicio(contToInicio);
         perfil.setControlToInicio(contToInicio);
-        displayProject.setControlToInicio(contToInicio);
-        displayCollective.setControlToInicio(contToInicio);
 
         this.contToPerfil = controlador.getToPerfil();
         inicioUser.setControlToPefil(contToPerfil);
+        displayCollective.setControlToPefil(contToPerfil);
+        displayProject.setControlToPefil(contToPerfil);
+        notif.setControlToPefil(contToPerfil);
         nuevoColectivo.setControlToPefil(contToPerfil);
         nuevoProyecto.setControlToPefil(contToPerfil);
-        displayProject.setControlToPefil(contToPerfil);
-        displayCollective.setControlToPefil(contToPerfil);
-        
-        //this.contUserDisplayCollective = controlador.getUserDisplayCollective();
-        //inicioUser.setControlVerColectivo(contUserDisplayCollective);
+
+        this.contNotif = controlador.getToNotif();
+        inicioUser.setControlToNotif(contNotif);
+        displayCollective.setControlToNotif(contNotif);
+        displayProject.setControlToNotif(contNotif);
+        notif.setControlToPefil(contToPerfil);
+        nuevoColectivo.setControlToNotif(contNotif);
+        nuevoProyecto.setControlToNotif(contNotif);
+        perfil.setControlToNotif(contNotif);
+        inicioAdmin.setControlToNotif(contNotif);
     }
 
     /**

@@ -23,6 +23,7 @@ import javax.swing.table.*;
 public class PanelInicioAdmin extends JPanel{
 		
 		private JButton logout = new JButton();
+		private JButton notif = new JButton();
     	JRadioButton proyectos = new JRadioButton("Proyectos");
     	JRadioButton usuarios = new JRadioButton("Usuarios");
     	JRadioButton config = new JRadioButton("Configuracion");
@@ -48,10 +49,16 @@ public class PanelInicioAdmin extends JPanel{
     		this.setLayout(layout);
 			
 			/* boton logout */
-			ImageIcon icon = new ImageIcon("icons/logout.png");
-			Image img = icon.getImage();
-			Image scaled = img.getScaledInstance(20,30,Image.SCALE_SMOOTH);
-			logout.setIcon(new ImageIcon(scaled));
+			ImageIcon iconLO = new ImageIcon("icons/logout.png");
+			Image imgLO = iconLO.getImage();
+			Image scaledLO = imgLO.getScaledInstance(20,30,Image.SCALE_SMOOTH);
+			logout.setIcon(new ImageIcon(scaledLO));
+
+			/* boton notificaciones */
+			ImageIcon iconN = new ImageIcon("icons/notif.png");
+			Image imgN = iconN.getImage();
+			Image scaledN = imgN.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+			notif.setIcon(new ImageIcon(scaledN));
 			
     		/*Botones*/
     		grupo.add(proyectos);
@@ -60,7 +67,6 @@ public class PanelInicioAdmin extends JPanel{
         	proyectos.setSelected(true);
         
     		/*Tablas*/
-        	
             aux = new JTable(new TablaProyectos());
             aux.setPreferredScrollableViewportSize(new Dimension(450, 250));
             aux.setFillsViewportHeight(true);
@@ -88,6 +94,9 @@ public class PanelInicioAdmin extends JPanel{
 			/* boton logout */
 			layout.putConstraint(SpringLayout.WEST, logout, 10, SpringLayout.WEST, this);
 			layout.putConstraint(SpringLayout.NORTH, logout, 10, SpringLayout.NORTH, this);
+			/* boton notificaciones */
+			layout.putConstraint(SpringLayout.EAST, notif, -10, SpringLayout.EAST, this);
+			layout.putConstraint(SpringLayout.NORTH, notif, 10, SpringLayout.NORTH, this);
 
     		/*Botones*/
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, proyectos, -75, SpringLayout.VERTICAL_CENTER, this);
@@ -105,6 +114,7 @@ public class PanelInicioAdmin extends JPanel{
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, table, 0, SpringLayout.VERTICAL_CENTER, this);
 
 			this.add(logout);
+			this.add(notif);
 
     		this.add(adminIni);
     		this.add(proyectsPanel);
@@ -151,6 +161,15 @@ public class PanelInicioAdmin extends JPanel{
 	
 	public void setControlLogout(ActionListener c){
         logout.addActionListener(c);
+	}
+	
+	/**
+     * Establece el control del boton de notificaciones
+     * 
+     * @param c accion que activa el boton
+     */
+    public void setControlToNotif(ActionListener c){
+        notif.addActionListener(c);
     }
     
     public void setControlAdminUsuarios(ActionListener c){
@@ -168,10 +187,6 @@ public class PanelInicioAdmin extends JPanel{
     public void setProyectosButton() {
     	proyectos.setSelected(true);
 	}
-	
-	public void setControlClickProject(MouseAdapter m){
-        aux.addMouseListener(m);
-    }
     	
     
 }

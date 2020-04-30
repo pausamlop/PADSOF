@@ -5,11 +5,8 @@ import across.model.user.Collective;
 import across.model.user.User;
 import across.gui.*;
 import across.gui.general.PanelDisplayCollective;
-import across.gui.general.PanelDisplayProject;
 
 import java.awt.event.*;
-
-import javax.swing.JOptionPane; 
 
 /**
  * Clase ControladorJoin
