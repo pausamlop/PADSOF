@@ -38,6 +38,8 @@ public class ControladorAtras implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
+        frame.getLogin().emptyFields();
+        frame.getRegistro().emptyFields();
         this.frame.showPanel("inicio");
     }
 }

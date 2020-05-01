@@ -50,6 +50,10 @@ public class ControladorLogin implements ActionListener{
             else if (model.getAdmin().login(password)){
                 login.emptyFields();
                 this.frame.showPanel("inicioAdmin");
+
+                int numNotif = Application.getApplication().getAdmin().getNotifications().size();
+                if (numNotif > 0)
+                    JOptionPane.showMessageDialog(frame, "Tiene " + numNotif + " notificacione pendientes", "Notificaciones", JOptionPane.INFORMATION_MESSAGE);
             }
             else
                 JOptionPane.showMessageDialog(frame, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
@@ -66,6 +70,10 @@ public class ControladorLogin implements ActionListener{
                 }
                 login.emptyFields();
                 this.frame.showPanel("inicioUser");
+
+                int numNotif = Application.getApplication().getCurrentUser().getNotifications().size();
+                if (numNotif > 0)
+                    JOptionPane.showMessageDialog(frame, "Tiene " + numNotif + " notificacione pendientes", "Notificaciones", JOptionPane.INFORMATION_MESSAGE);
             }
             else
                 JOptionPane.showMessageDialog(frame, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
