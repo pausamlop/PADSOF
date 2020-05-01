@@ -20,7 +20,7 @@ public class Main{
      * 
      */
     public static void main(String[] args) {
-        /*Application.setApplication(Application.loadData());
+        Application.setApplication(Application.loadData());
         Application app = Application.getApplication();
         app.setLogOut(false);
 
@@ -40,9 +40,9 @@ public class Main{
             }
             app.pantallaPrincipal();
             app.setLogOut(false);
-            Application.saveData(app);*/
+            Application.saveData(app);
     	
-    	Application.setApplication(Application.loadData());
+    	/*Application.setApplication(Application.loadData());
         Application app = Application.getApplication();
         
         for(Project aux : app.getNonValidatedProjects()) {
@@ -50,8 +50,8 @@ public class Main{
         }
         
         Application.saveData(app);
+        }*/
         }
 
-        
-
     }
+}

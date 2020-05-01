@@ -12,6 +12,7 @@ import javax.swing.table.TableRowSorter;
 
 import across.gui.EditFont;
 import across.gui.admin.PanelInicioAdmin.CustomTableCellEditor;
+import across.gui.menu.HomeAdmin;
 import across.model.application.Application;
 
 
@@ -25,13 +26,13 @@ import across.model.application.Application;
  *
  */
 @SuppressWarnings("serial")
-public class PanelAdminConfig extends JPanel{
+public class PanelAdminConfig extends HomeAdmin{
     	
     	JRadioButton proyectos = new JRadioButton("Proyectos");
     	JRadioButton usuarios = new JRadioButton("Usuarios");
     	JRadioButton config = new JRadioButton("Configuracion");
     	
-    	JLabel caducidad = new JLabel("Nº de dias para que un proyecto caduque: ");
+    	JLabel caducidad = new JLabel("Nï¿½ de dias para que un proyecto caduque: ");
     	JTextField tiempo = new JTextField(((Integer)(Application.getApplication().getDaysExpiration())).toString(), 5);
     	JButton buttonTiempo = new JButton("Aplicar");
     	
@@ -49,8 +50,7 @@ public class PanelAdminConfig extends JPanel{
         */
     	public PanelAdminConfig(){
     		
-    		SpringLayout layout = new SpringLayout();
-    		this.setLayout(layout);
+    		SpringLayout layout = (SpringLayout)getLayout();
     		
     		/*Botones*/
     		grupo.add(proyectos);
@@ -72,7 +72,7 @@ public class PanelAdminConfig extends JPanel{
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, buttonTiempo, -75, SpringLayout.VERTICAL_CENTER, this);
     		layout.putConstraint(SpringLayout.WEST, buttonTiempo, 5, SpringLayout.EAST, tiempo);
     		
-    		/*Configuracion Nº de votos minimo por proyecto*/
+    		/*Configuracion Nï¿½ de votos minimo por proyecto*/
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, vmin, -25, SpringLayout.VERTICAL_CENTER, this);
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, vmin, -80, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, votos, -25, SpringLayout.VERTICAL_CENTER, this);

@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import across.gui.EditFont;
@@ -23,7 +25,7 @@ public class PanelNotifications extends HomeUser {
         JScrollPane scroll = new JScrollPane(table);
 
         /* configuraciones de la tabla */
-        table.setPreferredScrollableViewportSize(new Dimension(400, 280));
+        table.setPreferredScrollableViewportSize(new Dimension(500, 260));
         table.getColumnModel().getColumn(0).setPreferredWidth(300);
         table.setFillsViewportHeight(true);
         table.setOpaque(false);
@@ -33,20 +35,31 @@ public class PanelNotifications extends HomeUser {
 
         /* colocacion */
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, scroll, 0, SpringLayout.HORIZONTAL_CENTER, this);
-        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, titulo, 30, SpringLayout.HORIZONTAL_CENTER, this);
-        spring.putConstraint(SpringLayout.VERTICAL_CENTER, scroll, 0, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, titulo, 0, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, scroll, 20, SpringLayout.VERTICAL_CENTER, this);
         spring.putConstraint(SpringLayout.SOUTH, titulo, -25, SpringLayout.NORTH, scroll);
 
         this.add(scroll);
         this.add(titulo);
     }
 
+    public JTable getTable(){
+        return table;
+    }
+
     public void setNotifications(ArrayList<Notification> not){
         ((TablaNotif)table.getModel()).setNotifications(not);
-        if (Application.getApplication().getCurrentAdmin()){
+    }
+    
+    public void update() {
+    	if (Application.getApplication().getCurrentUser() == null){
             toPerfil.setVisible(false);
         }else{
             toPerfil.setVisible(true);
         }
+    }
+
+    public void setControlVisto(TableModelListener e){
+        table.getModel().addTableModelListener(e);
     }
 }

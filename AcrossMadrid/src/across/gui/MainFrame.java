@@ -2,21 +2,23 @@ package across.gui;
 
 import across.control.*;
 import across.control.admin.*;
-import across.control.admin.menu.*;
+import across.control.menu.*;
+import across.control.menu.ControladorLogout;
+import across.control.menu.ControladorToInicio;
+import across.control.menu.ControladorToPerfil;
+import across.control.notif.ControladorVistoNotif;
 import across.control.start.*;
 import across.control.user.*;
-import across.control.user.menu.*;
 import across.control.user.project.*;
-//import across.control.user.project.*;
-import across.gui.start.*;
-import across.gui.user.*;
 import across.gui.admin.*;
 import across.gui.general.*;
+import across.gui.notif.*;
+import across.gui.start.*;
+import across.gui.user.*;
 import across.model.application.Application;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
 
 
 /**
@@ -37,6 +39,7 @@ public class MainFrame extends JFrame{
     /* user */
     private PanelInicioUser inicioUser = new PanelInicioUser();
     private PanelPerfil perfil = new PanelPerfil();
+    private PanelNotifications notif = new PanelNotifications();
     private PanelNewCollective nuevoColectivo = new PanelNewCollective();
     private PanelNewProject nuevoProyecto = new PanelNewProject();
     /* admin */
@@ -58,6 +61,9 @@ public class MainFrame extends JFrame{
     private ControladorLogin contLogin;
     private ControladorRegistro contRegistro;
     private ControladorAtras contAtras;
+    private ControladorToNotif contNotif;
+    /* notificacion */
+    private ControladorVistoNotif contVistoNotif;
     /* inicio user */
     private ControladorUserCrearProyecto contUserCrearProyecto;
     private ControladorUserCrearColectivo contUserCrearColectivo;
@@ -75,7 +81,6 @@ public class MainFrame extends JFrame{
     private ControladorSeguir contSeguir;
     private ControladorDejarSeguir contDejarSeguir;
     /* inicio admin */
-    private ControladorToInicioAdmin contToInicioAdmin;
     private ControladorAdminUsuarios contAdminUsuarios;
     private ControladorAdminConfig contAdminConfig;
     private ControladorAdminProyectos contAdminProyectos;
@@ -137,6 +142,7 @@ public class MainFrame extends JFrame{
 
         /* PANELES DEL USUARIO */
         contentPane.add(inicioUser, "inicioUser");
+        contentPane.add(notif, "notif");
         contentPane.add(perfil, "perfil");
         contentPane.add(nuevoColectivo, "nuevoColectivo");
         contentPane.add(nuevoProyecto, "nuevoProyecto");
@@ -183,6 +189,15 @@ public class MainFrame extends JFrame{
      */
     public PanelPerfil getPerfil(){
         return perfil;
+    }
+
+    /**
+      * Devuelve el panel de notificaciones 
+      * 
+      * @return panel de notificaciones
+      */
+      public PanelNotifications getNotif(){
+        return notif;
     }
 
     /**
@@ -280,16 +295,19 @@ public class MainFrame extends JFrame{
      */
     public void setControlador(Controlador controlador){
 
-        controladorLogout(controlador);
         controladorInicio(controlador);
         controladorRegistro(controlador);
         controladorLogin(controlador);
         controladorAtras(controlador);
 
-        controladorHomeUser(controlador);
+        controladorVistoNotif(controlador);
+
+        controladorHome(controlador);
         controladorUser(controlador);
         controladorNuevoProyecto(controlador);
         controladorNuevoColectivo(controlador);
+        controladorDisplayProject(controlador);
+        controladorDisplayCollective(controlador);
         
         controladorAdmin(controlador);
         controladorAdminConfig(controlador);
@@ -297,16 +315,6 @@ public class MainFrame extends JFrame{
 
     }
     
-    /**
-     * Establece el controlador de cierre de sesion
-     * 
-     * @param controlador objeto controlador general
-     */
-    private void controladorLogout(Controlador controlador){
-        this.contLogout = controlador.getLogout();
-        inicioUser.setControlLogout(contLogout);
-        inicioAdmin.setControlLogout(contLogout);
-    }
 
     /**
      * Establece los controladors del panel de inicio
@@ -352,25 +360,54 @@ public class MainFrame extends JFrame{
     }
 
     /**
+     * Establece el control de marcar una notificacion como vista
+     * 
+     * @param controlador objeto controlador general
+     */
+    public void controladorVistoNotif(Controlador controlador){
+        this.contVistoNotif = controlador.getVistoNotif();
+        notif.setControlVisto(contVistoNotif);
+    }
+
+    /**
      * Establece los controladores de inicio y perfil de usuario
      * 
      * @param controlador
      */
-    private void controladorHomeUser(Controlador controlador){
+    private void controladorHome(Controlador controlador){
+    	this.contLogout = controlador.getLogout();
+        inicioUser.setControlLogout(contLogout);
+        inicioAdmin.setControlLogout(contLogout);
+        adminUsuarios.setControlLogout(contLogout);
+        adminConfig.setControlLogout(contLogout);
+    	
         this.contToInicio = controlador.getToInicio();
+        displayCollective.setControlToInicio(contToInicio);
+        displayProject.setControlToInicio(contToInicio);
+        notif.setControlToInicio(contToInicio);
         nuevoColectivo.setControlToInicio(contToInicio);
         nuevoProyecto.setControlToInicio(contToInicio);
         perfil.setControlToInicio(contToInicio);
-        //display
 
         this.contToPerfil = controlador.getToPerfil();
         inicioUser.setControlToPefil(contToPerfil);
+        displayCollective.setControlToPefil(contToPerfil);
+        displayProject.setControlToPefil(contToPerfil);
+        notif.setControlToPefil(contToPerfil);
         nuevoColectivo.setControlToPefil(contToPerfil);
         nuevoProyecto.setControlToPefil(contToPerfil);
-        //display
-        
-        //this.contUserDisplayCollective = controlador.getUserDisplayCollective();
-        //inicioUser.setControlVerColectivo(contUserDisplayCollective);
+
+        this.contNotif = controlador.getNotif();
+        inicioUser.setControlToNotif(contNotif);
+        displayCollective.setControlToNotif(contNotif);
+        displayProject.setControlToNotif(contNotif);
+        notif.setControlToPefil(contToPerfil);
+        nuevoColectivo.setControlToNotif(contNotif);
+        nuevoProyecto.setControlToNotif(contNotif);
+        perfil.setControlToNotif(contNotif);
+        inicioAdmin.setControlToNotif(contNotif);
+        adminUsuarios.setControlToNotif(contNotif);
+        adminConfig.setControlToNotif(contNotif);
     }
 
     /**

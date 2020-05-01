@@ -1,7 +1,6 @@
 package across.gui.admin;
 
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -14,6 +13,7 @@ import javax.swing.table.TableRowSorter;
 
 import across.gui.EditFont;
 import across.gui.admin.PanelInicioAdmin.CustomTableCellEditor;
+import across.gui.menu.HomeAdmin;
 
 
 
@@ -26,7 +26,7 @@ import across.gui.admin.PanelInicioAdmin.CustomTableCellEditor;
  *
  */
 @SuppressWarnings("serial")
-public class PanelAdminUsuarios extends JPanel{
+public class PanelAdminUsuarios extends HomeAdmin{
     	
     	JRadioButton proyectos = new JRadioButton("Proyectos");
     	JRadioButton usuarios = new JRadioButton("Usuarios");
@@ -54,8 +54,7 @@ public class PanelAdminUsuarios extends JPanel{
         */
     	public PanelAdminUsuarios(){
     		
-    		SpringLayout layout = new SpringLayout();
-    		this.setLayout(layout);
+    		SpringLayout layout = (SpringLayout)getLayout();
     		
     		/*Botones*/
     		grupo.add(proyectos);

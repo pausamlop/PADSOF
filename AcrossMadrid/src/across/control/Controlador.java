@@ -1,14 +1,13 @@
 package across.control;
 
 import across.model.application.Application;
-import across.gui.MainFrame;
 import across.control.admin.*;
-import across.control.admin.menu.ControladorToInicioAdmin;
+import across.control.menu.*;
+import across.control.notif.ControladorVistoNotif;
 import across.control.start.*;
 import across.control.user.*;
-import across.control.user.menu.*;
 import across.control.user.project.*;
-//import across.control.user.project.*;
+import across.gui.MainFrame;
 
 /**
  * Clase Controlador
@@ -20,7 +19,6 @@ import across.control.user.project.*;
  */
 public class Controlador {
 
-    private ControladorLogout logout;
     /* inicio de la app */
     private ControladorInicioRegistro inicioRegistro;
     private ControladorInicioLogin inicioLogin;
@@ -29,9 +27,14 @@ public class Controlador {
     private ControladorAtras atras;
 
     /* menu user */
+    private ControladorLogout logout;
     private ControladorToInicio toInicio;
     private ControladorToPerfil toPerfil;
+    private ControladorToNotif toNotif;
 
+    /* notificaciones */
+    private ControladorVistoNotif vistoNotif;
+    
     /* inicio de User */
     private ControladorUserCrearProyecto userCrearProyecto;
     private ControladorUserDisplayProject userDisplayProject;
@@ -54,7 +57,6 @@ public class Controlador {
     private ControladorJoin join;
 
     /* inicio de admin */
-    private ControladorToInicioAdmin toInicioAdmin;
     private ControladorAdminUsuarios adminUsuarios;
     private ControladorAdminConfig adminConfig;
     private ControladorAdminProyectos adminProyectos;
@@ -82,7 +84,6 @@ public class Controlador {
      * Crea todos los controladores de la aplicacion
      */
     private void setupControladores(){
-        logout = new ControladorLogout(frame, model);
         /* inicio de la app */
         inicioRegistro = new ControladorInicioRegistro(frame, model);
         inicioLogin = new ControladorInicioLogin(frame, model);
@@ -91,8 +92,13 @@ public class Controlador {
         atras = new ControladorAtras(frame, model);
 
         /* menu user */
+        logout = new ControladorLogout(frame, model);
         toInicio = new ControladorToInicio(frame, model);
         toPerfil = new ControladorToPerfil(frame, model);
+        toNotif = new ControladorToNotif(frame, model);
+
+        /* notificaciones */
+        vistoNotif = new ControladorVistoNotif(frame, model);
 
         /* inicio de user */
         userCrearProyecto = new ControladorUserCrearProyecto(frame, model);
@@ -109,7 +115,6 @@ public class Controlador {
         join = new ControladorJoin(frame, model);
          
         /* inicio de admin */
-        toInicioAdmin = new ControladorToInicioAdmin(frame, model);
         adminUsuarios = new ControladorAdminUsuarios(frame, model);
         adminConfig = new ControladorAdminConfig(frame, model);
         adminProyectos = new ControladorAdminProyectos(frame, model);
@@ -196,6 +201,24 @@ public class Controlador {
      */
     public ControladorToPerfil getToPerfil(){
         return this.toPerfil;
+    }
+    
+    /**
+     * Devuelve el controlador que lleva al panel de notificaciones 
+     * 
+     * @return controlador de notificaciones
+     */
+    public ControladorToNotif getNotif(){
+        return toNotif;
+    }
+
+    /**
+     * Devuelve el panel de control de notificacion vista 
+     * 
+     * @return panel de notificacion vista
+     */
+    public ControladorVistoNotif getVistoNotif(){
+        return vistoNotif;
     }
 
 
@@ -299,17 +322,7 @@ public class Controlador {
     public ControladorDejarSeguir getDejarSeguir(){
         return dejarSeguir;
     }
-
-    /**
-     * Devuelve el controlador que lleva a la pantalla principal del administrador
-     * 
-     * @return controlador de votar proyecto
-     */
-    public ControladorToInicioAdmin getToInicioAdmin(){
-        return toInicioAdmin;
-    }
-
-    
+ 
     /**
      * Devuelve el controladro que lleva de la pantalla inicial del admin a la pantalla de gestion de usuarios
      * 

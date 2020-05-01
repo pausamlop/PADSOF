@@ -44,5 +44,15 @@ public abstract class Notification implements Serializable{
      * Metodo que genera la notificicacion, enviandose a sus correspondientes receptores
      */
     public abstract void sendNotification();
+    
+    /**
+     * Metodo que devuelve el objeto notificacion para visualizarlo como su mesaje
+     * 
+     * @return mensaje de la notificacion
+     */
+    @Override
+    public String toString() {
+    	return message;
+    }
 
 }

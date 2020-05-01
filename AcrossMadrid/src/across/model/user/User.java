@@ -135,6 +135,15 @@ public class User extends UserCollective {
     public void setFollowedProjects(ArrayList<Project> followedProjects) { this.followedProjects = followedProjects; }
     
     /**
+     * Establece las notificaciones del usuario
+     * 
+     * @param notif notificaciones del usuario
+     */
+	public void setNotifications(ArrayList<Notification> notif) {
+		notifications = notif;	
+	}
+	
+    /**
      * Añade una notificacion la lista de notificaciones del usuario
      * 
      * @param notification

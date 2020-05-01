@@ -38,14 +38,14 @@ public class ControladorToNotif implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        this.frame.showPanel("notif");
+    	frame.getNotif().update();
         ArrayList<Notification> newNotif;
-        if (Application.getApplication().getCurrentUser() != null){
+        if (Application.getApplication().getCurrentUser() != null)
             newNotif = Application.getApplication().getCurrentUser().getNotifications();
-        }else{
+        else
             newNotif = Application.getApplication().getAdmin().getNotifications();
-        }
         frame.getNotif().setNotifications(newNotif);
+        this.frame.showPanel("notif");
     }
 
 }
