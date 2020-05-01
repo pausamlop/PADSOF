@@ -1,12 +1,13 @@
 package across.control.user;
 
 import across.model.application.Application;
-import across.model.user.Collective;
-import across.model.user.User;
 import across.gui.*;
 import across.gui.general.PanelDisplayCollective;
+import across.gui.general.PanelDisplayProject;
 
 import java.awt.event.*;
+
+import javax.swing.JOptionPane; 
 
 /**
  * Clase ControladorJoin
@@ -43,13 +44,11 @@ public class ControladorJoin implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        Collective c = panel.getCollective();
-        User u = model.getCurrentUser();
-        if (u.getMemberCollectives().contains(c))
-            c.disjoin(u);
-        else
-            c.join(u);
+        panel.getCollective().join(model.getCurrentUser());
+        System.out.println(model.getCurrentUser() + "se ha unido al colectivo");
+        JOptionPane.showMessageDialog(frame, "Se ha unido al colectivo", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         panel.update();
+        frame.showPanel("inicioUser");
     }
     
     

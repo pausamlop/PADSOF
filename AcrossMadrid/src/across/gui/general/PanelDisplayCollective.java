@@ -1,15 +1,23 @@
 package across.gui.general;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import across.gui.EditFont;
-import across.gui.menu.HomeUser;
+import across.gui.user.HomeUser;
 import across.model.application.Application;
+import across.model.enumerations.projectState;
+import across.model.enumerations.typeSocial;
+import across.model.project.*;
 import across.model.user.Collective;
 import across.model.user.User;
 
+import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Clase PanelDisplayProject de la interfaz
@@ -40,6 +48,8 @@ public class PanelDisplayCollective extends HomeUser{
      */
     public PanelDisplayCollective(){
     	
+    	
+    	
     	setLayout(spring);
     	
         descProperties();
@@ -66,7 +76,7 @@ public class PanelDisplayCollective extends HomeUser{
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, scroll, -160, SpringLayout.HORIZONTAL_CENTER, nombre);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, scroll, 180, SpringLayout.VERTICAL_CENTER, nombre);
         
-        spring.putConstraint(SpringLayout.WEST, join, 0, SpringLayout.WEST, desc);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, join, 30, SpringLayout.HORIZONTAL_CENTER, nombre);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, join, 270, SpringLayout.VERTICAL_CENTER, nombre);
         
         
@@ -123,11 +133,11 @@ public class PanelDisplayCollective extends HomeUser{
 	private void updateButtons() {
         User user = Application.getApplication().getCurrentUser(); 
         
-		/* boton join */
+		/* boton votar */
 		if (user.getMemberCollectives().contains(collective))
-			join.setText("Salir del colectivo");
+			join.setEnabled(false);
 		else
-			join.setText("Unirse");;		
+			join.setEnabled(true);		
 
     }
     

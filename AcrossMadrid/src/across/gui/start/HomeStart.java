@@ -1,8 +1,10 @@
 package across.gui.start;
 
+import java.awt.Image;
 import java.awt.event.*;
 import javax.swing.*;
 
+import across.gui.EditFont;
 
 /**
  * Clase abstracta HomeStart

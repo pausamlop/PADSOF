@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import across.gui.EditFont;
-import across.gui.menu.HomeUser;
+import across.gui.user.HomeUser;
 import across.model.application.Application;
 import across.model.enumerations.projectState;
 import across.model.enumerations.typeSocial;
@@ -210,7 +210,6 @@ public class PanelDisplayProject extends HomeUser{
 	private void updateButtons() {
         User user = Application.getApplication().getCurrentUser(); 
     	if (user != null) {
-            toPerfil.setVisible(true);
             ((CardLayout)buttons.getLayout()).show(buttons,"user");
     		
     		/* boton seguir/dejar de seguir */
@@ -227,7 +226,6 @@ public class PanelDisplayProject extends HomeUser{
     			votar.setEnabled(true);		
         }
         else{
-            toPerfil.setVisible(false);
             ((CardLayout)buttons.getLayout()).show(buttons,"admin");
             if (!project.getProjectState().equals(projectState.ENVALIDACION)){
                 aceptar.setEnabled(false);

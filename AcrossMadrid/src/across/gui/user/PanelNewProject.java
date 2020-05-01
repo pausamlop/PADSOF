@@ -3,7 +3,6 @@ package across.gui.user;
 import javax.swing.*;
 
 import across.gui.EditFont;
-import across.gui.menu.HomeUser;
 import across.model.application.Application;
 import across.model.user.Collective;
 

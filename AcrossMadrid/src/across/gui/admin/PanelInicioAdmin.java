@@ -23,7 +23,6 @@ import javax.swing.table.*;
 public class PanelInicioAdmin extends JPanel{
 		
 		private JButton logout = new JButton();
-		private JButton notif = new JButton();
     	JRadioButton proyectos = new JRadioButton("Proyectos");
     	JRadioButton usuarios = new JRadioButton("Usuarios");
     	JRadioButton config = new JRadioButton("Configuracion");
@@ -49,16 +48,10 @@ public class PanelInicioAdmin extends JPanel{
     		this.setLayout(layout);
 			
 			/* boton logout */
-			ImageIcon iconLO = new ImageIcon("icons/logout.png");
-			Image imgLO = iconLO.getImage();
-			Image scaledLO = imgLO.getScaledInstance(20,30,Image.SCALE_SMOOTH);
-			logout.setIcon(new ImageIcon(scaledLO));
-
-			/* boton notificaciones */
-			ImageIcon iconN = new ImageIcon("icons/notif.png");
-			Image imgN = iconN.getImage();
-			Image scaledN = imgN.getScaledInstance(30,30,Image.SCALE_SMOOTH);
-			notif.setIcon(new ImageIcon(scaledN));
+			ImageIcon icon = new ImageIcon("icons/logout.png");
+			Image img = icon.getImage();
+			Image scaled = img.getScaledInstance(20,30,Image.SCALE_SMOOTH);
+			logout.setIcon(new ImageIcon(scaled));
 			
     		/*Botones*/
     		grupo.add(proyectos);
@@ -67,6 +60,7 @@ public class PanelInicioAdmin extends JPanel{
         	proyectos.setSelected(true);
         
     		/*Tablas*/
+        	
             aux = new JTable(new TablaProyectos());
             aux.setPreferredScrollableViewportSize(new Dimension(450, 250));
             aux.setFillsViewportHeight(true);
@@ -86,18 +80,13 @@ public class PanelInicioAdmin extends JPanel{
     		EditFont.setSize(adminIni,25);
     		EditFont.setSize(proyectsPanel,15);
 			
-			
+			layout.putConstraint(SpringLayout.WEST, logout, 10, SpringLayout.WEST, this);
+			layout.putConstraint(SpringLayout.NORTH, logout, 10, SpringLayout.NORTH, this);
+
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, adminIni, 0, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, proyectsPanel, 0, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.NORTH, proyectsPanel, 30, SpringLayout.NORTH, adminIni);
-			
-			/* boton logout */
-			layout.putConstraint(SpringLayout.WEST, logout, 10, SpringLayout.WEST, this);
-			layout.putConstraint(SpringLayout.NORTH, logout, 10, SpringLayout.NORTH, this);
-			/* boton notificaciones */
-			layout.putConstraint(SpringLayout.EAST, notif, -10, SpringLayout.EAST, this);
-			layout.putConstraint(SpringLayout.NORTH, notif, 10, SpringLayout.NORTH, this);
-
+    		
     		/*Botones*/
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, proyectos, -75, SpringLayout.VERTICAL_CENTER, this);
     		layout.putConstraint(SpringLayout.WEST, proyectos, 5, SpringLayout.WEST, this);
@@ -107,14 +96,13 @@ public class PanelInicioAdmin extends JPanel{
     		layout.putConstraint(SpringLayout.WEST, config, 5, SpringLayout.WEST, this);
     		
     		layout.putConstraint(SpringLayout.EAST, guardarCambios, 0, SpringLayout.EAST, table);
-			layout.putConstraint(SpringLayout.NORTH, guardarCambios, 20, SpringLayout.SOUTH, table);
+    		layout.putConstraint(SpringLayout.NORTH, guardarCambios, 20, SpringLayout.SOUTH, table);
     		
     		/*Tabla*/
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, table, 10, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.VERTICAL_CENTER, table, 0, SpringLayout.VERTICAL_CENTER, this);
 
 			this.add(logout);
-			this.add(notif);
 
     		this.add(adminIni);
     		this.add(proyectsPanel);
@@ -161,15 +149,6 @@ public class PanelInicioAdmin extends JPanel{
 	
 	public void setControlLogout(ActionListener c){
         logout.addActionListener(c);
-	}
-	
-	/**
-     * Establece el control del boton de notificaciones
-     * 
-     * @param c accion que activa el boton
-     */
-    public void setControlToNotif(ActionListener c){
-        notif.addActionListener(c);
     }
     
     public void setControlAdminUsuarios(ActionListener c){
@@ -186,7 +165,7 @@ public class PanelInicioAdmin extends JPanel{
     
     public void setProyectosButton() {
     	proyectos.setSelected(true);
-	}
+    }
     	
     
 }

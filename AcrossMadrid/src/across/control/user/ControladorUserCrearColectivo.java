@@ -3,10 +3,12 @@ package across.control.user;
 import across.model.application.Application;
 import across.model.user.Collective;
 import across.gui.*;
+import across.gui.user.PanelInicioUser;
 
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import java.util.*;
 
 /**
  * Clase ControladorUserCrearProyecto
@@ -18,6 +20,7 @@ import java.util.ArrayList;
  */
 public class ControladorUserCrearColectivo implements ActionListener{
 
+    private PanelInicioUser inicioUser;
     private MainFrame frame;
     private Application model;
 
@@ -30,6 +33,7 @@ public class ControladorUserCrearColectivo implements ActionListener{
     public ControladorUserCrearColectivo (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
+        this.inicioUser = frame.getInicioUser();
     }
 
     /**

@@ -2,6 +2,7 @@ package across.control.user.project;
 
 import across.model.application.Application;
 import across.gui.*;
+import across.gui.general.PanelDisplayCollective;
 import across.gui.general.PanelDisplayProject;
 
 import java.awt.event.*; 

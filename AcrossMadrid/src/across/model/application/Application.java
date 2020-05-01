@@ -800,8 +800,6 @@ public class Application implements Serializable{
         }catch(IOException | ClassNotFoundException exc){
             exc.printStackTrace();
         }
-        app.setCurrentUser(null);
-        app.setCurrentAdmin(false);
         return app;
     }
 

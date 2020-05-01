@@ -1,6 +1,7 @@
 package across.gui.user;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.ButtonGroup;
@@ -13,13 +14,14 @@ import javax.swing.SpringLayout;
 import javax.swing.table.TableRowSorter;
 
 import across.gui.EditFont;
-import across.gui.menu.HomeUser;
+import across.gui.admin.TablaUsuarios;
 import across.gui.user.tablasPerfil.TablaColectivosCreados;
 import across.gui.user.tablasPerfil.TablaColectivosMiembros;
 import across.gui.user.tablasPerfil.TablaProyectosApoyados;
 import across.gui.user.tablasPerfil.TablaProyectosCreados;
 import across.gui.user.tablasPerfil.TablaProyectosSeguidos;
 import across.model.application.Application;
+import across.model.user.User;
 
 /**
  * Clase PanelPerfil
@@ -68,7 +70,7 @@ public class PanelPerfil extends HomeUser{
         
         JPanel options = new JPanel(new GridLayout(20,10, 0, 10));
         
-        //setTables();
+        setTables();
 
         
         setControlPCreados();
@@ -92,29 +94,29 @@ public class PanelPerfil extends HomeUser{
         options.add(buttonCMiembro);
         
         
-        // spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, title, -220, SpringLayout.HORIZONTAL_CENTER, this);
-        // spring.putConstraint(SpringLayout.VERTICAL_CENTER, title, -130, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, title, -220, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, title, -130, SpringLayout.VERTICAL_CENTER, this);
         
-        // spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, options, -220, SpringLayout.HORIZONTAL_CENTER, this);
-        // spring.putConstraint(SpringLayout.VERTICAL_CENTER, options, 400, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, options, -220, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, options, 400, SpringLayout.VERTICAL_CENTER, this);
         
-        // spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, nombre, -220, SpringLayout.HORIZONTAL_CENTER, this);
-        // spring.putConstraint(SpringLayout.VERTICAL_CENTER, nombre, -95, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, nombre, -220, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, nombre, -95, SpringLayout.VERTICAL_CENTER, this);
         
-        // spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table1, 90, SpringLayout.HORIZONTAL_CENTER, this);
-        // spring.putConstraint(SpringLayout.VERTICAL_CENTER, table1, 10, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table1, 90, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, table1, 10, SpringLayout.VERTICAL_CENTER, this);
         
-        // spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table2, 90, SpringLayout.HORIZONTAL_CENTER, this);
-        // spring.putConstraint(SpringLayout.VERTICAL_CENTER, table2, 10, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table2, 90, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, table2, 10, SpringLayout.VERTICAL_CENTER, this);
         
-        // spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table3, 90, SpringLayout.HORIZONTAL_CENTER, this);
-        // spring.putConstraint(SpringLayout.VERTICAL_CENTER, table3, 10, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table3, 90, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, table3, 10, SpringLayout.VERTICAL_CENTER, this);
         
-        // spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table4, 90, SpringLayout.HORIZONTAL_CENTER, this);
-        // spring.putConstraint(SpringLayout.VERTICAL_CENTER, table4, 10, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table4, 90, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, table4, 10, SpringLayout.VERTICAL_CENTER, this);
         
-        // spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table5, 90, SpringLayout.HORIZONTAL_CENTER, this);
-        // spring.putConstraint(SpringLayout.VERTICAL_CENTER, table5, 10, SpringLayout.VERTICAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table5, 90, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, table5, 10, SpringLayout.VERTICAL_CENTER, this);
         
         
 	    EditFont.setSize(title, 24);
@@ -127,11 +129,11 @@ public class PanelPerfil extends HomeUser{
         this.add(title);
         this.add(nombre);
         
-        // this.add(table1);
-        // this.add(table2);
-        // this.add(table3);
-        // this.add(table4);
-        // this.add(table5);
+        this.add(table1);
+        this.add(table2);
+        this.add(table3);
+        this.add(table4);
+        this.add(table5);
         
     }
     
