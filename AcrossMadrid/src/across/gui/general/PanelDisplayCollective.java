@@ -76,7 +76,7 @@ public class PanelDisplayCollective extends HomeUser{
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, scroll, -160, SpringLayout.HORIZONTAL_CENTER, nombre);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, scroll, 180, SpringLayout.VERTICAL_CENTER, nombre);
         
-        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, join, 30, SpringLayout.HORIZONTAL_CENTER, nombre);
+        spring.putConstraint(SpringLayout.WEST, join, 0, SpringLayout.WEST, desc);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, join, 270, SpringLayout.VERTICAL_CENTER, nombre);
         
         
@@ -109,6 +109,7 @@ public class PanelDisplayCollective extends HomeUser{
      * Actualiza el panel
      */
     public void update(){
+        tree.setModel(null);
     	updateButtons();
     	updateCollectiveInfo();
     }
@@ -133,11 +134,11 @@ public class PanelDisplayCollective extends HomeUser{
 	private void updateButtons() {
         User user = Application.getApplication().getCurrentUser(); 
         
-		/* boton votar */
+		/* boton join */
 		if (user.getMemberCollectives().contains(collective))
-			join.setEnabled(false);
+			join.setText("Salir del colectivo");
 		else
-			join.setEnabled(true);		
+			join.setText("Unise");		
 
     }
     

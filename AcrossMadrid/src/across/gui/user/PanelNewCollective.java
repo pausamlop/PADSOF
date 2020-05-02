@@ -166,6 +166,7 @@ public class PanelNewCollective extends HomeUser{
      * @param col colectivos creados por el usuario actual
      */
     public void setColectivos(Collection<Collective> col){
+        c.removeAllItems();
         for (Collective aux: col)
             c.addItem(aux);
     }

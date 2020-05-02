@@ -1,4 +1,4 @@
-package across.control.user;
+package across.control.user.collective;
 
 import across.model.application.Application;
 import across.model.user.Collective;
@@ -50,7 +50,11 @@ public class ControladorNewCollective implements ActionListener{
         
         else if (panel.isChild()) {
         	
-        	Collective parent = panel.getColectivo();
+            Collective parent = panel.getColectivo();
+            if (parent == null){
+                JOptionPane.showMessageDialog(frame, "No existe un colectivo padre al que unirse", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             model.addCollectives(new Collective(name, desc, parent));
             JOptionPane.showMessageDialog(frame, "El colectivo ha sido creado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             panel.emptyFields();

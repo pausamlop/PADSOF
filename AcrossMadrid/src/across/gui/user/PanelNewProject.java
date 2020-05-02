@@ -259,6 +259,7 @@ public class PanelNewProject extends HomeUser{
      * @param col colectivos creados por el usuario actual
      */
     public void setColectivos(Collection<Collective> col){
+        colectivos.removeAllItems();
         for (Collective c: col)
             colectivos.addItem(c);
     }

@@ -218,26 +218,26 @@ public class User extends UserCollective {
      * @return infomacion del objeto User
      */
     public String toString(){
-        String perfil = "";
-        perfil += " - Nombre de usuario: " + username;
-        perfil += "\n - NIF: " + NIF;
-        perfil += "\n - Proyectos creados:";
-        for (Project p: getCreatedProjects()) perfil += "\n    * " + p.toString();
-        perfil += "\n\n - Proyectos votados:";
-        for (Project p: getVotedProjects()) perfil += "\n    * " + p.toString();
-        perfil += "\n\n - Proyectos seguidos:";
-        for (Project p: followedProjects) perfil += "\n    * " + p.toString();
-        perfil += "\n\n - Colectivos creados: ";
-        for (Collective c: createdCollectives) {
-            perfil += "\n    * " + c.toString();
-            if (c.getCreatedProjects().size() > 0){
-                perfil += "\n\n - Proyectos creados como manager del colectivo " + c.getName() + ":";
-                for (Project p: c.getCreatedProjects()) perfil += "\n    * " + p.toString();
-            }
-        }
-        perfil += "\n\n - Colectivos a los que pertenece: ";
-        for (Collective c: memberCollectives) perfil += "\n    * " + c.toString();
-        return perfil;
+        // String perfil = "";
+        // perfil += " - Nombre de usuario: " + username;
+        // perfil += "\n - NIF: " + NIF;
+        // perfil += "\n - Proyectos creados:";
+        // for (Project p: getCreatedProjects()) perfil += "\n    * " + p.toString();
+        // perfil += "\n\n - Proyectos votados:";
+        // for (Project p: getVotedProjects()) perfil += "\n    * " + p.toString();
+        // perfil += "\n\n - Proyectos seguidos:";
+        // for (Project p: followedProjects) perfil += "\n    * " + p.toString();
+        // perfil += "\n\n - Colectivos creados: ";
+        // for (Collective c: createdCollectives) {
+        //     perfil += "\n    * " + c.toString();
+        //     if (c.getCreatedProjects().size() > 0){
+        //         perfil += "\n\n - Proyectos creados como manager del colectivo " + c.getName() + ":";
+        //         for (Project p: c.getCreatedProjects()) perfil += "\n    * " + p.toString();
+        //     }
+        // }
+        // perfil += "\n\n - Colectivos a los que pertenece: ";
+        // for (Collective c: memberCollectives) perfil += "\n    * " + c.toString();
+        return username;
 
     }
 

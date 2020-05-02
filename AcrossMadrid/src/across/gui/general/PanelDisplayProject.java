@@ -9,7 +9,9 @@ import across.model.application.Application;
 import across.model.enumerations.projectState;
 import across.model.enumerations.typeSocial;
 import across.model.project.*;
+import across.model.user.Collective;
 import across.model.user.User;
+import across.model.user.UserCollective;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -33,10 +35,13 @@ public class PanelDisplayProject extends HomeUser{
     private JLabel nombre = new JLabel();
     private JLabel estado = new JLabel();
     private JLabel votos = new JLabel();
+    private JButton financiar = new JButton("Enviar a financiacion");
     private JLabel costeLabel = new JLabel("Coste:");
     private JLabel coste = new JLabel();
     private JLabel tipoLabel = new JLabel("Tipo:");
     private JLabel tipo = new JLabel();
+    private JLabel creadorLabel = new JLabel("Creador por:");
+    private JLabel creador = new JLabel();
     private JLabel distritoGrupoLabel = new JLabel();
     private JLabel distritoGrupo = new JLabel();
     private JLabel descLabel = new JLabel("Descripcion:");
@@ -76,16 +81,20 @@ public class PanelDisplayProject extends HomeUser{
         votos.setForeground(Color.GRAY);
         EditFont.bold(costeLabel);
         EditFont.bold(tipoLabel);
+        EditFont.bold(creadorLabel);
         EditFont.bold(distritoGrupoLabel);
         EditFont.bold(descLabel);
     	
     	this.add(nombre);
     	this.add(estado);
-    	this.add(votos);
+        this.add(votos);
+        this.add(financiar);
     	this.add(costeLabel);
     	this.add(coste);
     	this.add(tipoLabel);
-    	this.add(tipo);
+        this.add(tipo);
+        this.add(creadorLabel);
+        this.add(creador);
     	this.add(distritoGrupoLabel);
     	this.add(distritoGrupo);
     	this.add(descLabel);
@@ -143,9 +152,10 @@ public class PanelDisplayProject extends HomeUser{
      */
     private void anadirRestricciones(int desplIzq){
         /* alineacion horizontal */
-        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, nombre, -60, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, nombre, -80, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.WEST, coste, -desplIzq, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.WEST, tipo, -desplIzq, SpringLayout.HORIZONTAL_CENTER, this);
+        spring.putConstraint(SpringLayout.WEST, creador, -desplIzq, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.WEST, distritoGrupo, -desplIzq, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.WEST, desc, -desplIzq, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, buttons, 0, SpringLayout.HORIZONTAL_CENTER, this);
@@ -153,7 +163,8 @@ public class PanelDisplayProject extends HomeUser{
         /* uniones verticales */
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, image, 0, SpringLayout.VERTICAL_CENTER, this);
         spring.putConstraint(SpringLayout.SOUTH, distritoGrupo, 0, SpringLayout.VERTICAL_CENTER, this);
-        spring.putConstraint(SpringLayout.SOUTH, tipo, -10, SpringLayout.NORTH, distritoGrupo);
+        spring.putConstraint(SpringLayout.SOUTH, creador, -10, SpringLayout.NORTH, distritoGrupo);        
+        spring.putConstraint(SpringLayout.SOUTH, tipo, -10, SpringLayout.NORTH, creador);
         spring.putConstraint(SpringLayout.SOUTH, coste, -10, SpringLayout.NORTH, tipo);
         spring.putConstraint(SpringLayout.SOUTH, nombre, -40, SpringLayout.NORTH, coste);
         spring.putConstraint(SpringLayout.NORTH, desc, 10, SpringLayout.SOUTH, distritoGrupo);
@@ -162,6 +173,8 @@ public class PanelDisplayProject extends HomeUser{
         /* uniones horizontales */
         spring.putConstraint(SpringLayout.EAST, distritoGrupoLabel, -10, SpringLayout.WEST, distritoGrupo);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, distritoGrupoLabel, 0, SpringLayout.VERTICAL_CENTER, distritoGrupo);
+        spring.putConstraint(SpringLayout.EAST, creadorLabel, -10, SpringLayout.WEST, creador);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, creadorLabel, 0, SpringLayout.VERTICAL_CENTER, creador);
         spring.putConstraint(SpringLayout.EAST, tipoLabel, -10, SpringLayout.WEST, tipo);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, tipoLabel, 0, SpringLayout.VERTICAL_CENTER, tipo);
         spring.putConstraint(SpringLayout.EAST, costeLabel, -10, SpringLayout.WEST, coste);
@@ -173,6 +186,8 @@ public class PanelDisplayProject extends HomeUser{
         spring.putConstraint(SpringLayout.NORTH, estado, 0, SpringLayout.NORTH, nombre);
         spring.putConstraint(SpringLayout.NORTH, votos, 5, SpringLayout.SOUTH, estado);
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, votos, 0, SpringLayout.HORIZONTAL_CENTER, estado);
+        spring.putConstraint(SpringLayout.VERTICAL_CENTER, financiar, 5, SpringLayout.VERTICAL_CENTER, nombre);
+        spring.putConstraint(SpringLayout.WEST, financiar, 10, SpringLayout.EAST, votos);
 
         spring.putConstraint(SpringLayout.EAST, image, -10, SpringLayout.WEST, descLabel);
     }
@@ -236,6 +251,16 @@ public class PanelDisplayProject extends HomeUser{
                 rechazar.setEnabled(true);
             }
         }
+        UserCollective creator = project.getCreator();
+        if ((creator instanceof Collective && ((Collective)creator).getManager().equals(user)) || creator.equals(user)){
+            financiar.setVisible(true);
+            if (project.getProjectState().equals(projectState.VOTOSALCANZADOS))
+                financiar.setEnabled(true);
+            else
+                financiar.setEnabled(false);
+        }else{
+            financiar.setVisible(false);
+        }
     }
     
     /**
@@ -247,8 +272,13 @@ public class PanelDisplayProject extends HomeUser{
 		
 		String votosInfo = project.getVotes() + "/" + Application.getApplication().getMinVotes() + " votos";
 		votos.setText(votosInfo);
-		
-		coste.setText(String.format("%.2f", project.getCost()) + " €");
+        coste.setText(String.format("%.2f", project.getCost()) + " €");
+        String creadorInfo;
+        if (project.getCreator() instanceof Collective)
+            creadorInfo = "Colectivo ";
+        else 
+            creadorInfo = "Usuario ";
+        creador.setText(creadorInfo + project.getCreator());
 		
 		String tipoInfo;
 		if (project instanceof InfraestructureProject) {

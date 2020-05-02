@@ -5,7 +5,7 @@ import across.control.admin.*;
 import across.control.menu.*;
 import across.control.notif.ControladorVistoNotif;
 import across.control.start.*;
-import across.control.user.*;
+import across.control.user.collective.*;
 import across.control.user.project.*;
 import across.gui.MainFrame;
 

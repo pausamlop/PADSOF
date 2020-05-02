@@ -8,7 +8,7 @@ import across.control.menu.ControladorToInicio;
 import across.control.menu.ControladorToPerfil;
 import across.control.notif.ControladorVistoNotif;
 import across.control.start.*;
-import across.control.user.*;
+import across.control.user.collective.*;
 import across.control.user.project.*;
 import across.gui.admin.*;
 import across.gui.general.*;
