@@ -1,9 +1,12 @@
 package across.control.menu;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import across.gui.MainFrame;
 import across.model.application.Application;
+import across.model.project.Project;
+import across.model.user.Collective;
 
 /**
  * Clase ControladorToPerfil
@@ -36,7 +39,14 @@ public class ControladorToPerfil implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-		frame.getPerfil().updateData();
+    	ArrayList<Project> pc = model.getCurrentUser().getCreatedProjects();
+    	ArrayList<Project> pa = model.getCurrentUser().getVotedProjects();
+    	ArrayList<Project> ps = model.getCurrentUser().getFollowedProjects();
+    	ArrayList<Collective> cm = model.getCurrentUser().getMemberCollectives();
+    	ArrayList<Collective> cc = model.getCurrentUser().getCreatedCollectives();
+   
+
+		frame.getPerfil().updateData(pc,pa,ps,cm,cc);
         this.frame.showPanel("perfil");
     }
 

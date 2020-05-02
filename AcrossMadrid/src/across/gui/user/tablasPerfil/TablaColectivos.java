@@ -8,32 +8,19 @@ import across.gui.admin.PanelAdminUsuarios;
 import across.gui.user.PanelPerfil;
 import across.model.application.Application;
 import across.model.enumerations.projectState;
+import across.model.notification.Notification;
 import across.model.project.Project;
 import across.model.user.Collective;
 import across.model.user.User;
 
 @SuppressWarnings("serial")
-public class TablaColectivosCreados extends AbstractTableModel{
+public class TablaColectivos extends AbstractTableModel{
 	
-	private PanelPerfil panel;
 	private ArrayList<String> nombres = new ArrayList<>();
 	private ArrayList<Integer> miembros = new ArrayList<>();
 
 	private String[] titulos = {"Colectivo", "Numero de Miembros"};
 	
-	public TablaColectivosCreados(PanelPerfil panel) {
-		
-		this.panel = panel;
-		
-		for(Collective c : Application.getApplication().getCurrentUser().getCreatedCollectives()) {
-			if(!nombres.contains(c.getName())) {
-				nombres.add(c.getName());
-				miembros.add(c.getMembers().size());
-			}
-		}
-		
-
-	}
 	
 	public int getColumnCount() { return titulos.length; }
 	
@@ -52,8 +39,6 @@ public class TablaColectivosCreados extends AbstractTableModel{
 	}
 	
 	public boolean isCellEditable(int row, int col) {
-        //Note that the data/cell address is constant,
-        //no matter where the cell appears onscreen.
         return false;
     }
 	
@@ -61,5 +46,37 @@ public class TablaColectivosCreados extends AbstractTableModel{
 	public Class getColumnClass(int c) {
         return getValueAt(0, c).getClass();
     }
+	
+	
+	public void addRow(String n, Integer i) {
+		nombres.add(n);
+		this.miembros.add(i);
+		fireTableCellUpdated(nombres.size(), 0);
+		fireTableCellUpdated(miembros.size(), 1);
+	}
+	
+	
+	
+	public void setCC(ArrayList<Collective> lista){
+		deleteData();
+		for(Collective c : lista) {
+			if(!nombres.contains(c.getName())) {
+				nombres.add(c.getName());
+				miembros.add(c.getMembers().size());
+			}
+		}
+		fireTableRowsInserted(0, nombres.size() - 1);
+	}
+	
+	private void deleteData() {
+		int rows = getRowCount();
+        if (rows == 0) {
+            return;
+        }
+        nombres.clear();
+        miembros.clear();
+        fireTableRowsDeleted(0, rows - 1);
+	}
+
 
 }

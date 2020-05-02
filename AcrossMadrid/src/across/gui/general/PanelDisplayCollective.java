@@ -3,6 +3,7 @@ package across.gui.general;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import across.gui.EditFont;
 import across.gui.user.HomeUser;
@@ -109,7 +110,7 @@ public class PanelDisplayCollective extends HomeUser{
      * Actualiza el panel
      */
     public void update(){
-        tree.setModel(null);
+        //tree.setModel(null);
     	updateButtons();
     	updateCollectiveInfo();
     }
@@ -138,7 +139,7 @@ public class PanelDisplayCollective extends HomeUser{
 		if (user.getMemberCollectives().contains(collective))
 			join.setText("Salir del colectivo");
 		else
-			join.setText("Unise");		
+			join.setText("Unirse");		
 
     }
     
@@ -173,6 +174,12 @@ public class PanelDisplayCollective extends HomeUser{
 		nombre.setText(collective.getName());
 		desc.setText(collective.getDescription());
 		
+		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+		root.removeAllChildren();
+		model.reload();
+
+		
+		System.out.println(collective);
 
         Collective c = collective;
         while (c.getParent() != null) c = c.getParent();
