@@ -251,6 +251,8 @@ public class PanelDisplayProject extends HomeUser{
                 rechazar.setEnabled(true);
             }
         }
+
+        /* boton financiar */
         UserCollective creator = project.getCreator();
         if ((creator instanceof Collective && ((Collective)creator).getManager().equals(user)) || creator.equals(user)){
             financiar.setVisible(true);
@@ -353,6 +355,15 @@ public class PanelDisplayProject extends HomeUser{
      */
     public void setControlRechazar(ActionListener c){
         rechazar.addActionListener(c);
+    }
+
+    /**
+     * Establece el control del boton de financiar
+     * 
+     * @param c accion que activa el boton
+     */
+    public void setControlFinanciar(ActionListener c){
+        financiar.addActionListener(c);
     }
 
 }

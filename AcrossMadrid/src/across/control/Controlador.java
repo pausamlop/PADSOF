@@ -3,9 +3,11 @@ package across.control;
 import across.model.application.Application;
 import across.control.admin.*;
 import across.control.menu.*;
-import across.control.notif.ControladorVistoNotif;
+import across.control.notif.*;
 import across.control.start.*;
 import across.control.user.collective.*;
+import across.control.user.filtro.*;
+import across.control.user.informes.*;
 import across.control.user.project.*;
 import across.gui.MainFrame;
 
@@ -40,6 +42,9 @@ public class Controlador {
     private ControladorUserDisplayProject userDisplayProject;
     private ControladorUserCrearColectivo userCrearColectivo;
     private ControladorUserDisplayCollective userDisplayCollective;
+    private ControladorToInformes informes;
+    private ControladorFiltrar filtrar;
+    private ControladorLimpiarFiltro limpiar;
     
     /* control nuevo colectivo */
     private ControladorNewCollective nuevoColectivo;
@@ -52,6 +57,7 @@ public class Controlador {
     private ControladorVotar votar;
     private ControladorSeguir seguir;
     private ControladorDejarSeguir dejarSeguir;
+    private ControladorFinanciar financiar;
     
     /* botones de DisplayCollective*/
     private ControladorJoin join;
@@ -96,6 +102,9 @@ public class Controlador {
         toInicio = new ControladorToInicio(frame, model);
         toPerfil = new ControladorToPerfil(frame, model);
         toNotif = new ControladorToNotif(frame, model);
+        informes = new ControladorToInformes(frame, model);
+        filtrar = new ControladorFiltrar(frame, model);
+        limpiar = new ControladorLimpiarFiltro(frame, model);
 
         /* notificaciones */
         vistoNotif = new ControladorVistoNotif(frame, model);
@@ -110,6 +119,7 @@ public class Controlador {
         votar = new ControladorVotar(frame, model);
         seguir = new ControladorSeguir(frame, model);
         dejarSeguir = new ControladorDejarSeguir(frame, model);
+        financiar = new ControladorFinanciar(frame, model);
         
         /* display colectivo */
         join = new ControladorJoin(frame, model);
@@ -284,6 +294,33 @@ public class Controlador {
     public ControladorUserDisplayCollective getUserDisplayCollective(){
         return userDisplayCollective;
     }
+
+    /**
+     * Devuelve el controlador que lleva del panel inicial del usuario al de solicitar informes
+     * 
+     * @return controlador de inicio a solicitar informes
+     */
+    public ControladorToInformes getInformes(){
+        return informes;
+    }
+
+    /**
+     * Devuelve el controlador que filtra los proyectos del panel inicial del usuario
+     * 
+     * @return controlador de filtro
+     */
+    public ControladorFiltrar getFiltrar(){
+        return filtrar;
+    }
+
+    /**
+     * Devuelve el controlador que limpia los filtros del panel inicial del usuario
+     * 
+     * @return controlador de limpiar filtro
+     */
+    public ControladorLimpiarFiltro getLimpiarFiltro(){
+        return limpiar;
+    }
     
     /**
      * Devuelve el controlador que permite unirse a un colectivo
@@ -293,8 +330,6 @@ public class Controlador {
     public ControladorJoin getJoin(){
         return join;
     }
-
-    
 
     /**
      * Devuelve el controlador que permite votar un proyecto
@@ -321,6 +356,15 @@ public class Controlador {
      */
     public ControladorDejarSeguir getDejarSeguir(){
         return dejarSeguir;
+    }
+
+    /**
+     * Devuelve el controlador que permite enviar a financiar un proyecto
+     * 
+     * @return controlador de financiar proyecto
+     */
+    public ControladorFinanciar getFinanciar(){
+        return financiar;
     }
  
     /**

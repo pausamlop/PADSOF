@@ -3,12 +3,11 @@ package across.gui;
 import across.control.*;
 import across.control.admin.*;
 import across.control.menu.*;
-import across.control.menu.ControladorLogout;
-import across.control.menu.ControladorToInicio;
-import across.control.menu.ControladorToPerfil;
 import across.control.notif.ControladorVistoNotif;
 import across.control.start.*;
 import across.control.user.collective.*;
+import across.control.user.filtro.*;
+import across.control.user.informes.*;
 import across.control.user.project.*;
 import across.gui.admin.*;
 import across.gui.general.*;
@@ -42,6 +41,7 @@ public class MainFrame extends JFrame{
     private PanelNotifications notif = new PanelNotifications();
     private PanelNewCollective nuevoColectivo = new PanelNewCollective();
     private PanelNewProject nuevoProyecto = new PanelNewProject();
+    private PanelInformes informes = new PanelInformes();
     /* admin */
     private PanelInicioAdmin inicioAdmin = new PanelInicioAdmin();
     private PanelAdminUsuarios adminUsuarios = new PanelAdminUsuarios();
@@ -69,6 +69,9 @@ public class MainFrame extends JFrame{
     private ControladorUserCrearColectivo contUserCrearColectivo;
     private ControladorUserDisplayProject contUserDisplayProject;
     private ControladorUserDisplayCollective contUserDisplayCollective;
+    private ControladorToInformes contInformes;
+    private ControladorFiltrar contFiltrar;
+    private ControladorLimpiarFiltro contLimpiar;
     /* crear colectivo */
     private ControladorNewCollective contNuevoColectivo;
     /* displaycolectivo */
@@ -80,6 +83,7 @@ public class MainFrame extends JFrame{
     private ControladorVotar contVotar;
     private ControladorSeguir contSeguir;
     private ControladorDejarSeguir contDejarSeguir;
+    private ControladorFinanciar contFinanciar;
     /* inicio admin */
     private ControladorAdminUsuarios contAdminUsuarios;
     private ControladorAdminConfig contAdminConfig;
@@ -146,6 +150,9 @@ public class MainFrame extends JFrame{
         contentPane.add(perfil, "perfil");
         contentPane.add(nuevoColectivo, "nuevoColectivo");
         contentPane.add(nuevoProyecto, "nuevoProyecto");
+        contentPane.add(informes, "informes");
+
+        /* DISPLAYS */
         contentPane.add(displayProject, "displayProject");
         contentPane.add(displayCollective, "displayCollective");
 
@@ -252,6 +259,15 @@ public class MainFrame extends JFrame{
      */
     public PanelNewCollective getNewCollective(){
         return nuevoColectivo;
+    }
+
+    /**
+     * Devuelve el panel de solicitar informes
+     * 
+     * @return panel de informes 
+     */
+    public PanelInformes getInformes(){
+        return informes;
     }
     
     /**
@@ -384,6 +400,7 @@ public class MainFrame extends JFrame{
         this.contToInicio = controlador.getToInicio();
         displayCollective.setControlToInicio(contToInicio);
         displayProject.setControlToInicio(contToInicio);
+        informes.setControlToInicio(contToInicio);
         notif.setControlToInicio(contToInicio);
         nuevoColectivo.setControlToInicio(contToInicio);
         nuevoProyecto.setControlToInicio(contToInicio);
@@ -393,6 +410,7 @@ public class MainFrame extends JFrame{
         inicioUser.setControlToPefil(contToPerfil);
         displayCollective.setControlToPefil(contToPerfil);
         displayProject.setControlToPefil(contToPerfil);
+        informes.setControlToPefil(contToPerfil);
         notif.setControlToPefil(contToPerfil);
         nuevoColectivo.setControlToPefil(contToPerfil);
         nuevoProyecto.setControlToPefil(contToPerfil);
@@ -401,6 +419,7 @@ public class MainFrame extends JFrame{
         inicioUser.setControlToNotif(contNotif);
         displayCollective.setControlToNotif(contNotif);
         displayProject.setControlToNotif(contNotif);
+        informes.setControlToNotif(contNotif);
         notif.setControlToPefil(contToPerfil);
         nuevoColectivo.setControlToNotif(contNotif);
         nuevoProyecto.setControlToNotif(contNotif);
@@ -418,15 +437,18 @@ public class MainFrame extends JFrame{
     private void controladorUser(Controlador controlador){
         this.contUserCrearProyecto = controlador.getUserCrearProyecto();
         inicioUser.setControlCrearProyecto(contUserCrearProyecto);
-        
-        this.contUserDisplayProject = controlador.getUserDisplayProject();
-        inicioUser.setControlVerProyecto(contUserDisplayProject);
-        
+         
         this.contUserCrearColectivo = controlador.getUserCrearColectivo();
         inicioUser.setControlCrearColectivo(contUserCrearColectivo);
+
+        this.contInformes = controlador.getInformes();
+        inicioUser.setControlSolicitarInformes(contInformes);     
         
-        this.contUserDisplayCollective = controlador.getUserDisplayCollective();
-        inicioUser.setControlVerColectivo(contUserDisplayCollective);
+        this.contFiltrar = controlador.getFiltrar();
+        inicioUser.setControlFiltrar(contFiltrar);
+
+        this.contLimpiar = controlador.getLimpiarFiltro();
+        inicioUser.setControlLimpiarFiltro(contLimpiar);
     }
 
     /**
@@ -492,10 +514,15 @@ public class MainFrame extends JFrame{
     private void controladorDisplayProject(Controlador controlador) {
         this.contVotar = controlador.getVotar();
         displayProject.setControlVotar(contVotar);
+
         this.contSeguir = controlador.getSeguir();
         displayProject.setControlSeguir(contSeguir);
+
         this.contDejarSeguir = controlador.getDejarSeguir();
         displayProject.setControlDejarSeguir(contDejarSeguir);
+
+        this.contFinanciar = controlador.getFinanciar();
+        displayProject.setControlFinanciar(contFinanciar);
     }
     
     /**

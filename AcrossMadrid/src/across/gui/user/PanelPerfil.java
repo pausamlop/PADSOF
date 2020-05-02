@@ -1,7 +1,6 @@
 package across.gui.user;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -12,20 +11,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SpringLayout;
-import javax.swing.table.TableRowSorter;
-
 import across.gui.EditFont;
-import across.gui.admin.TablaUsuarios;
-import across.gui.notif.TablaNotif;
-import across.gui.user.tablasPerfil.TablaColectivos;
+import across.gui.user.tablas.TablaColectivos;
 
-import across.gui.user.tablasPerfil.TablaProyectos;
+import across.gui.user.tablas.TablaProyectos;
 
 import across.model.application.Application;
-import across.model.notification.Notification;
 import across.model.project.Project;
 import across.model.user.Collective;
-import across.model.user.User;
 
 /**
  * Clase PanelPerfil

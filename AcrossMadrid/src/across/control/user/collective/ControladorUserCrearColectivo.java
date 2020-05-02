@@ -8,8 +8,6 @@ import across.gui.user.PanelInicioUser;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import java.util.*;
-
 /**
  * Clase ControladorUserCrearProyecto
  *

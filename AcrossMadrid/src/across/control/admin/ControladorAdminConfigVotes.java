@@ -2,11 +2,8 @@ package across.control.admin;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
-
 import across.gui.MainFrame;
 import across.gui.admin.PanelAdminConfig;
-import across.gui.admin.PanelInicioAdmin;
 import across.model.application.Application;
 
 public class ControladorAdminConfigVotes implements ActionListener{

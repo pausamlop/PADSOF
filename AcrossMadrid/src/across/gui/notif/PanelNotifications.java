@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 

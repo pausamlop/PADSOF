@@ -1,6 +1,5 @@
 package across.gui.general;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -8,17 +7,10 @@ import javax.swing.tree.DefaultTreeModel;
 import across.gui.EditFont;
 import across.gui.user.HomeUser;
 import across.model.application.Application;
-import across.model.enumerations.projectState;
-import across.model.enumerations.typeSocial;
-import across.model.project.*;
 import across.model.user.Collective;
 import across.model.user.User;
 
-import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Clase PanelDisplayProject de la interfaz

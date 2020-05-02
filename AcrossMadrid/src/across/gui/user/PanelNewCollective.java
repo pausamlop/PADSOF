@@ -2,15 +2,12 @@ package across.gui.user;
 
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 
 import javax.swing.*;
 
 import across.gui.EditFont;
-import across.model.application.Application;
-import across.model.project.Project;
 import across.model.user.Collective;
 
 /**

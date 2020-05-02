@@ -57,7 +57,6 @@ public class ControladorJoin implements ActionListener{
             JOptionPane.showMessageDialog(frame, "Ahora pertenece al colectivo " + c, "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
         panel.update();
-        //frame.showPanel("inicioUser");
     }
     
     

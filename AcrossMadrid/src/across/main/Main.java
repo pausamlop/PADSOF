@@ -2,8 +2,6 @@ package across.main;
 
 
 import across.model.application.*;
-import across.model.enumerations.projectState;
-import across.model.project.Project;
 
 /**
  * Clase Main

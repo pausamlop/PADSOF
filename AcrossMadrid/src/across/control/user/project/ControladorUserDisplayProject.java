@@ -40,6 +40,5 @@ public class ControladorUserDisplayProject implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         this.frame.showPanel("displayProject");
-        this.frame.getDisplayProject().setProject(inicioUser.getProject());
     }
 }

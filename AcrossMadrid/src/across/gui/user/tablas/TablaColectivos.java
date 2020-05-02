@@ -1,17 +1,10 @@
-package across.gui.user.tablasPerfil;
+package across.gui.user.tablas;
 
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import across.gui.admin.PanelAdminUsuarios;
-import across.gui.user.PanelPerfil;
-import across.model.application.Application;
-import across.model.enumerations.projectState;
-import across.model.notification.Notification;
-import across.model.project.Project;
 import across.model.user.Collective;
-import across.model.user.User;
 
 @SuppressWarnings("serial")
 public class TablaColectivos extends AbstractTableModel{
@@ -43,7 +36,7 @@ public class TablaColectivos extends AbstractTableModel{
     }
 	
 	
-	public Class getColumnClass(int c) {
+	public Class<?> getColumnClass(int c) {
         return getValueAt(0, c).getClass();
     }
 	
@@ -65,6 +58,7 @@ public class TablaColectivos extends AbstractTableModel{
 				miembros.add(c.getMembers().size());
 			}
 		}
+		if (nombres.size() == 0) return;
 		fireTableRowsInserted(0, nombres.size() - 1);
 	}
 	

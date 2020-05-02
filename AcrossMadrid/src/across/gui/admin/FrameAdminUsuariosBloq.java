@@ -1,20 +1,16 @@
 package across.gui.admin;
 
-import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 
 import across.gui.EditFont;
 import across.gui.MainFrame;
-import across.model.application.Application;
 import across.model.user.User;
 
 public class FrameAdminUsuariosBloq extends JDialog {

@@ -1,12 +1,14 @@
 package across.control.user.collective;
 
 import across.model.application.Application;
+import across.model.project.Project;
 import across.model.user.Collective;
 import across.gui.*;
 import across.gui.user.PanelNewCollective;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -34,37 +36,39 @@ public class ControladorNewCollective implements ActionListener{
         String desc = panel.getDescription().trim();
         
         /* Comprobacion general */
-        if (name.equals(""))
+        if (name.equals("")){
             JOptionPane.showMessageDialog(frame, "Debe introducir un nombre para el colectivo", "Aviso", JOptionPane.WARNING_MESSAGE);
-        else if (desc.equals(""))
+            return;
+        }
+        else if (desc.equals("")){
             JOptionPane.showMessageDialog(frame, "Debe introducir una descripcion para el colectivo", "Aviso", JOptionPane.WARNING_MESSAGE);
-        
+            return;
+        }
         else if (panel.isIndependent()) {
-        	
             model.addCollectives(new Collective(name, desc));
             JOptionPane.showMessageDialog(frame, "El colectivo ha sido creado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             panel.emptyFields();
-            frame.showPanel("inicioUser");
-        	
         }
-        
         else if (panel.isChild()) {
-        	
             Collective parent = panel.getColectivo();
             if (parent == null){
                 JOptionPane.showMessageDialog(frame, "No existe un colectivo padre al que unirse", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
             model.addCollectives(new Collective(name, desc, parent));
             JOptionPane.showMessageDialog(frame, "El colectivo ha sido creado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             panel.emptyFields();
-            frame.showPanel("inicioUser");
-        	
+        }
+        else{
+            JOptionPane.showMessageDialog(frame, "Debe decidir si el colectivo es independiente, o escoger un colectivo padre", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
         }
         
-        else
-            JOptionPane.showMessageDialog(frame, "Debe decidir si el colectivo es independiente, o escoger un colectivo padre", "Aviso", JOptionPane.WARNING_MESSAGE);
-        
+        ArrayList<Project> proyectos = model.getProjects();
+        ArrayList<Collective> colectivos = model.getCollectives();
+        frame.getInicioUser().updateData(proyectos, colectivos);
+        frame.showPanel("inicioUser");
 		
 	}
 	

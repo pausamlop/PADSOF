@@ -3,7 +3,9 @@ package across.control.user.project;
 import across.model.application.Application;
 import across.model.enumerations.typeSocial;
 import across.model.project.InfraestructureProject;
+import across.model.project.Project;
 import across.model.project.SocialProject;
+import across.model.user.Collective;
 import across.model.user.UserCollective;
 import across.gui.*;
 import across.gui.user.PanelNewProject;
@@ -12,6 +14,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -68,12 +71,16 @@ public class ControladorNewProject implements ActionListener{
             JOptionPane.showMessageDialog(frame, "Debe seleccionar como desea crear el proyecto: como usuario o como colectivo", "Aviso", JOptionPane.WARNING_MESSAGE);
 
         /* INFORMACION GENERAL DEL PROYECTO */
-        if (name.equals(""))
+        if (name.equals("")){
             JOptionPane.showMessageDialog(frame, "Debe introducir un nombre para el proyecto", "Aviso", JOptionPane.WARNING_MESSAGE);
-        else if (cost <= 0)
+            return;
+        }else if (cost <= 0){
             JOptionPane.showMessageDialog(frame, "Debe introducir un coste de proyecto valido", "Aviso", JOptionPane.WARNING_MESSAGE);
-        else if (desc.equals(""))
+            return;
+        }else if (desc.equals("")){
             JOptionPane.showMessageDialog(frame, "Debe introducir una descripcion para el proyecto", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         /* TIPO DE PROYECTO */
         else if (panel.isInfraestructura()){
@@ -85,26 +92,31 @@ public class ControladorNewProject implements ActionListener{
             model.addNewProject(new InfraestructureProject(name, desc, cost, imgPath, distrito, creator));
             JOptionPane.showMessageDialog(frame, "Su propuesta de proyecto se ha enviado al adminstrador.\nUna vez validado estara disponible para ser votado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             panel.emptyFields();
-            frame.showPanel("inicioUser");
         }
         else if (panel.isSocial()){
             String grupo = panel.getGroup().trim();
             String ambitoStr = panel.getAmbito();
-            if (grupo.equals(""))
+            if (grupo.equals("")){
                 JOptionPane.showMessageDialog(frame, "Debe introducir el grupo social al que va dirigido el proyecto", "Aviso", JOptionPane.WARNING_MESSAGE);
-            else if (ambitoStr.equals("Ambito"))
+                return;
+            }else if (ambitoStr.equals("Ambito")){
                 JOptionPane.showMessageDialog(frame, "Debe elegir un ambito de proyecto valido", "Aviso", JOptionPane.WARNING_MESSAGE);
-            else{
+                return;
+            }else{
                 typeSocial tipo = (ambitoStr.equals("Nacional"))?typeSocial.NACIONAL:typeSocial.INTERNACIONAL;
                 model.addNewProject(new SocialProject(name, desc, cost, grupo, tipo, creator));
                 JOptionPane.showMessageDialog(frame, "Su propuesta de proyecto se ha enviado al adminstrador.\nUna vez validado estara disponible para ser votado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 panel.emptyFields();
-                frame.showPanel("inicioUser");
             }
-        }
-        else
+        }else{
             JOptionPane.showMessageDialog(frame, "Debe elegir tipo de proyecto: de infraestructura o social", "Aviso", JOptionPane.WARNING_MESSAGE);
-
+            return;
+        }
+        
+        ArrayList<Project> proyectos = model.getProjects();
+        ArrayList<Collective> colectivos = model.getCollectives();
+        frame.getInicioUser().updateData(proyectos, colectivos);
+        frame.showPanel("inicioUser");
     }
 
     /**

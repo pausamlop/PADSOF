@@ -3,13 +3,8 @@ package across.control.admin;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JDialog;
-import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-
 import across.gui.MainFrame;
 import across.gui.admin.FrameAdminUsuariosBloq;
-import across.gui.admin.PanelAdminUsuarios;
 import across.model.application.Application;
 import across.model.user.User;
 

@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import across.gui.MainFrame;
 import across.gui.admin.PanelAdminConfig;
-import across.gui.admin.PanelInicioAdmin;
 import across.model.application.Application;
 
 public class ControladorAdminProyectos implements ActionListener{

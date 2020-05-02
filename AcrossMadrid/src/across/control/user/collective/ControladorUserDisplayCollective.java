@@ -39,9 +39,7 @@ public class ControladorUserDisplayCollective implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        this.frame.showPanel("displayCollective");
-        this.frame.getDisplayCollective().setCollective(inicioUser.getCollective());
-        
+        this.frame.showPanel("displayCollective");        
     }
 
 }

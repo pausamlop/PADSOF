@@ -1,22 +1,12 @@
 package across.control.admin;
 
-import java.awt.Dialog;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import across.gui.MainFrame;
 import across.gui.admin.FrameAdminUsuariosBloq;
 import across.gui.admin.PanelAdminUsuarios;
-import across.gui.admin.PanelInicioAdmin;
-import across.gui.admin.TablaUsuarios;
 import across.model.application.Application;
 import across.model.user.User;
 

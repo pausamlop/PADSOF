@@ -519,7 +519,7 @@ public class Application implements Serializable{
 
         // encontrar proyectos sociales nacionales o internacionales
         for (Project p: projects){
-            if (p.getClass().equals(SocialProject.class))
+            if (p instanceof SocialProject && ((SocialProject)p).gettypeSocial().equals(type))
                 output.add(p);
         }
 

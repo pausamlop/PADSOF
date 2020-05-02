@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.table.*;
 
-import across.model.application.Application;
 import across.model.notification.Notification;
 
 @SuppressWarnings("serial")
@@ -68,6 +67,8 @@ public class TablaNotif extends AbstractTableModel{
 		notif.addAll(not);
 		for (int i = 0; i < notif.size(); i++)
 			visto.add(false);
+		
+		if (notif.size() == 0) return;
 		fireTableRowsInserted(0, notif.size() - 1);
 	}
 	

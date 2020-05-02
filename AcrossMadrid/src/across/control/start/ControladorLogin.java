@@ -1,10 +1,14 @@
 package across.control.start;
 
 import across.model.application.Application;
+import across.model.project.Project;
+import across.model.user.Collective;
 import across.gui.*;
 import across.gui.start.PanelLogin;
 
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 /**
@@ -69,6 +73,9 @@ public class ControladorLogin implements ActionListener{
                 	JOptionPane.showMessageDialog(frame, "Usuario bloqueado:\n"+model.getUserByName(username).getBlockedMssg(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
                 login.emptyFields();
+                ArrayList<Project> proyectos = model.getProjects();
+                ArrayList<Collective> colectivos = model.getCollectives();
+                frame.getInicioUser().updateData(proyectos, colectivos);
                 this.frame.showPanel("inicioUser");
 
                 int numNotif = Application.getApplication().getCurrentUser().getNotifications().size();

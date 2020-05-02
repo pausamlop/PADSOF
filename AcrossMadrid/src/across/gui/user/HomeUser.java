@@ -4,7 +4,6 @@ import java.awt.Image;
 import java.awt.event.*;
 import javax.swing.*;
 
-import across.gui.*;
 import across.gui.menu.Home;
 
 /**

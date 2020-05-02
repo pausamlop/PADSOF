@@ -1,17 +1,8 @@
 package across.gui.admin;
 
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableRowSorter;
-
 import across.gui.EditFont;
-import across.gui.admin.PanelInicioAdmin.CustomTableCellEditor;
 import across.gui.menu.HomeAdmin;
 import across.model.application.Application;
 
