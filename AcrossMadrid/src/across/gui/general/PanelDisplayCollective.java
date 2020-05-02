@@ -109,6 +109,7 @@ public class PanelDisplayCollective extends HomeUser{
      * Actualiza el panel
      */
     public void update(){
+		tree.setModel(null);
     	updateButtons();
     	updateCollectiveInfo();
     }
