@@ -7,6 +7,14 @@ import across.gui.MainFrame;
 import across.gui.admin.PanelAdminConfig;
 import across.model.application.Application;
 
+/**
+ * Clase ControladorAdminProyectos
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 public class ControladorAdminProyectos implements ActionListener{
 	private PanelAdminConfig adminConfig;
     private MainFrame frame;

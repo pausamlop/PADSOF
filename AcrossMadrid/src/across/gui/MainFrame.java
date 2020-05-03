@@ -17,6 +17,8 @@ import across.gui.user.*;
 import across.model.application.Application;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
 
 
@@ -341,6 +343,7 @@ public class MainFrame extends JFrame{
         controladorVistoNotif(controlador);
 
         controladorHome(controlador);
+        controladorPerfil(controlador);
         controladorUser(controlador);
         controladorNuevoProyecto(controlador);
         controladorNuevoColectivo(controlador);
@@ -490,6 +493,11 @@ public class MainFrame extends JFrame{
         inicioAdmin.setControlAdminGuardar(contAdminProyectosGuardar);
     }
     
+    /**
+     * Establece los controladores del panel de configuracion de administrador
+     * 
+     * @param controlador objeto controlador general
+     */
     private void controladorAdminConfig(Controlador controlador) {
     	this.contAdminUsuarios = controlador.getAdminUsuarios();
     	adminConfig.setControlAdminUsuarios(contAdminUsuarios);
@@ -504,6 +512,11 @@ public class MainFrame extends JFrame{
         adminConfig.setControlAdminConfigCaducidad(contAdminConfigCaducidad);
     }
     
+    /**
+     * Establece los controladores del panel de usuarios de adminstradoe
+     * 
+     * @param controlador objeto controlador general
+     */
     private void controladorAdminUsuarios(Controlador controlador) {
     	this.contAdminConfig = controlador.getAdminConfig();
     	adminUsuarios.setControlAdminConfig(contAdminConfig);
@@ -527,6 +540,23 @@ public class MainFrame extends JFrame{
 
         this.contNuevoProyecto = controlador.getNuevoProyecto();
         nuevoProyecto.setControlProponerProyecto(contNuevoProyecto);
+    }
+
+
+    /**
+     * Establece los controladors del perfil
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorPerfil(Controlador controlador){
+        this.contUserDisplayCollective = controlador.getUserDisplayCollective();
+        perfil.setControlCollective((ListSelectionListener)contUserDisplayCollective);
+        inicioUser.setControlCollective((ListSelectionListener)contUserDisplayCollective);
+
+        this.contUserDisplayProject = controlador.getUserDisplayProject();
+        perfil.setControlProject((ListSelectionListener)contUserDisplayProject);
+        inicioUser.setControlProject((ListSelectionListener)contUserDisplayProject);
+ 
     }
 
     /**

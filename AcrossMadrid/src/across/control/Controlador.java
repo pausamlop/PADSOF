@@ -89,6 +89,7 @@ public class Controlador {
 
     /**
      * Crea todos los controladores de la aplicacion
+     * 
      */
     private void setupControladores(){
         /* inicio de la app */
@@ -396,22 +397,47 @@ public class Controlador {
     	return adminConfig;
     }
     
+    /**
+     * Devuelve el controlador  que lleva de la pantalla inicial del admin a la pantalla de proyectos
+     * 
+     * @return controlador de inicioadmin a adminProyectos
+     */
     public ControladorAdminProyectos getAdminProyectos() {
     	return adminProyectos;
     }
     
+    /**
+     * Devuelve el controlador que permite configurar los votos minimos
+     * 
+     * @return controlador configuracion votos minimos
+     */
     public ControladorAdminConfigVotes getAdminConfigVotes() {
     	return adminConfigVotes;
     }
     
+    /**
+     * Devuelve el controlador que permite configurar el limite de caducidad
+     * 
+     * @return controlador configuracion caducidad
+     */
     public ControladorAdminConfigCaducidad getAdminConfigCaducidad() {
     	return adminConfigCaducidad;
     }
     
+    /**
+     * Devuelve el controlador que permite guardar los cambios efectuados en los proyectos por el admin
+     * 
+     * @return controlador guardar cambios de proyectos
+     */
     public ControladorAdminProyectosGuardar getAdminProyectosGuardar() {
     	return adminProyectosGuardar;
     }
     
+    /**
+     * Devuelve el controlador que permite bloquear un usuario
+     * 
+     * @return controlador bloqueo
+     */
     public ControladorAdminUsuariosBloq getAdminUsuariosBloq() {
     	return adminUsuariosBloq;
     }

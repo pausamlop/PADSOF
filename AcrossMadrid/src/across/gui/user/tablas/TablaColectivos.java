@@ -6,19 +6,46 @@ import javax.swing.table.AbstractTableModel;
 
 import across.model.user.Collective;
 
+/**
+ * Clase TablaColectivos de la interfaz
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 @SuppressWarnings("serial")
 public class TablaColectivos extends AbstractTableModel{
 	
-	private ArrayList<String> nombres = new ArrayList<>();
+	private ArrayList<Collective> nombres = new ArrayList<>();
 	private ArrayList<Integer> miembros = new ArrayList<>();
 
 	private String[] titulos = {"Colectivo", "Numero de Miembros"};
-	
-	
+
+	/**
+     * Devuelve los colectivos de la tabla
+	 * @return colectivos
+     */
+	public ArrayList<Collective> getCollectives() { return nombres; }
+
+	/**
+     * Devuelve el numero de columnas
+	 * @return numero de columnas
+     */
 	public int getColumnCount() { return titulos.length; }
 	
+	/**
+     * Devuelve el numero de filas
+	 * @return numero de filas
+     */
 	public int getRowCount() { return nombres.size(); }
 	
+	/**
+     * Devuelve el numero de filas
+	 * @param row
+	 * @param col
+	 * @return numero de filas
+     */
 	public Object getValueAt(int row, int col) {
 		if(col == 0) {
 			return nombres.get(row);
@@ -27,34 +54,34 @@ public class TablaColectivos extends AbstractTableModel{
 		}
 	}
 	
+	/**
+     * Devuelve el nombre de la columna
+	 * @param c
+	 * @return nombre
+     */
 	public String getColumnName(int c) {
 		return titulos[c];
 	}
 	
-	public boolean isCellEditable(int row, int col) {
-        return false;
-    }
-	
-	
+	/**
+     * Devuelve la clase de la columna
+	 * @param c
+	 * @return clase de la columna
+     */
 	public Class<?> getColumnClass(int c) {
         return getValueAt(0, c).getClass();
-    }
+    }	
 	
-	
-	public void addRow(String n, Integer i) {
-		nombres.add(n);
-		this.miembros.add(i);
-		fireTableCellUpdated(nombres.size(), 0);
-		fireTableCellUpdated(miembros.size(), 1);
-	}
-	
-	
-	
+	/**
+     * Setter de la tabla
+	 * @param lista
+     */
 	public void setCC(ArrayList<Collective> lista){
 		deleteData();
+		
 		for(Collective c : lista) {
-			if(!nombres.contains(c.getName())) {
-				nombres.add(c.getName());
+			if(!nombres.contains(c)) {
+				nombres.add(c);
 				miembros.add(c.getMembers().size());
 			}
 		}
@@ -62,6 +89,9 @@ public class TablaColectivos extends AbstractTableModel{
 		fireTableRowsInserted(0, nombres.size() - 1);
 	}
 	
+	/**
+     * Borra los datos de la tabla
+     */
 	private void deleteData() {
 		int rows = getRowCount();
         if (rows == 0) {

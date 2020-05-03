@@ -30,6 +30,11 @@ public class ControladorNewCollective implements ActionListener{
         this.panel = frame.getNewCollective();
     }
 
+    /**
+     * Accion que se realiza cuando se pulsa el boton de 'crear colectivo' en el panel de inicio del usuario
+     * 
+     * @param e accion recibida
+     */
 	@Override
 	public void actionPerformed(ActionEvent e) {
         String name = panel.getName().trim();

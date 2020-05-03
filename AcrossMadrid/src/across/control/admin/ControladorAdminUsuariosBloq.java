@@ -10,6 +10,14 @@ import across.gui.admin.PanelAdminUsuarios;
 import across.model.application.Application;
 import across.model.user.User;
 
+/**
+ * Clase ControladorAdminUsuariosBloq
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 public class ControladorAdminUsuariosBloq implements ListSelectionListener{
 	private PanelAdminUsuarios adminUsuarios;
     private MainFrame frame;

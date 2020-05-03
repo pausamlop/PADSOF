@@ -1,10 +1,13 @@
 package across.control.user.project;
 
 import across.model.application.Application;
+import across.model.project.Project;
 import across.gui.*;
 import across.gui.user.PanelInicioUser;
+import across.gui.user.tablas.TablaProyectos;
 
-import java.awt.event.*;
+import javax.swing.JTable;
+import javax.swing.event.*;
 
 /**
  * Clase ControladorUserDisplayProject
@@ -14,14 +17,14 @@ import java.awt.event.*;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
-public class ControladorUserDisplayProject implements ActionListener{
+public class ControladorUserDisplayProject implements ListSelectionListener{
 
     private PanelInicioUser inicioUser;
     private MainFrame frame;
     private Application model;
 
     /**
-     * Constructor de la clase ControladorUserCrearProyecto
+     * Constructor de la clase ControladorUserDisplayProject
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
@@ -33,12 +36,28 @@ public class ControladorUserDisplayProject implements ActionListener{
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'crear proyecto' en el panel inicial del usuario
+     * Accion que se realiza cuando se hace click sobre un colectivo en una tabla
      * 
      * @param e accion recibida
      */
-    @Override
-    public void actionPerformed(ActionEvent e){
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+
+        if (e.getValueIsAdjusting()) return;
+
+        JTable t;
+        if (frame.getPerfil().isVisible())
+            t = frame.getPerfil().getTableP();
+        else if (frame.getInicioUser().isVisible())
+            t = frame.getInicioUser().getTableP();
+        else return;
+
+        int rows = t.getSelectedRow();
+        if (rows == -1) return;
+
+        Project p = ((TablaProyectos)t.getModel()).getProjects().get(rows);
+        this.frame.getDisplayProject().setProject(p);
         this.frame.showPanel("displayProject");
+        
     }
 }

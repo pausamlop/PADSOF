@@ -8,6 +8,14 @@ import across.model.application.Application;
 import across.model.enumerations.projectState;
 import across.model.project.Project;
 
+/**
+ * Clase TablaProyectos
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 @SuppressWarnings("serial")
 public class TablaProyectos extends AbstractTableModel{
 	
@@ -16,7 +24,7 @@ public class TablaProyectos extends AbstractTableModel{
 	private ArrayList<projectState> estado = new ArrayList<>();
 	private ArrayList<Boolean> validar = new ArrayList<>();
 	private ArrayList<Boolean> rechazar = new ArrayList<>();
-	private String[] titulos = {"Proyectos", "Nº de votos", "Estado", "Validar","Rechazar"};
+	private String[] titulos = {"Proyectos", "Nï¿½ de votos", "Estado", "Validar","Rechazar"};
 	
 	private Application app = Application.getApplication();
 	

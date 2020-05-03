@@ -13,6 +13,14 @@ import across.gui.EditFont;
 import across.gui.MainFrame;
 import across.model.user.User;
 
+/**
+ * Clase FrameAdminUsuariosBloq
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 public class FrameAdminUsuariosBloq extends JDialog {
 	User userToBloq;
     

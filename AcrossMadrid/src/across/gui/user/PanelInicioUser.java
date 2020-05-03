@@ -1,6 +1,7 @@
 package across.gui.user;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -128,12 +129,6 @@ public class PanelInicioUser extends HomeUser{
 		this.add(ambito);
 		this.add(distrito);
 		this.add(estado);
-		
-
-    	// this.add(colectivos);
-    	// this.add(verColectivo);
-    	// this.add(proyectos);
-    	// this.add(verProyecto);
 	}
 
 	/**
@@ -217,6 +212,10 @@ public class PanelInicioUser extends HomeUser{
 		filtroProy.setRowFilter(RowFilter.regexFilter(buscador.getText(), 0));
 	}
 
+	/**
+	 * Metodo para crear los filtros
+	 * 
+	 */
 	private void crearFiltros() {
 		String[] filtroTE = {"Estado", "Infraestructura", "Social"};
 		tipoEstado = new JComboBox<>(filtroTE);
@@ -237,6 +236,24 @@ public class PanelInicioUser extends HomeUser{
 		ambito.setVisible(false);
 		distrito.setVisible(false);
 		estado.setVisible(true);
+	}
+
+	/**
+	 * Devuelve la tabla de colectivos del panel
+	 * 
+	 * @return tabla de colectivos
+	 */
+	public JTable getTableC() {
+		return tableColectivos;
+	}
+
+	/**
+	 * Devuelve la tabla de proyectos del panel
+	 * 
+	 * @return tabla de proyectos
+	 */
+	public JTable getTableP() {
+		return tableProyectos;
 	}
 
 	/**
@@ -360,6 +377,30 @@ public class PanelInicioUser extends HomeUser{
 	}
 
 	/**
+	 * Establece el control cuando se hace click en la tabla
+	 * 
+	 * @param c accion que activa el control
+	 */
+	public void setControlCollective(ListSelectionListener c){
+		ListSelectionModel cellSelectionModel = tableColectivos.getSelectionModel();
+	    cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    cellSelectionModel.addListSelectionListener(c);
+	}
+	
+
+	/**
+	 * Establece el control cuando se hace click en la tabla
+	 * 
+	 * @param c accion que activa el control
+	 */
+    public void setControlProject(ListSelectionListener contUserDisplayProjects){
+		ListSelectionModel cellSelectionModel = this.getTableP().getSelectionModel();
+	    cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    cellSelectionModel.addListSelectionListener(contUserDisplayProjects);
+
+    }
+
+	/**
 	 * Actualiza la informacion sobre el usuario que tiene el colectiovo
 	 * 
 	 * @param proyectos proyectos de la aplicacion
@@ -369,5 +410,6 @@ public class PanelInicioUser extends HomeUser{
         ((TablaProyectos)tableProyectos.getModel()).setPP(proyectos);
         ((TablaColectivos)tableColectivos.getModel()).setCC(colectivos);
 	}
+
 	
 }

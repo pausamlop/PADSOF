@@ -9,6 +9,14 @@ import across.gui.admin.PanelAdminUsuarios;
 import across.model.application.Application;
 import across.model.user.User;
 
+/**
+ * Clase ControladorFrameBloqEnviar
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 public class ControladorFrameBloqEnviar implements ActionListener{
 	private FrameAdminUsuariosBloq frameBloq;
     private MainFrame frame;

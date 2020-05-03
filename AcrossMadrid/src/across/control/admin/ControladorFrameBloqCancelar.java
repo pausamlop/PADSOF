@@ -6,8 +6,15 @@ import java.awt.event.ActionListener;
 import across.gui.MainFrame;
 import across.gui.admin.FrameAdminUsuariosBloq;
 import across.model.application.Application;
-import across.model.user.User;
 
+/**
+ * Clase ControladorFrameBloqCancelar
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 public class ControladorFrameBloqCancelar implements ActionListener{
 	private FrameAdminUsuariosBloq frameBloq;
     private MainFrame frame;

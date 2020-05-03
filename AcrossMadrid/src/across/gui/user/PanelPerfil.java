@@ -10,11 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
-import across.gui.EditFont;
-import across.gui.user.tablas.TablaColectivos;
+import javax.swing.event.ListSelectionListener;
 
-import across.gui.user.tablas.TablaProyectos;
+import across.gui.EditFont;
+import across.gui.user.tablas.*;
 
 import across.model.application.Application;
 import across.model.project.Project;
@@ -47,13 +48,21 @@ public class PanelPerfil extends HomeUser{
 	JTable cCreados;
 	JTable cMiembro;
 	
+	TablaColectivos t4;
+	TablaColectivos t5;
+	TablaProyectos t3;
+	TablaProyectos t1;
+	TablaProyectos t2;
+	
 	JScrollPane table1;
 	JScrollPane table2;
 	JScrollPane table3;
 	JScrollPane table4;
 	JScrollPane table5;
 	
-
+    /**
+     * Constructor de la clase PanelPerfil
+     */
     public PanelPerfil(){
     	super();
 		this.setLayout(spring);
@@ -63,14 +72,12 @@ public class PanelPerfil extends HomeUser{
         JPanel options = new JPanel(new GridLayout(20,10, 0, 10));
         
         setTables();
-
-        
+	 	
         setControlPCreados();
         setControlPApoyados();
         setControlPSeguidos();
         setControlCCreados();
         setControlCMiembro();
-	    
 	    
         buttonGroup = new ButtonGroup();
         buttonGroup.add(buttonPCreados);
@@ -84,7 +91,6 @@ public class PanelPerfil extends HomeUser{
         options.add(buttonPSeguidos);
         options.add(buttonCCreados);
         options.add(buttonCMiembro);
-        
         
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, title, -220, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, title, -130, SpringLayout.VERTICAL_CENTER, this);
@@ -109,14 +115,13 @@ public class PanelPerfil extends HomeUser{
         
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, table5, 90, SpringLayout.HORIZONTAL_CENTER, this);
         spring.putConstraint(SpringLayout.VERTICAL_CENTER, table5, 10, SpringLayout.VERTICAL_CENTER, this);
-        
-        
+
 	    EditFont.setSize(title, 24);
         EditFont.bold(title);
         
 	    EditFont.setSize(nombre, 16);
         EditFont.bold(title);
-        
+
         this.add(options);
         this.add(title);
         this.add(nombre);
@@ -130,6 +135,9 @@ public class PanelPerfil extends HomeUser{
     }
     
     
+    /**
+     * crea las distintas tablas
+     */
     public void setTables() {
     	
         /* TABLA DE PROYECTOS APOYADOS */
@@ -180,7 +188,6 @@ public class PanelPerfil extends HomeUser{
     }
     
 
-    
     
     /**
      * Establece el control de la seleccion del RadioButton
@@ -237,17 +244,74 @@ public class PanelPerfil extends HomeUser{
     	buttonCMiembro.addActionListener(e -> table5.setVisible(false));
     }
 
-
+    /**
+     * Hace update de los datos
+     * @param pc
+     * @param pa
+     * @param ps
+     * @param cm
+     * @param cc
+     */
 	public void updateData(ArrayList<Project> pc, ArrayList<Project> pa, ArrayList<Project> ps,
 			ArrayList<Collective> cm, ArrayList<Collective> cc) {
     	nombre.setText(Application.getApplication().getCurrentUser().getUsername()); 
-
+      
         ((TablaProyectos)pCreados.getModel()).setPP(pc);
         ((TablaProyectos)pApoyados.getModel()).setPP(pa);
         ((TablaProyectos)pSeguidos.getModel()).setPP(ps);
         ((TablaColectivos)cMiembro.getModel()).setCC(cm);
         ((TablaColectivos)cCreados.getModel()).setCC(cc);
-		
 	}
+    
+    /**
+     * Devuelve la tabla de proyectos visible
+     * @return tabla, null si no hay ninguna 
+     */
+	public JTable getTableP() {
+        if (table1.isVisible()) return pApoyados;
+        else if (table4.isVisible()) return pSeguidos;
+        else if (table5.isVisible()) return pCreados;
+        else return null;
+	}
+
+	/**
+     * Devuelve la tabla de colectivos visible
+     * @return tabla, null si no hay ninguna 
+     */
+	public JTable getTableC() {
+        if (table2.isVisible()) return cCreados;
+        if (table3.isVisible()) return cMiembro;
+        else return null;
+	}
+	
+	/**
+     * Gestionar el display de colectivos
+     * @param contUserDisplayCollective controlador
+     */
+	public void setControlCollective(ListSelectionListener contUserDisplayCollective){
+        ListSelectionModel cellSelectionModelCC = cCreados.getSelectionModel();
+        ListSelectionModel cellSelectionModelCM = cMiembro.getSelectionModel();
+        cellSelectionModelCC.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModelCM.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModelCC.addListSelectionListener(contUserDisplayCollective);
+        cellSelectionModelCM.addListSelectionListener(contUserDisplayCollective);
+
+    }
+
+    /**
+     * Gestionar el display de proyectos
+     * @param contUserDisplayProjects controlador
+     */
+    public void setControlProject(ListSelectionListener contUserDisplayProjects){
+        ListSelectionModel cellSelectionModelPC = pCreados.getSelectionModel();
+        ListSelectionModel cellSelectionModelPA = pApoyados.getSelectionModel();
+        ListSelectionModel cellSelectionModelPS = pSeguidos.getSelectionModel();
+        cellSelectionModelPC.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModelPA.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModelPS.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModelPC.addListSelectionListener(contUserDisplayProjects);
+        cellSelectionModelPA.addListSelectionListener(contUserDisplayProjects);
+        cellSelectionModelPS.addListSelectionListener(contUserDisplayProjects);
+    }
 
 }

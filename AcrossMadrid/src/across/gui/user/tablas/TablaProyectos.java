@@ -7,19 +7,46 @@ import javax.swing.table.AbstractTableModel;
 import across.model.enumerations.projectState;
 import across.model.project.Project;
 
+/**
+ * Clase TablaProyectos de la interfaz
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 @SuppressWarnings("serial")
 public class TablaProyectos extends AbstractTableModel{
 	
-	private ArrayList<String> nombres = new ArrayList<>();
+	private ArrayList<Project> nombres = new ArrayList<>();
 	private ArrayList<projectState> estado = new ArrayList<>();
 	private ArrayList<Integer> votos = new ArrayList<>();
 	private String[] titulos = {"Proyecto", "Estado", "Votos"};
 
-	
+	/**
+     * Devuelve los proyectos de la tabla
+	 * @return proyectos
+     */
+	public ArrayList<Project> getProjects() { return nombres; }
+
+	/**
+     * Devuelve el numero de columnas
+	 * @return numero de columnas
+     */
 	public int getColumnCount() { return titulos.length; }
 	
+	/**
+     * Devuelve el numero de filas
+	 * @return numero de filas
+     */
 	public int getRowCount() { return nombres.size(); }
 	
+	/**
+     * Devuelve el numero de filas
+	 * @param row
+	 * @param col
+	 * @return numero de filas
+     */
 	public Object getValueAt(int row, int col) {
 		if(col == 0) {
 			return nombres.get(row);
@@ -30,39 +57,33 @@ public class TablaProyectos extends AbstractTableModel{
 		}
 	}
 	
+	/**
+     * Devuelve el nombre de la columna
+	 * @param c
+	 * @return nombre
+     */
 	public String getColumnName(int c) {
 		return titulos[c];
 	}
 	
-	public boolean isCellEditable(int row, int col) {
-        return false;
-    }
-	
-	
+	/**
+     * Devuelve la clase de la columna
+	 * @param c
+	 * @return clase de la columna
+     */
 	public Class<?> getColumnClass(int c) {
         return getValueAt(0, c).getClass();
     }
 	
-	
-	
-	
-	
-	public void addRow(String n, projectState p,  Integer i) {
-		nombres.add(n);
-		this.estado.add(p);
-		this.votos.add(i);
-		fireTableCellUpdated(nombres.size(), 0);
-		fireTableCellUpdated(estado.size(), 1);
-		fireTableCellUpdated(votos.size(), 1);
-	}
-	
-	
-	
+	/**
+     * Setter de la tabla
+	 * @param lista
+     */
 	public void setPP(ArrayList<Project> lista){
 		deleteData();
 		for(Project p : lista) {
-			if(!nombres.contains(p.getName())) {
-				nombres.add(p.getName());
+			if(!nombres.contains(p)) {
+				nombres.add(p);
 				estado.add(p.getProjectState());
 				votos.add(p.getVotes());
 
@@ -73,6 +94,9 @@ public class TablaProyectos extends AbstractTableModel{
 		fireTableRowsInserted(0, nombres.size() - 1);
 	}
 	
+	/**
+     * Borra los datos de la tabla
+     */
 	private void deleteData() {
 		int rows = getRowCount();
         if (rows == 0) {

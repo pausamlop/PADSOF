@@ -23,8 +23,6 @@ public class ControladorJoin implements ActionListener{
     private PanelDisplayCollective panel;
     private MainFrame frame;
     private Application model;
-	
-
     
     /**
      * Constructor de la clase ControladorJoin

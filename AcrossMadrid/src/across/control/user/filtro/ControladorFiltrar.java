@@ -36,7 +36,7 @@ public class ControladorFiltrar implements ActionListener{
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'filtrar proyecti' en el panel de inicio del usuario
+     * Accion que se realiza cuando se pulsa el boton de 'filtrar proyecto' en el panel de inicio del usuario
      * 
      * @param e accion recibida
      */

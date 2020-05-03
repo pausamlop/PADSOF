@@ -41,10 +41,8 @@ public class ControladorUpdateColectivos implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         Collective col = panel.getColectivo();
-        if (col == null){
-            //JOptionPane.showMessageDialog(frame, "Debe seleccionar un colectivo para generar su informe de afinidad", "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        if (col == null) return;
+        
         panel.updateCollectives(model.affinityReport(col));
         this.frame.showPanel("informes");
     }
