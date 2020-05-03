@@ -70,6 +70,7 @@ public class MainFrame extends JFrame{
     private ControladorUserDisplayProject contUserDisplayProject;
     private ControladorUserDisplayCollective contUserDisplayCollective;
     private ControladorToInformes contInformes;
+    private ControladorUpdateColectivos contUpdateCol;
     private ControladorFiltrar contFiltrar;
     private ControladorLimpiarFiltro contLimpiar;
     /* crear colectivo */
@@ -345,6 +346,7 @@ public class MainFrame extends JFrame{
         controladorNuevoColectivo(controlador);
         controladorDisplayProject(controlador);
         controladorDisplayCollective(controlador);
+        controladorInformes(controlador);
         
         controladorAdmin(controlador);
         controladorAdminConfig(controlador);
@@ -564,6 +566,17 @@ public class MainFrame extends JFrame{
     private void controladorDisplayCollective(Controlador controlador) {
         this.contJoin = controlador.getJoin();
         displayCollective.setControlJoin(contJoin);
+
+    }
+
+    /**
+     * Establece los controladores del panel informes
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorInformes(Controlador controlador) {
+        this.contUpdateCol = controlador.getUpdateColectivos();
+        informes.setControlSelectColectivo(contUpdateCol);
 
     }
 

@@ -43,6 +43,7 @@ public class Controlador {
     private ControladorUserCrearColectivo userCrearColectivo;
     private ControladorUserDisplayCollective userDisplayCollective;
     private ControladorToInformes informes;
+    private ControladorUpdateColectivos updateCol;
     private ControladorFiltrar filtrar;
     private ControladorLimpiarFiltro limpiar;
     
@@ -103,6 +104,7 @@ public class Controlador {
         toPerfil = new ControladorToPerfil(frame, model);
         toNotif = new ControladorToNotif(frame, model);
         informes = new ControladorToInformes(frame, model);
+        updateCol = new ControladorUpdateColectivos(frame, model);
         filtrar = new ControladorFiltrar(frame, model);
         limpiar = new ControladorLimpiarFiltro(frame, model);
 
@@ -302,6 +304,15 @@ public class Controlador {
      */
     public ControladorToInformes getInformes(){
         return informes;
+    }
+
+    /**
+     * Devuelve el controlador que actualiza la tabla de informe de afinidad
+     * 
+     * @return controlador de actualizar afinidad
+     */
+    public ControladorUpdateColectivos getUpdateColectivos(){
+        return updateCol;
     }
 
     /**

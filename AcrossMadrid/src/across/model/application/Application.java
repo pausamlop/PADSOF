@@ -646,20 +646,21 @@ public class Application implements Serializable{
      * 
      * @return Informe de popularidad de los proyectos creados
      */
-    public String popularityReport(){
-    	String report = "";
+    public ArrayList<Project> popularityReport(){
+    	//String report = "";
 
         ArrayList<Project> output = new ArrayList<Project>();
         output.addAll(projects);
         Collections.sort(output);
+        return output;
 
-        int count = 1;
-        for (Project p: output){
-            report += count + ". " + p.getName() + "\n";
-            count++;
-        }
+        // int count = 1;
+        // for (Project p: output){
+        //     report += count + ". " + p.getName() + "\n";
+        //     count++;
+        // }
 
-        return report;
+        // return report;
     }
 
     /**
@@ -668,7 +669,7 @@ public class Application implements Serializable{
      * @param c colectivo sobre el que se hace el informe
      * @return HashMap de los colectivos ordenados segun afinidad
      */
-    public String affinityReport(Collective c){
+    public Map<Collective, Double> affinityReport(Collective c){
         if (currentUser.getMemberCollectives().contains(c) == false){
             return null;
         }
@@ -700,19 +701,20 @@ public class Application implements Serializable{
         }
 
         LinkedHashMap<Collective, Double> output = sortCollectives(notSorted);
+        return output;
 
-        // Pasar a string
+        // // Pasar a string
 
-        String result = "";
+        // String result = "";
 
-        int count = 1;
+        // int count = 1;
 
-        for (Collective colec : output.keySet()) {
-            result += count + ". " + colec.getName() + ", " + output.get(colec) + "\n" ;
-            count ++;
-          }
+        // for (Collective colec : output.keySet()) {
+        //     result += count + ". " + colec.getName() + ", " + output.get(colec) + "\n" ;
+        //     count ++;
+        //   }
 
-        return result;
+        // return result;
 
     }
 

@@ -51,10 +51,10 @@ public class PanelInicioUser extends HomeUser{
 	TableRowSorter<?> filtroProy;
 
 	/* tablas */
-	JScrollPane scrollCol;
-	JScrollPane scrollProy;
-	JTable tableColectivos;
-	JTable tableProyectos;
+	private JScrollPane scrollCol;
+	private JScrollPane scrollProy;
+	private JTable tableColectivos;
+	private JTable tableProyectos;
 	
 	/**
 	 * Contructor del Panel de inicio de usuario
@@ -136,6 +136,10 @@ public class PanelInicioUser extends HomeUser{
     	// this.add(verProyecto);
 	}
 
+	/**
+	 * Coloca todos los elementos de este panel
+	 * 
+	 */
 	private void setColocacion() {
 		/* tablas */
 		spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollCol, 50, SpringLayout.HORIZONTAL_CENTER, this);

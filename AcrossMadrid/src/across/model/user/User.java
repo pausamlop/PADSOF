@@ -489,7 +489,7 @@ public class User extends UserCollective {
      * @return cadena de caracteres con el output a mostrar por pantalla
      */
     private String popularityReport(){
-        String output = Application.getApplication().popularityReport();
+        String output = "a";//Application.getApplication().popularityReport();
         if (output.length() == 0){
             return "No hay proyectos disponibles para generar un informe";
         }
@@ -532,7 +532,7 @@ public class User extends UserCollective {
                 return "";
             }
 
-            output = Application.getApplication().affinityReport(memberCollectives.get(num));
+            output = ""; //Application.getApplication().affinityReport(memberCollectives.get(num));
         }catch(IOException exc){
             exc.printStackTrace();
         }
