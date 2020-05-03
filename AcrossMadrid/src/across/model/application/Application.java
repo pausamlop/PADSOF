@@ -395,6 +395,12 @@ public class Application implements Serializable{
     	return pendingFinance;
     }
     
+    /**
+     * Devuelve el usuario cuyo nombre corresponde con el pasado como argumento
+     * 
+     * @param name nombre de ususario
+     * @return usuario con dicho nombre
+     */
     public User getUserByName(String name) {
     	for(User aux : users) {
     		if(aux.getUsername().equals(name)) {
@@ -409,6 +415,39 @@ public class Application implements Serializable{
     	}
     	return null;
     }
+
+    /**
+     * Comprueba si ya existe un proyecto con el nombre pasado como argumento
+     * 
+     * @param name nombre del proyecto
+     * @return true si no existe ninguno proyecto con ese nombre, sino false
+     */
+    public boolean validNameProject(String name){
+        for (Project p: projects){
+            if (p.getName().equals(name))
+                return false;
+        }
+        for (Project p: nonValidatedProjects){
+            if (p.getName().equals(name))
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Comprueba si ya existe un colectivo con el nombre pasado como argumento
+     * 
+     * @param name nombre del colectivo
+     * @return true si no existe ninguno colectivo con ese nombre, sino false
+     */
+    public boolean validNameColective(String name){
+        for (Collective c: collectives){
+            if (c.getName().equals(name))
+                return false;
+        }
+        return true;
+    }
+    
     
     /**
      * Lee del archivo de texto "Distritos.txt" los distritos de Madrid y los guarda en un array

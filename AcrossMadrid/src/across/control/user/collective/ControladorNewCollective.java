@@ -40,6 +40,10 @@ public class ControladorNewCollective implements ActionListener{
             JOptionPane.showMessageDialog(frame, "Debe introducir un nombre para el colectivo", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        else if(!model.validNameColective(name)){
+            JOptionPane.showMessageDialog(frame, "Ya existe un colectivo con ese nombre", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         else if (desc.equals("")){
             JOptionPane.showMessageDialog(frame, "Debe introducir una descripcion para el colectivo", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;

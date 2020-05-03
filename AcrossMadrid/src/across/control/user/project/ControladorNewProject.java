@@ -74,6 +74,9 @@ public class ControladorNewProject implements ActionListener{
         if (name.equals("")){
             JOptionPane.showMessageDialog(frame, "Debe introducir un nombre para el proyecto", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
+        }else if(!model.validNameProject(name)){
+            JOptionPane.showMessageDialog(frame, "Ya existe un proyecto con ese nombre", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
         }else if (cost <= 0){
             JOptionPane.showMessageDialog(frame, "Debe introducir un coste de proyecto valido", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;

@@ -216,11 +216,16 @@ public class PanelInicioUser extends HomeUser{
 	private void crearFiltros() {
 		String[] filtroTE = {"Estado", "Infraestructura", "Social"};
 		tipoEstado = new JComboBox<>(filtroTE);
+
 		String[] filtroAmb = {"Todos","Nacional","Internacional"};
 		ambito = new JComboBox<>(filtroAmb);
-		ArrayList<String> filtroDist = Application.getApplication().getDistricts();
-		filtroDist.add(0, "Todos");
+
+		ArrayList<String> filtroDist = new ArrayList<>();
+		filtroDist.add("Todos");
+		for (String d: Application.getApplication().getDistricts())
+			filtroDist.add(d);
 		distrito = new JComboBox<>(filtroDist.toArray(new String[0]));
+		
 		projectState[] filtroPS = {projectState.ACEPTADO, projectState.VOTOSALCANZADOS,
 								 projectState.ENVIADO, projectState.FINANCIADO,
 								 projectState.CADUCADO};
