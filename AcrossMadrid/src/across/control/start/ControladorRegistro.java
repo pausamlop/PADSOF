@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import across.gui.MainFrame;
+import across.gui.admin.PanelAdminUsuarios;
 import across.gui.start.PanelRegistro;
 import across.model.application.Application;
 
@@ -59,6 +60,7 @@ public class ControladorRegistro implements ActionListener{
         
         else if (model.register(username, nif, password)) {
         	JOptionPane.showMessageDialog(frame, "Su cuenta está siendo validada", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        	this.frame.updateAdminUsuarios(new PanelAdminUsuarios());
             this.frame.showPanel("inicio");
         }
         else

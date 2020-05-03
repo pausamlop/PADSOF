@@ -24,7 +24,6 @@ public class ControladorAdminUsuariosBloq implements ListSelectionListener{
     public ControladorAdminUsuariosBloq (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.adminUsuarios = frame.getAdminUsuarios();
     }
 
     /**
@@ -34,6 +33,8 @@ public class ControladorAdminUsuariosBloq implements ListSelectionListener{
      */
     @Override
     public void valueChanged(ListSelectionEvent e){
+        this.adminUsuarios = frame.getAdminUsuarios();
+        
     	JTable aux = adminUsuarios.getTabla();
     	
     	int selectedRow = aux.getSelectedRow();

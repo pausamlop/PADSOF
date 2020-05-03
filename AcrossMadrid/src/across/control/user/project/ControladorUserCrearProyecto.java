@@ -2,6 +2,7 @@ package across.control.user.project;
 
 import across.model.application.Application;
 import across.gui.*;
+import across.gui.admin.PanelInicioAdmin;
 import across.gui.user.PanelInicioUser;
 
 import java.awt.event.*;

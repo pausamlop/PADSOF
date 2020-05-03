@@ -14,11 +14,11 @@ public class TablaProyectos extends AbstractTableModel{
 	private ArrayList<String> nombres = new ArrayList<>();
 	private ArrayList<Integer> votos = new ArrayList<>();
 	private ArrayList<projectState> estado = new ArrayList<>();
-	private ArrayList<String> validar = new ArrayList<>();
-	private String[] titulos = {"Proyectos", "Nº de votos", "Estado", "Validar"};
+	private ArrayList<Boolean> validar = new ArrayList<>();
+	private ArrayList<Boolean> rechazar = new ArrayList<>();
+	private String[] titulos = {"Proyectos", "Nº de votos", "Estado", "Validar","Rechazar"};
 	
 	private Application app = Application.getApplication();
-	
 	
 	public TablaProyectos() {
 		
@@ -31,11 +31,14 @@ public class TablaProyectos extends AbstractTableModel{
 				estado.add(status);
 				
 				if(status == projectState.ENVALIDACION) {
-					validar.add("Validar/Rechazar");
-				}else if(status == projectState.RECHAZADO) {
-					validar.add("Rechazado");
+					validar.add(false);
+					rechazar.add(false);
+				}else if(status == projectState.RECHAZADO){
+					validar.add(false);
+					rechazar.add(true);
 				}else {
-					validar.add("Validado");
+					validar.add(true);
+					rechazar.add(false);
 				}
 			}
 		}
@@ -53,6 +56,8 @@ public class TablaProyectos extends AbstractTableModel{
 			return estado.get(row);
 		}else if(col == 3) {
 			return validar.get(row);
+		}else if(col == 4) {
+			return rechazar.get(row);
 		}else {
 			return votos.get(row);
 		}
@@ -65,31 +70,40 @@ public class TablaProyectos extends AbstractTableModel{
 	public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
-        if (col == 3 && validar.get(row).equals("Validar/Rechazar")) {
-            return true;
-        } else {
-            return false;
-        }
+		if(!validar.get(row) && !rechazar.get(row)) {
+	        if (col == 3) {
+	            return true;
+	        } else if(col == 4) {
+	        	return true;
+	        }
+		}
+        return false;
     }
 	
 	public void setValueAt(Object value, int row, int col) {	
+		Project aux = app.getProjectByName(nombres.get(row));
+		
 		if(col == 3) {
-			Project aux = app.getProjectByName(nombres.get(row));
+			aux.validate();
 			
-			if(((String)value).equals("Validar")) {
-				aux.validate();
-				
-				estado.set(row, aux.getProjectState());
-				validar.set(row,"Validado");
-				fireTableCellUpdated(row, col);
-			}else {
-				aux.reject();
-				
-				estado.set(row, aux.getProjectState());
-				validar.set(row,"Rechazado");
-				fireTableCellUpdated(row, col);
-			}
+			votos.set(row, aux.getVotes());
+			estado.set(row, aux.getProjectState());
+			validar.set(row,true);
+			fireTableCellUpdated(row, col);
+			fireTableCellUpdated(row, 2);
+			fireTableCellUpdated(row, 1);
+		}else {
+			aux.reject();
+			
+			estado.set(row, aux.getProjectState());
+			rechazar.set(row,true);
+			fireTableCellUpdated(row, col);
+			fireTableCellUpdated(row, 2);
 		}
+    }
+	
+	public Class<?> getColumnClass(int c) {
+        return getValueAt(0, c).getClass();
     }
 	
 }

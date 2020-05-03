@@ -73,7 +73,7 @@ public class PanelInicioAdmin extends HomeAdmin{
             table.setOpaque(false);
             //table.getViewport().setOpaque(false);
             
-            aux.getColumnModel().getColumn(3).setCellEditor(new CustomTableCellEditor());
+            aux.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JCheckBox()));
     		
     		/*Titulos*/
     		EditFont.setSize(adminIni,25);
@@ -120,7 +120,7 @@ public class PanelInicioAdmin extends HomeAdmin{
      * Implementacion para permitir definir el comportamiento de algunas de las celdas en concreto dentro de una misma columna de una tabla	
      * 
      */
-    public static class CustomTableCellEditor extends AbstractCellEditor implements TableCellEditor {
+   /* public static class CustomTableCellEditor extends AbstractCellEditor implements TableCellEditor {
         private TableCellEditor editor;
 
         @Override
@@ -136,6 +136,7 @@ public class PanelInicioAdmin extends HomeAdmin{
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             if (((String)value).equals("Validar/Rechazar")) {
             	JComboBox<String> comboBox = new JComboBox<>();
+            	
         		comboBox.addItem("Validar");
         		comboBox.addItem("Rechazar");
         		comboBox.addItem("Validar/Rechazar");
@@ -145,7 +146,7 @@ public class PanelInicioAdmin extends HomeAdmin{
 
             return editor.getTableCellEditorComponent(table, value, isSelected, row, column);
         }
-	}
+	}*/
     
     public void setControlAdminUsuarios(ActionListener c){
         usuarios.addActionListener(c);
@@ -161,6 +162,10 @@ public class PanelInicioAdmin extends HomeAdmin{
     
     public void setProyectosButton() {
     	proyectos.setSelected(true);
+    }
+    
+    public JTable getTabla() {
+    	return aux;
     }
     	
     

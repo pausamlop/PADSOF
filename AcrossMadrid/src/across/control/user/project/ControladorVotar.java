@@ -2,6 +2,7 @@ package across.control.user.project;
 
 import across.model.application.Application;
 import across.gui.*;
+import across.gui.admin.PanelInicioAdmin;
 import across.gui.general.PanelDisplayProject;
 
 import java.awt.event.*; 
@@ -44,6 +45,7 @@ public class ControladorVotar implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         panel.getProject().vote(model.getCurrentUser());
+        frame.updateInicioAdmin(new PanelInicioAdmin());
         panel.update();
     }
 

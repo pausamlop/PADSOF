@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import across.gui.MainFrame;
 import across.gui.admin.FrameAdminUsuariosBloq;
+import across.gui.admin.PanelAdminUsuarios;
 import across.model.application.Application;
 import across.model.user.User;
 
@@ -40,10 +41,12 @@ public class ControladorFrameBloqEnviar implements ActionListener{
     	
     	userToBloq.block(mensaje);
     	
+    	this.frame.updateAdminUsuarios(new PanelAdminUsuarios());
+    	
     	this.frame.showPanel("adminUsuarios");
     	
-    	frame.getAdminUsuarios().getTabla().clearSelection();
-    	frame.getAdminUsuarios().updateTableCell(true,row, col);
+    	/*frame.getAdminUsuarios().getTabla().clearSelection();
+    	frame.getAdminUsuarios().updateTableCell(true,row, col);*/
     	
     	frameBloq.dispose();
     }

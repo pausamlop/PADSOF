@@ -8,6 +8,7 @@ import across.model.project.SocialProject;
 import across.model.user.Collective;
 import across.model.user.UserCollective;
 import across.gui.*;
+import across.gui.admin.PanelInicioAdmin;
 import across.gui.user.PanelNewProject;
 
 import java.awt.event.*;
@@ -93,6 +94,7 @@ public class ControladorNewProject implements ActionListener{
             if (!saveImage(imgPath)) return;
             
             model.addNewProject(new InfraestructureProject(name, desc, cost, imgPath, distrito, creator));
+            frame.updateInicioAdmin(new PanelInicioAdmin());
             JOptionPane.showMessageDialog(frame, "Su propuesta de proyecto se ha enviado al adminstrador.\nUna vez validado estara disponible para ser votado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             panel.emptyFields();
         }
@@ -108,6 +110,7 @@ public class ControladorNewProject implements ActionListener{
             }else{
                 typeSocial tipo = (ambitoStr.equals("Nacional"))?typeSocial.NACIONAL:typeSocial.INTERNACIONAL;
                 model.addNewProject(new SocialProject(name, desc, cost, grupo, tipo, creator));
+                frame.updateInicioAdmin(new PanelInicioAdmin());
                 JOptionPane.showMessageDialog(frame, "Su propuesta de proyecto se ha enviado al adminstrador.\nUna vez validado estara disponible para ser votado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 panel.emptyFields();
             }

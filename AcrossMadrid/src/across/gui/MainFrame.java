@@ -94,6 +94,8 @@ public class MainFrame extends JFrame{
     private ControladorAdminUsuariosBloq contAdminUsuariosBloq;
 
     private JPanel contentPane;
+    
+    private Controlador contMain;
 
     /**
      * Constructor de la ventana principal de la aplicacion
@@ -300,8 +302,25 @@ public class MainFrame extends JFrame{
     	adminBloq = panel;
     }
     
-
-
+    public void updateAdminUsuarios(PanelAdminUsuarios panel) {
+    	contentPane.remove(adminUsuarios);
+    	adminUsuarios = panel;
+    	controladorAdminUsuarios(contMain);
+    	controladorHome(contMain);
+    	adminUsuarios.setUsuariosButton();
+    	adminUsuarios.getTabla().clearSelection();
+    	contentPane.add(adminUsuarios, "adminUsuarios");
+    }
+    
+    public void updateInicioAdmin(PanelInicioAdmin panel) {
+    	contentPane.remove(inicioAdmin);
+    	inicioAdmin = panel;
+    	controladorAdmin(contMain);
+    	controladorHome(contMain);
+    	inicioAdmin.setProyectosButton();
+    	inicioAdmin.getTabla().clearSelection();
+    	contentPane.add(inicioAdmin, "inicioAdmin");
+    }
 
     /**
      * Establece los controlador de los diferentes paneles mediante el uso de metodos
@@ -310,6 +329,8 @@ public class MainFrame extends JFrame{
      * @param controlador objeto controlador general
      */
     public void setControlador(Controlador controlador){
+    	
+    	contMain = controlador;
 
         controladorInicio(controlador);
         controladorRegistro(controlador);
