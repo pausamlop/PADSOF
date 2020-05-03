@@ -11,6 +11,7 @@ import javax.swing.table.TableRowSorter;
 
 import across.gui.EditFont;
 import across.gui.menu.HomeAdmin;
+import across.gui.user.tablas.TablaProyectos;
 
 /**
  * Clase PanelInicioAdmin de la interfaz
@@ -78,13 +79,14 @@ public class PanelAdminUsuarios extends HomeAdmin {
 		table.setOpaque(false);
 
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, table, 0, SpringLayout.HORIZONTAL_CENTER, this);
-		layout.putConstraint(SpringLayout.VERTICAL_CENTER, table, 0, SpringLayout.VERTICAL_CENTER, this);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, table, 20, SpringLayout.VERTICAL_CENTER, this);
 
 		/* Titulos */
 		EditFont.setSize(adminIni, 25);
 		EditFont.setSize(usersPanel, 15);
 
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, adminIni, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		layout.putConstraint(SpringLayout.NORTH, adminIni, 50, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, usersPanel, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.NORTH, usersPanel, 30, SpringLayout.NORTH, adminIni);
 
@@ -101,10 +103,10 @@ public class PanelAdminUsuarios extends HomeAdmin {
 		});
 
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, buscador, -70, SpringLayout.HORIZONTAL_CENTER, this);
-		layout.putConstraint(SpringLayout.VERTICAL_CENTER, buscador, -140, SpringLayout.VERTICAL_CENTER, this);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, buscador, -110, SpringLayout.VERTICAL_CENTER, this);
 
 		layout.putConstraint(SpringLayout.EAST, etiquetaBuscador, -5, SpringLayout.WEST, buscador);
-		layout.putConstraint(SpringLayout.VERTICAL_CENTER, etiquetaBuscador, -140, SpringLayout.VERTICAL_CENTER, this);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, etiquetaBuscador, -110, SpringLayout.VERTICAL_CENTER, this);
 
 		/* Bloqueo de usuarios */
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, bloqMensaje, -70, SpringLayout.HORIZONTAL_CENTER, this);
@@ -164,5 +166,10 @@ public class PanelAdminUsuarios extends HomeAdmin {
 	public JTable getTabla() {
 		return aux;
 	}
+	
+    
+    public void updateTableCell(Object value,int row, int col) {
+    	((TablaUsuarios)aux.getModel()).setValueAt(value, row, col);
+    }
 
 }

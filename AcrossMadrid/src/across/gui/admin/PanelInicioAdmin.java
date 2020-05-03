@@ -83,6 +83,7 @@ public class PanelInicioAdmin extends HomeAdmin{
 			// layout.putConstraint(SpringLayout.NORTH, logout, 10, SpringLayout.NORTH, this);
 
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, adminIni, 0, SpringLayout.HORIZONTAL_CENTER, this);
+    		layout.putConstraint(SpringLayout.NORTH, adminIni, 50, SpringLayout.NORTH, this);
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, proyectsPanel, 0, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.NORTH, proyectsPanel, 30, SpringLayout.NORTH, adminIni);
     		
@@ -99,7 +100,7 @@ public class PanelInicioAdmin extends HomeAdmin{
     		
     		/*Tabla*/
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, table, 10, SpringLayout.HORIZONTAL_CENTER, this);
-    		layout.putConstraint(SpringLayout.VERTICAL_CENTER, table, 0, SpringLayout.VERTICAL_CENTER, this);
+    		layout.putConstraint(SpringLayout.VERTICAL_CENTER, table, 20, SpringLayout.VERTICAL_CENTER, this);
 
 			//this.add(logout);
 
@@ -109,7 +110,7 @@ public class PanelInicioAdmin extends HomeAdmin{
     		this.add(proyectos);
     		this.add(usuarios);
     		this.add(config);
-    		this.add(guardarCambios);
+    		//this.add(guardarCambios);
     		
     		this.add(table);
     		

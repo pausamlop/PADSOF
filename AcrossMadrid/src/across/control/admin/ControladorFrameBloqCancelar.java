@@ -8,11 +8,10 @@ import across.gui.admin.FrameAdminUsuariosBloq;
 import across.model.application.Application;
 import across.model.user.User;
 
-public class ControladorFrameBloqEnviar implements ActionListener{
+public class ControladorFrameBloqCancelar implements ActionListener{
 	private FrameAdminUsuariosBloq frameBloq;
     private MainFrame frame;
     private Application model;
-    private int row,col;
 
     /**
      * Constructor de la clase ControladorUserCrearProyecto
@@ -20,12 +19,10 @@ public class ControladorFrameBloqEnviar implements ActionListener{
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
      */
-    public ControladorFrameBloqEnviar (MainFrame frame, Application model, int row, int col){
+    public ControladorFrameBloqCancelar (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
         this.frameBloq = frame.getFrameAdminUsuariosBloq();
-        this.row = row;
-        this.col = col;
     }
 
     /**
@@ -35,15 +32,8 @@ public class ControladorFrameBloqEnviar implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-    	User userToBloq = frameBloq.getUserToBloq();
-    	String mensaje = frameBloq.getMensajeBloq();
-    	
-    	userToBloq.block(mensaje);
-    	
+
     	this.frame.showPanel("adminUsuarios");
-    	
-    	frame.getAdminUsuarios().getTabla().clearSelection();
-    	frame.getAdminUsuarios().updateTableCell(true,row, col);
     	
     	frameBloq.dispose();
     }

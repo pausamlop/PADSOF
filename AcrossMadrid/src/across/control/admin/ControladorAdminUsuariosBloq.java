@@ -37,9 +37,9 @@ public class ControladorAdminUsuariosBloq implements ListSelectionListener{
     	JTable aux = adminUsuarios.getTabla();
     	
     	int selectedRow = aux.getSelectedRow();
-        int selectedColumns = aux.getSelectedColumn();
+        int selectedColumn = aux.getSelectedColumn();
         
-        if(selectedColumns == 3  && selectedRow >= 0 && !((Boolean)adminUsuarios.getTablaUsuarios().getValueAt(selectedRow, selectedColumns))) {
+        if(selectedColumn == 3  && selectedRow >= 0 && !((Boolean)adminUsuarios.getTablaUsuarios().getValueAt(selectedRow, selectedColumn))) {
         	
         	User userToBloq = model.getUserByName((String)aux.getValueAt(selectedRow, 0));
         	
@@ -49,15 +49,16 @@ public class ControladorAdminUsuariosBloq implements ListSelectionListener{
         	frameBloq.setBounds(200,200,500,300);
         	frameBloq.setResizable(false);
         	frame.setFrameAdminUsuariosBloq(frameBloq);
-        	frameBloq.setControlFrameBloqEnviar(new ControladorFrameBloqEnviar(frame, model));
+        	frameBloq.setControlFrameBloqEnviar(new ControladorFrameBloqEnviar(frame, model, selectedRow, selectedColumn));
+        	frameBloq.setControlFrameBloqCancelar(new ControladorFrameBloqCancelar(frame, model));
         	
         	frameBloq.setVisible(true);
         	
         }else {
         	if(selectedRow>=0) {
         		(model.getUserByName((String)aux.getValueAt(selectedRow, 0))).unblock();
+            	aux.clearSelection();
         	}
-        	aux.clearSelection();
         	frame.showPanel("adminUsuarios");
         }
     	

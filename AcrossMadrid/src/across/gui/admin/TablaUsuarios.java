@@ -96,6 +96,8 @@ public class TablaUsuarios extends AbstractTableModel{
 			user.validate();
 			validar.set(row, (Boolean)value);
 			fireTableCellUpdated(row,col);
+			estado.set(row, "Funcional");
+			fireTableCellUpdated(row,1);
 		}
     }
 	

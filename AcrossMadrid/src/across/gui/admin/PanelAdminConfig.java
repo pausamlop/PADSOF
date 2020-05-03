@@ -77,6 +77,7 @@ public class PanelAdminConfig extends HomeAdmin{
     		EditFont.setSize(configPanel,15);
     		
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, adminIni, 0, SpringLayout.HORIZONTAL_CENTER, this);
+    		layout.putConstraint(SpringLayout.NORTH, adminIni, 50, SpringLayout.NORTH, this);
     		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, configPanel, 0, SpringLayout.HORIZONTAL_CENTER, this);
     		layout.putConstraint(SpringLayout.NORTH, configPanel, 30, SpringLayout.NORTH, adminIni);
     		

@@ -68,10 +68,12 @@ public class ControladorLogin implements ActionListener{
             else if (password.equals(""))
                 JOptionPane.showMessageDialog(frame, "Introduzca contraseña", "Aviso", JOptionPane.WARNING_MESSAGE);
             
+            else if(model.getUserByName(username) != null && model.getUserByName(username).getBlocked()) {
+            	JOptionPane.showMessageDialog(frame, "Usuario bloqueado:\n"+model.getUserByName(username).getBlockedMssg(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+            
             else if (model.login(username, password)){
-            	if(model.getUserByName(username) != null && model.getUserByName(username).getBlocked()) {
-                	JOptionPane.showMessageDialog(frame, "Usuario bloqueado:\n"+model.getUserByName(username).getBlockedMssg(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
+
                 login.emptyFields();
                 ArrayList<Project> proyectos = model.getProjects();
                 ArrayList<Collective> colectivos = model.getCollectives();

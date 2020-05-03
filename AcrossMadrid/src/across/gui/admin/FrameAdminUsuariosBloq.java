@@ -78,6 +78,10 @@ public class FrameAdminUsuariosBloq extends JDialog {
     	enviar.addActionListener(c);
     }
     
+    public void setControlFrameBloqCancelar(ActionListener c) {
+    	cancelar.addActionListener(c);
+    }
+    
     public User getUserToBloq() {
     	return userToBloq;
     }
