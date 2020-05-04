@@ -12,12 +12,24 @@ import across.gui.menu.HomeUser;
 import across.model.application.Application;
 import across.model.notification.Notification;
 
+/**
+ * Clase PanelNotifications
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 @SuppressWarnings("serial")
 public class PanelNotifications extends HomeUser {
 
     JLabel titulo = new JLabel("Notificaciones");
     JTable table;
 
+    /**
+     * Constructor de la clase PanelNotifications
+     * 
+     */
     public PanelNotifications(){
         AbstractTableModel model = new TablaNotif();
         table = new JTable(model);
@@ -42,14 +54,26 @@ public class PanelNotifications extends HomeUser {
         this.add(titulo);
     }
 
+    /**
+     * Devuelve  la tabla
+     * @return tabla
+     */
     public JTable getTable(){
         return table;
     }
 
+    /**
+     * Establece las nostificaciones a mostrar en la tabla
+     * 
+     * @param not lista de notificaciones
+     */
     public void setNotifications(ArrayList<Notification> not){
         ((TablaNotif)table.getModel()).setNotifications(not);
     }
     
+    /**
+     * Actualiza la informacion del panel en funcion del usuario conectado
+     */
     public void update() {
     	if (Application.getApplication().getCurrentUser() == null){
             toPerfil.setVisible(false);
@@ -58,6 +82,10 @@ public class PanelNotifications extends HomeUser {
         }
     }
 
+    /**
+     * Establece el control de una notificacion vista
+     * @param e
+     */
     public void setControlVisto(TableModelListener e){
         table.getModel().addTableModelListener(e);
     }

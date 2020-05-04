@@ -344,7 +344,7 @@ public class PanelDisplayProject extends HomeUser{
      * 
      * @param c accion que activa el boton
      */
-    public void setControlDejarAceptar(ActionListener c){
+    public void setControlAceptar(ActionListener c){
         aceptar.addActionListener(c);
     }
 

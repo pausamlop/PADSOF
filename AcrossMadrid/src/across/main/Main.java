@@ -18,38 +18,29 @@ public class Main{
      * 
      */
     public static void main(String[] args) {
-        Application.setApplication(Application.loadData());
-        Application app = Application.getApplication();
-        app.setLogOut(false);
+        // Application.setApplication(Application.loadData());
+        // Application app = Application.getApplication();
+        // app.setLogOut(false);
 
-        System.out.println(" ------------------------------------------------------");
-        System.out.println(" ------------- BIENVENIDO A ACROSS MADRID -------------");
-        System.out.println(" ------------------------------------------------------");  
+        // System.out.println(" ------------------------------------------------------");
+        // System.out.println(" ------------- BIENVENIDO A ACROSS MADRID -------------");
+        // System.out.println(" ------------------------------------------------------");  
     
-        while (true){
+        // while (true){
             
-            app.checkFinance();
-            app.checkExpired();
+        //     app.checkFinance();
+        //     app.checkExpired();
 
-            app.pantallaLogin();
-            if (app.getLogOut()){
-                System.out.println("\nSaliendo de la aplicacion");
-                break;
-            }
-            app.pantallaPrincipal();
-            app.setLogOut(false);
-            Application.saveData(app);
+        //     app.pantallaLogin();
+        //     if (app.getLogOut()){
+        //         System.out.println("\nSaliendo de la aplicacion");
+        //         break;
+        //     }
+        //     app.pantallaPrincipal();
+        //     app.setLogOut(false);
+        //     Application.saveData(app);
     	
-    	/*Application.setApplication(Application.loadData());
-        Application app = Application.getApplication();
-        
-        for(Project aux : app.getNonValidatedProjects()) {
-        	aux.setProjectState(projectState.ENVALIDACION);
-        }
-        
-        Application.saveData(app);
-        }*/
-        }
+        // }
 
     }
 }

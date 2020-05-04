@@ -65,10 +65,6 @@ public class InfraestructureProject extends Project {
     
     @Override
     public String toString(){
-//        String resumen = super.toString();
-//        resumen += "\n      PROYECTO TIPO INFRAESTRUCTURA";
-//        resumen += "\n      + Distrito: " + district;
-//        resumen += "\n      + Foto: " + image;
         return super.toString();
     }
     

@@ -267,18 +267,6 @@ public class Collective extends UserCollective {
      * @return String con la informacion del objeto Collective
      */
     public String toString() {
-        // String resumen = "";
-        // resumen += "Nombre: "+ name;
-        // resumen += ", descipcion: "+ description;
-        // if (parent != null){
-        //     resumen += ", padre: " + parent.getName();
-        // }
-        // if (children.size() > 0){
-        //     resumen += ", hijos: ";
-        //     for (Collective c: children) resumen += c.getName() + " ";
-        // }
-
-        // return resumen;
         return name;
     }
 

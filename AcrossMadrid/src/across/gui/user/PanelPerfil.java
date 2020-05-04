@@ -246,11 +246,11 @@ public class PanelPerfil extends HomeUser{
 
     /**
      * Hace update de los datos
-     * @param pc
-     * @param pa
-     * @param ps
-     * @param cm
-     * @param cc
+     * @param pc proyectos creados
+     * @param pa proyectos apoyados
+     * @param ps proyectos seguidos
+     * @param cm colectivos miembro
+     * @param cc colectivos creados
      */
 	public void updateData(ArrayList<Project> pc, ArrayList<Project> pa, ArrayList<Project> ps,
 			ArrayList<Collective> cm, ArrayList<Collective> cc) {

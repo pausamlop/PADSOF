@@ -16,7 +16,7 @@ import across.model.application.Application;
  *
  */
 public class ControladorAdminProyectosGuardar implements ActionListener{
-	private PanelInicioAdmin inicioAdmin;
+
     private MainFrame frame;
     private Application model;
 
@@ -29,7 +29,6 @@ public class ControladorAdminProyectosGuardar implements ActionListener{
     public ControladorAdminProyectosGuardar(MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.inicioAdmin = frame.getInicioAdmin();
     }
 
     /**

@@ -21,6 +21,7 @@ import across.model.user.User;
  * @author Paula Samper paula.samper@estudiante.uam.es
  *
  */
+@SuppressWarnings("serial")
 public class FrameAdminUsuariosBloq extends JDialog {
 	User userToBloq;
     
@@ -32,8 +33,15 @@ public class FrameAdminUsuariosBloq extends JDialog {
     
     JTextArea mensaje;
 
-    public FrameAdminUsuariosBloq(User userToBloq, MainFrame frame, String title, Boolean bool)
-    {
+    /**
+     * Constructor de la clase FrameAdminUsuariosBloq
+     * 
+     * @param userToBloq usuario a bloquear
+     * @param frame pantalla principal
+     * @param title titulo
+     * @param bool modo de JDialog
+     */
+    public FrameAdminUsuariosBloq(User userToBloq, MainFrame frame, String title, Boolean bool) {
     	super(frame, title, bool);
     	
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
@@ -101,6 +109,7 @@ public class FrameAdminUsuariosBloq extends JDialog {
     }
     
     /**
+     * Devuelve el ususario a bloquear
      * 
      * @return devuelve el usuarios a bloquear
      */
@@ -109,6 +118,7 @@ public class FrameAdminUsuariosBloq extends JDialog {
     }
     
     /**
+     * Devuelve el mensaje de de bloqueo
      * 
      * @return cadena de caracteres recogida en textfield
      */

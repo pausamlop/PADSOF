@@ -42,8 +42,8 @@ public class ControladorLimpiarFiltro implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        ArrayList<Project> proyectos = model.getProjects();
-        ArrayList<Collective> colectivos = model.getCollectives();
+        ArrayList<Project> proyectos = model.searchProject(panel.getBusqueda());
+        ArrayList<Collective> colectivos = model.searchCollective(panel.getBusqueda());
 
         panel.updateData(proyectos, colectivos);
     }

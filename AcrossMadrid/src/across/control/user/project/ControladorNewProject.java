@@ -8,7 +8,6 @@ import across.model.project.SocialProject;
 import across.model.user.Collective;
 import across.model.user.UserCollective;
 import across.gui.*;
-import across.gui.admin.PanelInicioAdmin;
 import across.gui.user.PanelNewProject;
 
 import java.awt.event.*;

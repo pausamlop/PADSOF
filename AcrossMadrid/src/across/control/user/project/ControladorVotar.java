@@ -2,7 +2,6 @@ package across.control.user.project;
 
 import across.model.application.Application;
 import across.gui.*;
-import across.gui.admin.PanelInicioAdmin;
 import across.gui.general.PanelDisplayProject;
 
 import java.awt.event.*; 
@@ -20,10 +19,6 @@ public class ControladorVotar implements ActionListener{
     private PanelDisplayProject panel;
     private MainFrame frame;
     private Application model;
-    
-
-    
-    
     
     /**
      * Constructor de la clase ControladorVotar

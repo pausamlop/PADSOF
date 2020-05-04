@@ -6,9 +6,18 @@ import java.util.Map;
 
 import javax.swing.table.*;
 
+import across.model.application.Application;
 import across.model.enumerations.projectState;
 import across.model.project.Project;
 
+/**
+ * Clase TablaProyectos
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 @SuppressWarnings("serial")
 public class TablaProyectos extends AbstractTableModel{
 	
@@ -21,12 +30,6 @@ public class TablaProyectos extends AbstractTableModel{
 	private Map<String, Boolean> changes;
 	
 	private String[] titulos = {"Proyectos", "NÂº de votos", "Estado", "Validar","Rechazar"};
-	
-	/**
-	 * Constructor de la clase TablaProyectos
-	 * 
-	 */
-	public TablaProyectos() {}
 
 	/**
 	 * 
@@ -119,12 +122,25 @@ public class TablaProyectos extends AbstractTableModel{
 	/**
 	 * Metodo que permite al rendere de la tabla interpretar que tipo de celda usar, en caso de una columna de booleans, una chekcBox
 	 * 
-	 * @param c nº de la columna
+	 * @param c nï¿½ de la columna
 	 * @return Class<?> clase de los elementos de la columna c
 	 */
 	public Class<?> getColumnClass(int c) {
         return getValueAt(0, c).getClass();
-    }
+	}
+	
+	/**
+	 * Devuelve la lista de proyectos de la tabla
+	 * 
+	 * @return proyectos
+	 */
+	public ArrayList<Project> getProjects(){
+		ArrayList<Project> lista = new ArrayList<>();;
+		for (String s: nombres){
+			lista.add(Application.getApplication().getProjectByName(s));
+		}
+		return lista;
+	}
 	
 	/**
 	 * Funcion para poblar la tabla con los datos de la app

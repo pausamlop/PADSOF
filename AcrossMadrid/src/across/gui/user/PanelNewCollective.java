@@ -38,9 +38,9 @@ public class PanelNewCollective extends HomeUser{
     private JScrollPane descPane;
     private JPanel colectivos = new JPanel(new CardLayout());
     
-
-
-    
+    /**
+     * Constructor del panel que permite crear un nuevo colectivo
+     */
     public PanelNewCollective(){
         super();
     	
@@ -138,7 +138,6 @@ public class PanelNewCollective extends HomeUser{
         button.addActionListener(c);
     }
     
-    
     /**
      * Devuelve si el colectivo es independiente 
      * 
@@ -168,8 +167,6 @@ public class PanelNewCollective extends HomeUser{
             c.addItem(aux);
     }
     
-    
-    
     /**
      * Devuelve el padre
      * 
@@ -197,7 +194,6 @@ public class PanelNewCollective extends HomeUser{
         return description.getText();
     }
     
-    
     /**
      * Vacia los campos de texto para que la proxima vez que se cree un proyecto,
      * estos aparezan vacios
@@ -209,6 +205,5 @@ public class PanelNewCollective extends HomeUser{
         name.setText("");
         description.setText("");
 	}
-
 
 }

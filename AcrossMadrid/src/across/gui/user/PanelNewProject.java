@@ -53,7 +53,6 @@ public class PanelNewProject extends HomeUser{
     private JTextField grupoSocial = new JTextField(anchoTextField);
     private JComboBox<String> ambito;
 
-    //private SpringLayout spring = new SpringLayout();
 
 
     private BufferedImage infrImage = null;

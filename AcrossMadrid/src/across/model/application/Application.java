@@ -647,20 +647,12 @@ public class Application implements Serializable{
      * @return Informe de popularidad de los proyectos creados
      */
     public ArrayList<Project> popularityReport(){
-    	//String report = "";
 
         ArrayList<Project> output = new ArrayList<Project>();
         output.addAll(projects);
         Collections.sort(output);
         return output;
 
-        // int count = 1;
-        // for (Project p: output){
-        //     report += count + ". " + p.getName() + "\n";
-        //     count++;
-        // }
-
-        // return report;
     }
 
     /**
@@ -702,20 +694,6 @@ public class Application implements Serializable{
 
         LinkedHashMap<Collective, Double> output = sortCollectives(notSorted);
         return output;
-
-        // // Pasar a string
-
-        // String result = "";
-
-        // int count = 1;
-
-        // for (Collective colec : output.keySet()) {
-        //     result += count + ". " + colec.getName() + ", " + output.get(colec) + "\n" ;
-        //     count ++;
-        //   }
-
-        // return result;
-
     }
 
     /**
@@ -843,79 +821,6 @@ public class Application implements Serializable{
         }
         return app;
     }
-
-
-
-    /************************************************************************/
-    /************ FUNCIONES AUXILIARES PARA PROBAR FUNCIONAMIENTO ***********/
-    /************************************************************************/
-
-
-    /**
-     * Pantalla de inicio de la aplicacion.
-     * Da opcion de registrarse como nuevo usario o iniciar sesion como usuario o administrador
-     * 
-     * @return true, si la accion se ejecuto con exito
-     * @return false, si no se ha podido realizar la accion
-     */
-    public void pantallaLogin(){
-        System.out.println("\n ------------------- ACROSS MADRID --------------------");
-        try{
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("1. Registro\n2. Login\n3. Login como administrador");
-            String opc = reader.readLine();
-            if (opc.equals("1")) {
-                System.out.println("Nombre de usuario:");
-                String username = reader.readLine();
-                System.out.println("NIF:");
-                String NIF = reader.readLine();
-                System.out.println("Contrasena:");
-                String password = reader.readLine();
-                //reader.close();
-                if(!register(username, NIF, password)){
-                    System.out.println("El nombre de usuario o NIF no son validos o ya han sido registrados");
-                }
-            }
-            else if(opc.equals("2")) {
-                System.out.println("Nombre de usuario:");
-                String username = reader.readLine();
-                System.out.println("Contrasena:");
-                String password = reader.readLine();
-                if (!login(username, password)){
-                    System.out.println("Nombre de usuario o contrasena incorrectos");
-                }
-            }
-            else if (opc.equals("3")){
-                System.out.println("Contrasena de administrador: ");
-                String password = reader.readLine();
-                if (!admin.login(password)){
-                    System.out.println("Contrasena erronea");
-                }else{
-                    currentAdmin = true;
-                }
-            }
-            else if(opc.equals("q")){
-                logOut = true;
-            }
-        }catch(IOException exception){
-            exception.printStackTrace();
-        }
-    }
-
-    /**
-     * Redirige la aplicacion a la pantalla principal de usuario o de administrador,
-     * segun cual de los dos este logueado
-     */
-    public void pantallaPrincipal(){
-        while (currentUser != null)
-            currentUser.principalUser();
-        while (currentAdmin){
-            admin.principalAdmin();
-        }
-        return;
-
-    }
-    
 
 }
 

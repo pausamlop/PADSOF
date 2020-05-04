@@ -16,7 +16,7 @@ import across.model.application.Application;
  *
  */
 public class ControladorAdminProyectos implements ActionListener{
-	private PanelAdminConfig adminConfig;
+
     private MainFrame frame;
     private Application model;
 
@@ -29,7 +29,6 @@ public class ControladorAdminProyectos implements ActionListener{
     public ControladorAdminProyectos (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.adminConfig = frame.getAdminConfig();
     }
 
     /**

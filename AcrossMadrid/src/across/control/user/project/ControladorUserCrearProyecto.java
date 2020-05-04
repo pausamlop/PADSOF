@@ -2,7 +2,6 @@ package across.control.user.project;
 
 import across.model.application.Application;
 import across.gui.*;
-import across.gui.admin.PanelInicioAdmin;
 import across.gui.user.PanelInicioUser;
 
 import java.awt.event.*;
@@ -17,7 +16,6 @@ import java.awt.event.*;
  */
 public class ControladorUserCrearProyecto implements ActionListener{
 
-    private PanelInicioUser inicioUser;
     private MainFrame frame;
     private Application model;
 
@@ -30,7 +28,6 @@ public class ControladorUserCrearProyecto implements ActionListener{
     public ControladorUserCrearProyecto (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.inicioUser = frame.getInicioUser();
     }
 
     /**

@@ -6,7 +6,6 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableRowSorter;
 
 import across.gui.EditFont;
 import across.gui.user.tablas.*;
@@ -35,7 +34,6 @@ public class PanelInformes extends HomeUser{
     private JTable colectivos;
     private JScrollPane scrollCol;
     private JScrollPane scrollProy;
-    private TableRowSorter<?> sorter;
 
     /**
      * Contructor del panel de socilicitar informes del usuario

@@ -23,7 +23,7 @@ public class MainGUI {
         frame.setVisible(true);
 
         // para probar paneles sin conectar
-        frame.showPanel("login");
+        frame.showPanel("inicio");
     }
 
 

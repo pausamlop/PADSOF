@@ -95,6 +95,8 @@ public class MainFrame extends JFrame{
     private ControladorAdminConfigCaducidad contAdminConfigCaducidad;
     private ControladorAdminProyectosGuardar contAdminProyectosGuardar;
     private ControladorAdminUsuariosBloq contAdminUsuariosBloq;
+    private ControladorValidar contValidar;
+    private ControladorRechazar contRechazar;
 
     private JPanel contentPane;
     
@@ -121,6 +123,8 @@ public class MainFrame extends JFrame{
      */
     public void showPanel(String carta) {
         Application.saveData(Application.getApplication());
+        Application.getApplication().checkFinance();
+        Application.getApplication().checkExpired();
 		CardLayout layout = (CardLayout)contentPane.getLayout();
 		layout.show(contentPane, carta);
     }
@@ -285,26 +289,46 @@ public class MainFrame extends JFrame{
     }
     
     /**
-     * Devuelve el panel de visualizar proyecto
+     * Devuelve el panel de visualizar colectivo
      * 
-     * @return panel de visualizar proyecto
+     * @return panel de visualizar colectivo
      */
     public PanelDisplayCollective getDisplayCollective(){
         return displayCollective;
     }
     
+    /**
+     * Establece el panel de configuracion del administrador
+     * 
+     * @param panel panel de configuracion del adminstrador
+     */
     public void setPanelAdminConfig(PanelAdminConfig panel) {
     	adminConfig = panel;
     }
     
+    /**
+     * Devuelve la ventada de bloquedo de usuario
+     * 
+     * @return ventana de bloqueo
+     */
     public FrameAdminUsuariosBloq getFrameAdminUsuariosBloq() {
     	return adminBloq;
     }
     
+    /**
+     * Establece la ventana de bloqueo de usuario
+     * 
+     * @param panel ventana de bloqueo
+     */
     public void setFrameAdminUsuariosBloq(FrameAdminUsuariosBloq panel) {
     	adminBloq = panel;
     }
     
+    /**
+     * Actualiza la tabla de usuarios del panel del admnistrador
+     * 
+     * @param panel panel de usuarios del administrador
+     */
     public void updateAdminUsuarios(PanelAdminUsuarios panel) {
     	contentPane.remove(adminUsuarios);
     	adminUsuarios = panel;
@@ -344,6 +368,7 @@ public class MainFrame extends JFrame{
         controladorAdmin(controlador);
         controladorAdminConfig(controlador);
         controladorAdminUsuarios(controlador);
+        controladorAdminProject(controlador);
 
     }
     
@@ -520,6 +545,20 @@ public class MainFrame extends JFrame{
     }
 
     /**
+     * Establece los controladores del panel de displayProject de administrador
+     * 
+     * @param controlador objeto controlador general
+     */
+    private void controladorAdminProject(Controlador controlador) {
+        this.contValidar = controlador.getValidar();
+        displayProject.setControlAceptar(contValidar);
+
+        this.contRechazar = controlador.getRechazar();
+        displayProject.setControlRechazar(contRechazar);
+    	
+    }
+
+    /**
      * Establece los controladors del panel de crear proyecto
      * 
      * @param controlador objeto controlador general
@@ -546,6 +585,7 @@ public class MainFrame extends JFrame{
         this.contUserDisplayProject = controlador.getUserDisplayProject();
         perfil.setControlProject((ListSelectionListener)contUserDisplayProject);
         inicioUser.setControlProject((ListSelectionListener)contUserDisplayProject);
+        inicioAdmin.setControlProject((ListSelectionListener)contUserDisplayProject);
  
     }
 

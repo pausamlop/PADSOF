@@ -32,8 +32,6 @@ public class PanelLogin extends HomeStart {
      */
     public PanelLogin(){
         super();
-        // SpringLayout spring = new SpringLayout();
-        // setLayout(spring);
 
         JPanel centro = new JPanel(new GridLayout(4,2,10,5));
         centro.add(usernameLabel);

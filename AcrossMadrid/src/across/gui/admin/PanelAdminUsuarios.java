@@ -13,7 +13,6 @@ import javax.swing.table.TableRowSorter;
 
 import across.gui.EditFont;
 import across.gui.menu.HomeAdmin;
-import across.gui.user.tablas.TablaProyectos;
 import across.model.user.User;
 
 /**
@@ -132,7 +131,7 @@ public class PanelAdminUsuarios extends HomeAdmin {
 	}
 
 	/**
-	 * Metodo para filtrar, a través de los datos introducidos en el buscador
+	 * Metodo para filtrar, a travï¿½s de los datos introducidos en el buscador
 	 * 
 	 */
 	public void filtro() {

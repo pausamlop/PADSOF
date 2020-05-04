@@ -16,7 +16,7 @@ import across.model.application.Application;
  *
  */
 public class ControladorAdminUsuarios implements ActionListener{
-	private PanelInicioAdmin inicioAdmin;
+
     private MainFrame frame;
     private Application model;
 
@@ -29,7 +29,6 @@ public class ControladorAdminUsuarios implements ActionListener{
     public ControladorAdminUsuarios (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.inicioAdmin = frame.getInicioAdmin();
     }
 
     /**

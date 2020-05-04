@@ -71,6 +71,8 @@ public class Controlador {
     private ControladorAdminConfigCaducidad adminConfigCaducidad;
     private ControladorAdminProyectosGuardar adminProyectosGuardar;
     private ControladorAdminUsuariosBloq adminUsuariosBloq;
+    private ControladorValidar validar;
+    private ControladorRechazar rechazar;
 
     private MainFrame frame;
     private Application model;
@@ -135,6 +137,8 @@ public class Controlador {
         adminConfigCaducidad = new ControladorAdminConfigCaducidad(frame, model);
         adminProyectosGuardar = new ControladorAdminProyectosGuardar(frame, model);
         adminUsuariosBloq = new ControladorAdminUsuariosBloq(frame, model);
+        validar = new ControladorValidar(frame, model);
+        rechazar = new ControladorRechazar(frame, model);
         
         /* nuevo proyecto */
         nuevoProyecto = new ControladorNewProject(frame, model);
@@ -440,6 +444,24 @@ public class Controlador {
      */
     public ControladorAdminUsuariosBloq getAdminUsuariosBloq() {
     	return adminUsuariosBloq;
+    }
+
+    /**
+     * Devuelve el controlador que permite validar un projecto
+     * 
+     * @return controlador validacion
+     */
+    public ControladorValidar getValidar() {
+    	return validar;
+    }
+
+    /**
+     * Devuelve el controlador que permite rechazar un projecto
+     * 
+     * @return controlador rechazo
+     */
+    public ControladorRechazar getRechazar() {
+    	return rechazar;
     }
     
 

@@ -16,7 +16,6 @@ import java.awt.event.*;
  */
 public class ControladorInicioRegistro implements ActionListener{
 
-    private PanelInicio inicio;
     private MainFrame frame;
     private Application model;
 
@@ -29,7 +28,6 @@ public class ControladorInicioRegistro implements ActionListener{
     public ControladorInicioRegistro (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.inicio = frame.getInicio();
     }
 
     /**

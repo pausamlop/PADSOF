@@ -40,7 +40,7 @@ public class PanelInicioUser extends HomeUser{
 	private JComboBox<String> distrito;
 	private JComboBox<projectState> estado;
 	private JButton filtrar = new JButton("Filtrar proyecto");
-	private JButton limpiar = new JButton("<html>Limpiar filtro/<br>busqueda</html>");
+	private JButton limpiar = new JButton("     Buscar     ");
 
 	/* buscador */
 	private JLabel buscarLabel = new JLabel("Buscar:");
@@ -181,6 +181,14 @@ public class PanelInicioUser extends HomeUser{
 		
 	}
 	
+	/**
+	 * Devuelve la busqueda del ususario
+	 * 
+	 * @return busqueda
+	 */
+	public String getBusqueda(){
+		return buscador.getText();
+	}
     
 	/**
 	 * Establece el control de la busqueda automatica
@@ -191,26 +199,8 @@ public class PanelInicioUser extends HomeUser{
 		filtroProy = new TableRowSorter<>(tableProyectos.getModel());
 		tableColectivos.setRowSorter(filtroCol);
 		tableProyectos.setRowSorter(filtroProy);
-
-		buscador.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(final KeyEvent e) {
-				String cadena = buscador.getText();
-				buscador.setText(cadena);
-				repaint();
-				filtro();
-			}
-		});
 	}
 
-	/**
-	 * Metodo para filtrar, en el buscador
-	 * 
-	 */
-	private void filtro() {
-		filtroCol.setRowFilter(RowFilter.regexFilter(buscador.getText()));
-		filtroProy.setRowFilter(RowFilter.regexFilter(buscador.getText(), 0));
-	}
 
 	/**
 	 * Metodo para crear los filtros

@@ -7,6 +7,15 @@ import javax.swing.*;
 
 import across.gui.EditFont;
 
+
+/**
+ * Clase PanelRegistro
+ *
+ * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
+ * @author Laura de Paz laura.pazc@uam.es
+ * @author Paula Samper paula.samper@estudiante.uam.es
+ *
+ */
 @SuppressWarnings("serial")
 public class PanelRegistro extends HomeStart {
 	
@@ -20,11 +29,12 @@ public class PanelRegistro extends HomeStart {
     private JPasswordField password = new JPasswordField(15);
     private JButton button = new JButton("Continuar");
 
+    /**
+     * Constructor de la clase PanelRegistro
+     */
     public PanelRegistro(){
         super();
-        // SpringLayout spring = new SpringLayout();
-        // setLayout(spring);
-
+ 
         JPanel centro = new JPanel(new GridLayout(4,2,10,5));
         
         /* anadir componentes a la ventana */
@@ -58,20 +68,34 @@ public class PanelRegistro extends HomeStart {
     }
     
     
-    
+    /**
+     * Devuelve el username
+     * @return nombre
+     */
     public String getUsername(){
         return username.getText();
     }
 
+    /**
+     * Devuelve la contrasena
+     * @return password
+     */
     public String getPassword(){
         return new String(password.getPassword());
     }
 
+    /**
+     * Devuelve el NIF
+     * @return NIF
+     */
     public String getNif(){
         return nif.getText();
     }
 
-
+    /**
+     * Establece el control del boton continuar
+     * @param c
+     */
     public void setControlContinuar(ActionListener c){
         button.addActionListener(c);
     }

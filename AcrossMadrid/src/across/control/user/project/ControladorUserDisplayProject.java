@@ -2,12 +2,13 @@ package across.control.user.project;
 
 import across.model.application.Application;
 import across.model.project.Project;
+import across.model.user.User;
 import across.gui.*;
-import across.gui.user.PanelInicioUser;
-import across.gui.user.tablas.TablaProyectos;
+import across.gui.admin.PanelAdminUsuarios;
 
 import javax.swing.JTable;
 import javax.swing.event.*;
+import java.util.*;
 
 /**
  * Clase ControladorUserDisplayProject
@@ -19,7 +20,6 @@ import javax.swing.event.*;
  */
 public class ControladorUserDisplayProject implements ListSelectionListener{
 
-    private PanelInicioUser inicioUser;
     private MainFrame frame;
     private Application model;
 
@@ -32,7 +32,6 @@ public class ControladorUserDisplayProject implements ListSelectionListener{
     public ControladorUserDisplayProject (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.inicioUser = frame.getInicioUser();
     }
 
     /**
@@ -45,17 +44,37 @@ public class ControladorUserDisplayProject implements ListSelectionListener{
 
         if (e.getValueIsAdjusting()) return;
 
+        Map<String, Boolean> changesUsuarios = frame.getAdminUsuarios().getApplicationUpdate();
+		for(User aux: model.getNonValidatedUsers()) {
+			String uname = aux.getUsername();
+			
+			if(changesUsuarios.containsKey(uname)) {
+				if(changesUsuarios.get(uname)) {
+					aux.validate();
+				}
+			}
+		}
+		
+		frame.updateAdminUsuarios(new PanelAdminUsuarios());
+		this.frame.getAdminUsuarios().updateTable(model.getNonValidatedUsers(), model.getUsers());
+
         JTable t;
         if (frame.getPerfil().isVisible())
             t = frame.getPerfil().getTableP();
         else if (frame.getInicioUser().isVisible())
             t = frame.getInicioUser().getTableP();
+        else if (frame.getInicioAdmin().isVisible())
+            t = frame.getInicioAdmin().getTableP();
         else return;
 
         int rows = t.getSelectedRow();
         if (rows == -1) return;
 
-        Project p = ((TablaProyectos)t.getModel()).getProjects().get(rows);
+        Project p;
+        if (frame.getInicioAdmin().isVisible())
+            p = ((across.gui.admin.TablaProyectos)t.getModel()).getProjects().get(rows);
+        else
+            p = ((across.gui.user.tablas.TablaProyectos)t.getModel()).getProjects().get(rows);
         this.frame.getDisplayProject().setProject(p);
         this.frame.showPanel("displayProject");
         

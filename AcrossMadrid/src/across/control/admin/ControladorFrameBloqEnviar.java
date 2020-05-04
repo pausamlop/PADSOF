@@ -22,7 +22,6 @@ public class ControladorFrameBloqEnviar implements ActionListener{
 	private FrameAdminUsuariosBloq frameBloq;
     private MainFrame frame;
     private Application model;
-    private int row,col;
 
     /**
      * Constructor de la clase ControladorFrameEnviar
@@ -34,8 +33,6 @@ public class ControladorFrameBloqEnviar implements ActionListener{
         this.model = model;
         this.frame = frame;
         this.frameBloq = frame.getFrameAdminUsuariosBloq();
-        this.row = row;
-        this.col = col;
     }
 
     /**
