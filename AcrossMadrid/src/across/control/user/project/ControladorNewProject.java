@@ -67,8 +67,10 @@ public class ControladorNewProject implements ActionListener{
                 return;
             }
         }
-        else
+        else{
             JOptionPane.showMessageDialog(frame, "Debe seleccionar como desea crear el proyecto: como usuario o como colectivo", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         /* INFORMACION GENERAL DEL PROYECTO */
         if (name.equals("")){

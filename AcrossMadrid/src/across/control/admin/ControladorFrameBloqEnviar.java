@@ -28,6 +28,8 @@ public class ControladorFrameBloqEnviar implements ActionListener{
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
+     * @param row file
+     * @param col fila
      */
     public ControladorFrameBloqEnviar (MainFrame frame, Application model, int row, int col){
         this.model = model;

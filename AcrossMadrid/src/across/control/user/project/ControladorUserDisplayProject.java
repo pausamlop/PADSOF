@@ -2,11 +2,7 @@ package across.control.user.project;
 
 import across.model.application.Application;
 import across.model.project.Project;
-import across.model.user.User;
 import across.gui.*;
-import across.gui.admin.PanelAdminUsuarios;
-import across.gui.admin.PanelInicioAdmin;
-
 import javax.swing.JTable;
 import javax.swing.event.*;
 import java.util.*;

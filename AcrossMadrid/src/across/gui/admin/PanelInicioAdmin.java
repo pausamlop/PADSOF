@@ -23,7 +23,6 @@ import javax.swing.event.ListSelectionListener;
 @SuppressWarnings("serial")
 public class PanelInicioAdmin extends HomeAdmin {
 
-    private JButton logout = new JButton();
     JRadioButton proyectos = new JRadioButton("Proyectos");
     JRadioButton usuarios = new JRadioButton("Usuarios");
     JRadioButton config = new JRadioButton("Configuracion");
@@ -144,6 +143,7 @@ public class PanelInicioAdmin extends HomeAdmin {
     /**
      * Devuelve la tabla del panel
      * 
+     * @return tabla de este panel
      */
     public JTable getTabla() {
         return aux;
@@ -169,7 +169,7 @@ public class PanelInicioAdmin extends HomeAdmin {
     /**
      * Establece el control cuando se hace click en la tabla
      * 
-     * @param c accion que activa el control
+     * @param contUserDisplayProjects accion que activa el control
      */
     public void setControlProject(ListSelectionListener contUserDisplayProjects) {
         ListSelectionModel cellSelectionModel = this.getTableP().getSelectionModel();

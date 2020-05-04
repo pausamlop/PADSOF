@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import across.gui.MainFrame;
-import across.gui.admin.PanelAdminConfig;
 import across.model.application.Application;
 
 /**

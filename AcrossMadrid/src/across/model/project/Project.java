@@ -222,7 +222,7 @@ public abstract class Project implements Serializable, Comparable<Project>{
     /**
      * Sobreescribe el metodo compareTo para objetos de la clase Project
      * 
-     * @param p 
+     * @param p proyecto a comparar
      * @return entero dependiendo de si es mayor menor o igual
      */
     @Override
@@ -287,7 +287,7 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
     /**
      * Comprueba si un usuario sigue a un proyecto
-	 * 
+	 * @param u usuario
      * @return boolean 
      */
     public boolean checkFollow(User u){
@@ -299,8 +299,7 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
     /**
      * Un usuario empieza a seguir a un proyecto
-	 * 
-     * @return boolean 
+	 * @param u usuario
      */
     public void follow(User u){
         if (checkFollow(u)) return;
@@ -314,8 +313,7 @@ public abstract class Project implements Serializable, Comparable<Project>{
 
     /**
      * Un usuario deja de seguir a un proyecto
-	 * 
-     * @return boolean 
+	 * @param u usuario
      */
     public void unfollow (User u){
         if (checkFollow(u)){
@@ -412,7 +410,6 @@ public abstract class Project implements Serializable, Comparable<Project>{
      * Update de los votos de un proyecto cuando 
      * cambian los miembros de un colectivo
 	 * 
-     * @param c usercollective
      */
     public void updateVotes(){
 
@@ -460,6 +457,7 @@ public abstract class Project implements Serializable, Comparable<Project>{
     /**
      * Metodo para obtener la financiacion dada a un proyecto en cuestion
      * 
+     * @param id identificado del proyecto
      * @return en caso de haber sido financiado, el dinero con el que ha sido financiado. En caso de que aun no haya sido atendida
      * esta request, devolverá null.
      */

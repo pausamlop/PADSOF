@@ -381,7 +381,7 @@ public class PanelInicioUser extends HomeUser{
 	/**
 	 * Establece el control cuando se hace click en la tabla
 	 * 
-	 * @param c accion que activa el control
+	 * @param contUserDisplayProjects accion que activa el control
 	 */
     public void setControlProject(ListSelectionListener contUserDisplayProjects){
 		ListSelectionModel cellSelectionModel = this.getTableP().getSelectionModel();

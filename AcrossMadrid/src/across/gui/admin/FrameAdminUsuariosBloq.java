@@ -52,14 +52,14 @@ public class FrameAdminUsuariosBloq extends JDialog {
         SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
         
-        mensaje = new JTextArea(8,40);
+        mensaje = new JTextArea(8,34);
         mensaje.setLineWrap(true);
         mensaje.setWrapStyleWord(true);
         
         JScrollPane scrollPane = new JScrollPane(mensaje);
         
         layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollPane, 125, SpringLayout.VERTICAL_CENTER, this);
-        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollPane, 230, SpringLayout.HORIZONTAL_CENTER, this);
+        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollPane, 260, SpringLayout.HORIZONTAL_CENTER, this);
 
         /*Etiquetas*/
         label1 = new JLabel("Bloqueo de usuario " + userToBloq.getUsername());

@@ -124,7 +124,7 @@ public class PanelInformes extends HomeUser{
     
     /**
      * Devuelve el colectivo seleccionado del combo box
-     * @return
+     * @return colectivo
      */
     public Collective getColectivo(){
         return (Collective)misColectivos.getSelectedItem();
@@ -170,7 +170,7 @@ public class PanelInformes extends HomeUser{
     /**
      * Establece el control cuando se selecciona un colectivo
      * 
-     * @param c accion que activa el boton
+     * @param e accion que activa el boton
      */
     public void setControlSelectColectivo(ActionListener e){
         misColectivos.addActionListener(e);

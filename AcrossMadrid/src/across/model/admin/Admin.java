@@ -1,9 +1,6 @@
 package across.model.admin;
 
-import across.model.application.Application; 
 import across.model.notification.*;
-import across.model.user.*;
-
 import java.io.*;
 import java.util.*;
 
@@ -39,8 +36,7 @@ public class Admin implements Serializable {
      * Comprueba que la contrasena coincida con la del administrador
 	 * 
 	 * @param pass password del objeto
-     * @return true si la contrasena es correcta
-     * @return false si la contrasena es incorrecta
+     * @return true si la contrasena es correcta, false sino
      */
     public boolean login(String pass){
         if (password.equals(pass)) return true;
@@ -56,6 +52,7 @@ public class Admin implements Serializable {
     }
     /**
      * Metodo para establecer el array de notificaicones
+     * @param notifications lista de notificaciones
      */
     public void setNotifications(ArrayList<Notification> notifications){
         this.notifications = notifications;
@@ -64,7 +61,7 @@ public class Admin implements Serializable {
     /**
      * Metodo para añadir una notificacion a la lista de notificaciones del administrador
      * 
-     * @param notification notificacion a añadir
+     * @param notificacion notificacion a añadir
      */
     public void addNotification(Notification notificacion){
         this.notifications.add(notificacion);

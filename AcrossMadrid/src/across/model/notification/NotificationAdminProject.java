@@ -23,7 +23,7 @@ public class NotificationAdminProject extends Notification {
      * Constructor de la clase notificacion para administrador, para la notificacion
      * cuando un proyecto es creado y esta pendiente de validacion
      * 
-     * @param project proyecto del que se va notificar
+     * @param p proyecto del que se va notificar
      */
     public NotificationAdminProject(Project p) { 
         this.project = p;

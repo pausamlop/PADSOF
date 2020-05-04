@@ -25,7 +25,7 @@ public class NotificationUser extends Notification {
      * Constructor de la clase notificacion para usuario, para la notificacion
      * acerca del cambio de estado de proyectos
      * 
-     * @param project proyecto del cual se notificara
+     * @param p proyecto del cual se notificara
      */
     public NotificationUser(Project p) { 
         receivers = new ArrayList<User>();

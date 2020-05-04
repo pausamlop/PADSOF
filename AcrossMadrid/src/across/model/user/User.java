@@ -1,10 +1,8 @@
 package across.model.user;
 
-import java.io.*;
 import java.util.*;
 
 import across.model.application.Application;
-import across.model.enumerations.*;
 import across.model.project.*;
 import across.model.notification.*;
 
@@ -36,11 +34,6 @@ public class User extends UserCollective {
      * @param username username del objeto
 	 * @param NIF NIF del objeto
 	 * @param password contraseña del objeto
-	 * @param blocked si el objeto esta o no bloqueado
-     * @param createdCollectives colectivos creados por el usuario
-	 * @param memberCollectives colectivos de los que el usuario es miembro
-	 * @param notifications notificaciones del usuario
-	 * @param followedProjects proyectos seguidos por el usuario
      */
     public User(String username, String NIF, String password) {
         this.username = username;
@@ -145,7 +138,7 @@ public class User extends UserCollective {
     /**
      * Añade una notificacion la lista de notificaciones del usuario
      * 
-     * @param notification
+     * @param notification notificacion a anadir
      */
     public void addNotification(Notification notification){
         this.notifications.add(notification);

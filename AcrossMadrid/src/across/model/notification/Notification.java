@@ -34,7 +34,6 @@ public abstract class Notification implements Serializable{
     /**
      * Metodo que dependiendo del estado del proyecto a notificar, genera un mensaje personalizado
      * 
-     * @param ps estado del proyecto
      * @return  mensaje a enviar
      */
     public abstract String generateMessage();

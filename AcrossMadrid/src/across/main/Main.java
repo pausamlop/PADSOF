@@ -1,8 +1,5 @@
 package across.main;
 
-
-import across.model.application.*;
-
 /**
  * Clase Main
  *
@@ -15,7 +12,7 @@ public class Main{
   
     /**
      * Funcion principal de la aplicacion Across Madrid
-     * 
+     * @params args argumeentos de entrada
      */
     public static void main(String[] args) {
         // Application.setApplication(Application.loadData());

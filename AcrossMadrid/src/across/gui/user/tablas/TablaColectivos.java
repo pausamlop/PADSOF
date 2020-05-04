@@ -42,8 +42,8 @@ public class TablaColectivos extends AbstractTableModel{
 	
 	/**
      * Devuelve el numero de filas
-	 * @param row
-	 * @param col
+	 * @param row fila
+	 * @param col columna
 	 * @return numero de filas
      */
 	public Object getValueAt(int row, int col) {
@@ -56,7 +56,7 @@ public class TablaColectivos extends AbstractTableModel{
 	
 	/**
      * Devuelve el nombre de la columna
-	 * @param c
+	 * @param c columna
 	 * @return nombre
      */
 	public String getColumnName(int c) {
@@ -65,7 +65,7 @@ public class TablaColectivos extends AbstractTableModel{
 	
 	/**
      * Devuelve la clase de la columna
-	 * @param c
+	 * @param c columna
 	 * @return clase de la columna
      */
 	public Class<?> getColumnClass(int c) {
@@ -74,7 +74,7 @@ public class TablaColectivos extends AbstractTableModel{
 	
 	/**
      * Setter de la tabla
-	 * @param lista
+	 * @param lista lista de colectivos
      */
 	public void setCC(ArrayList<Collective> lista){
 		deleteData();

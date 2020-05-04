@@ -84,7 +84,7 @@ public class PanelNotifications extends HomeUser {
 
     /**
      * Establece el control de una notificacion vista
-     * @param e
+     * @param e controlador de la accion
      */
     public void setControlVisto(TableModelListener e){
         table.getModel().addTableModelListener(e);

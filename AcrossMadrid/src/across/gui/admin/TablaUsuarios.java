@@ -29,7 +29,7 @@ public class TablaUsuarios extends AbstractTableModel{
 	/**
 	 * Contructor de la clase tabla usuarios, simplemente crea una tabla vacia que poblaremos luego
 	 * 
-	 * @param panel
+	 * @param panel panel de usuarios del admin
 	 */
 	public TablaUsuarios(PanelAdminUsuarios panel) {
 		
@@ -83,7 +83,7 @@ public class TablaUsuarios extends AbstractTableModel{
 	 * @param row fila de la cual obtener el valor
 	 * @param col columna de la que botener el valor
 	 * 
-	 * @boolean diciendo si la celda es o no editable
+	 * @return diciendo si la celda es o no editable
 	 */
 	public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
@@ -100,7 +100,7 @@ public class TablaUsuarios extends AbstractTableModel{
 	 * 
 	 * @param row fila de la cual obtener el valor
 	 * @param col columna de la que botener el valor
-	 * @param object valor a establecer
+	 * @param value valor a establecer
 	 */
 	public void setValueAt(Object value, int row, int col) {	
 		
@@ -120,8 +120,8 @@ public class TablaUsuarios extends AbstractTableModel{
 	/**
 	 * Metodo que permite al rendere de la tabla interpretar que tipo de celda usar, en caso de una columna de booleans, una chekcBox
 	 * 
-	 * @param c nº de la columna
-	 * @return Class<?> clase de los elementos de la columna c
+	 * @param c numero de la columna
+	 * @return Class clase de los elementos de la columna c
 	 */
 	public Class<?> getColumnClass(int c) {
         return getValueAt(0, c).getClass();
@@ -176,7 +176,7 @@ public class TablaUsuarios extends AbstractTableModel{
 	/**
 	 * Devuelve un mapa con los cambios que se han producido al modificar la tabla
 	 * 
-	 * @return Map<String, Boolean>
+	 * @return mapa con los cambios
 	 */
 	public Map<String, Boolean> getChanges(){
 		return changes;

@@ -94,7 +94,7 @@ public class PanelRegistro extends HomeStart {
 
     /**
      * Establece el control del boton continuar
-     * @param c
+     * @param c control 
      */
     public void setControlContinuar(ActionListener c){
         button.addActionListener(c);

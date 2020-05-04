@@ -103,7 +103,6 @@ public class Application implements Serializable{
      * Devuelve si el usuario logueado es el administrador o no
      * 
      * @return true, si el administrador esta conectado
-     * @return false, en otro caso 
      */
     public boolean getCurrentAdmin(){
         return currentAdmin;
@@ -243,7 +242,7 @@ public class Application implements Serializable{
     /**
      * Metodo para a�adir un usuario al array de usuarios no validados
      * 
-     * @param usuario a a�adir
+     * @param u a a�adir
      */
     public void addNonValidatedUsers(User u) {
     	this.nonValidatedUsers.add(u);
@@ -382,6 +381,7 @@ public class Application implements Serializable{
     /**
      * Metodo auxiliar para los tests, para poder avanzar la fecha de la pasarela hasta la fecha date y asi poder
      * simular facilmente.
+     * @param date fecha
      */
     public void setCCGGDate(LocalDate date) {
     	CCGG.getGateway().setDate(date);
@@ -477,8 +477,6 @@ public class Application implements Serializable{
      * @param NIF NIF del usuario a registrar
      * @param password contrasena del usuario
      * @return true, si se lleva a cabo el registro con exito
-     * @return false, si no se puede registrar porque ya existe el nombre de
-     * usuario introducido o el NIF ya ha sido registrado
      */
     public boolean register(String username, String NIF, String password){
 
@@ -507,7 +505,6 @@ public class Application implements Serializable{
      * @param username nombre de usuario
      * @param password contrasena del usuario
      * @return true, si la contrasena coincide con la del nombre de usuario
-     * @return false, en otro caso
      */
     public boolean login(String username, String password){
         for (User u: users){
@@ -531,8 +528,7 @@ public class Application implements Serializable{
     /**
      * Filtra un proyecto por su estado
      * 
-     * @param type tipo de proyecto social
-     * @param group Grupo social al que va dirigido
+     * @param state estado de proyecto
      * @return ArrayList de proyectos qye cumplen las condiciones
      */
     public ArrayList<Project> filterProject(projectState state){
@@ -589,7 +585,7 @@ public class Application implements Serializable{
     /**
      * Filtra un proyecto de infraestructura por distrito
      * 
-     * @param d distrito 
+     * @param disc distrito 
      * @return ArrayList de proyectos que cumplen las condiciones
      */
     public ArrayList<Project> filterInfrProject(String disc){

@@ -99,7 +99,6 @@ public class PanelLogin extends HomeStart {
     /**
     * Establece el control de seleccionar o deseleccionar el checkbox
     * 
-    * @param c accion que activa la casilla
     */
     public void setControlCheckAdmin(){
         checkAdmin.addActionListener(e -> {

@@ -29,7 +29,7 @@ public class Collective extends UserCollective {
      * Constructor de un objeto Collective sin padre
      * 
      * @param name       nombre del colectivo
-     * @param decription descripcion del colectivo
+     * @param description descripcion del colectivo
      */
     public Collective(String name, String description) {
         this.manager = Application.getApplication().getCurrentUser();
@@ -61,7 +61,8 @@ public class Collective extends UserCollective {
      * Constructor de un objeto Collective hijo
      * 
      * @param name       nombre del colectivo
-     * @param decription descripcion del colectivo
+     * @param description descripcion del colectivo
+     * @param parent colectivo padre
      */
     public Collective(String name, String description, Collective parent) {
         this.manager = Application.getApplication().getCurrentUser();

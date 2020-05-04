@@ -139,7 +139,7 @@ public class PanelDisplayCollective extends HomeUser{
     /**
      * Establece el colectivo a visualizar en este panel
      * 
-     * @param project colectivo a visualizar
+     * @param col colectivo a visualizar
      */
     public void setCollective(Collective col) {
 
