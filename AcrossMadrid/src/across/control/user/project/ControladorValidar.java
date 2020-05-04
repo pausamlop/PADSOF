@@ -1,9 +1,9 @@
 package across.control.user.project;
 
 import across.model.application.Application;
-import across.model.user.*;
+import across.model.project.Project;
 import across.gui.*;
-import across.gui.admin.PanelAdminUsuarios;
+import across.gui.admin.PanelInicioAdmin;
 import across.gui.general.PanelDisplayProject;
 
 import java.awt.event.*; 
@@ -44,19 +44,25 @@ public class ControladorValidar implements ActionListener{
     public void actionPerformed(ActionEvent e){
         panel.getProject().validate();
 
-        Map<String, Boolean> changesUsuarios = frame.getAdminUsuarios().getApplicationUpdate();
-		for(User aux: model.getNonValidatedUsers()) {
-			String uname = aux.getUsername();
+        Map<String, Boolean> changes = frame.getInicioAdmin().getApplicationUpdate();
+		for(Project aux: model.getNonValidatedProjects()) {
+			String pname = aux.getName();
 			
-			if(changesUsuarios.containsKey(uname)) {
-				if(changesUsuarios.get(uname)) {
+			if(changes.containsKey(pname)) {
+				if(changes.get(pname)) {
 					aux.validate();
+				}else {
+					aux.reject();
 				}
 			}
 		}
 		
-		frame.updateAdminUsuarios(new PanelAdminUsuarios());
-		this.frame.getAdminUsuarios().updateTable(model.getNonValidatedUsers(), model.getUsers());
+		frame.updateInicioAdmin(new PanelInicioAdmin());
+		ArrayList<Project> allP = new ArrayList<>();
+        allP.addAll(model.getProjects());
+        allP.addAll(model.getRejectedProjects());
+        allP.addAll(model.getNonValidatedProjects());
+        this.frame.getInicioAdmin().updateTablaProyectos(allP);
 
         panel.update();
     }

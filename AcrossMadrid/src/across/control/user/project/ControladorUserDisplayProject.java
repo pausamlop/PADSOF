@@ -5,6 +5,7 @@ import across.model.project.Project;
 import across.model.user.User;
 import across.gui.*;
 import across.gui.admin.PanelAdminUsuarios;
+import across.gui.admin.PanelInicioAdmin;
 
 import javax.swing.JTable;
 import javax.swing.event.*;
@@ -44,20 +45,19 @@ public class ControladorUserDisplayProject implements ListSelectionListener{
 
         if (e.getValueIsAdjusting()) return;
 
-        Map<String, Boolean> changesUsuarios = frame.getAdminUsuarios().getApplicationUpdate();
-		for(User aux: model.getNonValidatedUsers()) {
-			String uname = aux.getUsername();
+        Map<String, Boolean> changes = frame.getInicioAdmin().getApplicationUpdate();
+		for(Project aux: model.getNonValidatedProjects()) {
+			String pname = aux.getName();
 			
-			if(changesUsuarios.containsKey(uname)) {
-				if(changesUsuarios.get(uname)) {
+			if(changes.containsKey(pname)) {
+				if(changes.get(pname)) {
 					aux.validate();
+				}else {
+					aux.reject();
 				}
 			}
 		}
-		
-		frame.updateAdminUsuarios(new PanelAdminUsuarios());
-		this.frame.getAdminUsuarios().updateTable(model.getNonValidatedUsers(), model.getUsers());
-
+        
         JTable t;
         if (frame.getPerfil().isVisible())
             t = frame.getPerfil().getTableP();
