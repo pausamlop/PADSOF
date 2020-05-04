@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -12,9 +14,10 @@ import javax.swing.table.TableRowSorter;
 import across.gui.EditFont;
 import across.gui.menu.HomeAdmin;
 import across.gui.user.tablas.TablaProyectos;
+import across.model.user.User;
 
 /**
- * Clase PanelInicioAdmin de la interfaz
+ * Clase PanelAdminUsuarios de la interfaz
  *
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@uam.es
@@ -129,7 +132,7 @@ public class PanelAdminUsuarios extends HomeAdmin {
 	}
 
 	/**
-	 * Metodo para filtrar, en el buscador
+	 * Metodo para filtrar, a través de los datos introducidos en el buscador
 	 * 
 	 */
 	public void filtro() {
@@ -137,39 +140,83 @@ public class PanelAdminUsuarios extends HomeAdmin {
 		trsfiltro.setRowFilter(RowFilter.regexFilter(buscador.getText(), 0));
 	}
 
+	/**
+     * Metodo para establecer el controlador del boton "config"
+     * 
+     * @param c controlador
+     */
 	public void setControlAdminConfig(ActionListener c) {
 		config.addActionListener(c);
 	}
 
+	/**
+     * Metodo para establecer el controlador del boton "proyectos"
+     * 
+     * @param c controlador
+     */
 	public void setControlAdminProyectos(ActionListener c) {
 		proyectos.addActionListener(c);
 	}
 
+	/**
+     * Metodo para establecer el controlador de la columna de la tabla de usuarios para bloquear
+     * 
+     * @param c controlador
+     */
 	public void setControlAdminBloq(ListSelectionListener c) {
 		ListSelectionModel cellSelectionModel = aux.getSelectionModel();
 		cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		cellSelectionModel.addListSelectionListener(c);
 	}
 
+	/**
+	 * Marca el boton de usuarios
+	 * 
+	 */
 	public void setUsuariosButton() {
 		usuarios.setSelected(true);
 	}
 
+	/**
+	 * Desmarca el boton de usuarios
+	 * 
+	 */
 	public void setFUsuariosButton() {
 		usuarios.setSelected(false);
 	}
-
+	
+	/**
+	 * 
+	 * @return modelo de la tabla del panel
+	 */
 	public TablaUsuarios getTablaUsuarios() {
 		return tablaUsuarios;
 	}
 
+	/**
+	 * 
+	 * @return tabla del proyecto
+	 */
 	public JTable getTabla() {
 		return aux;
 	}
 	
-    
-    public void updateTableCell(Object value,int row, int col) {
-    	((TablaUsuarios)aux.getModel()).setValueAt(value, row, col);
+    /**
+     * Metodo para actualizar la tabla de usuarios del panel de adminUsuarios
+     * 
+     * @param nonValidated array con los usuarios no validados
+     * @param validatedUsers array con los usuarios validados
+     */
+    public void updateTable(ArrayList<User> nonValidated, ArrayList<User> validatedUsers) {
+    	((TablaUsuarios)aux.getModel()).setUsuarios(nonValidated, validatedUsers);
     }
-
+    
+    /**
+     * Metodo que devuelve los cambios acontecidos en la tabla de usuarios
+     * 
+     * @return mapa con los cambios por usuario
+     */
+    public Map<String, Boolean> getApplicationUpdate(){
+    	return ((TablaUsuarios)aux.getModel()).getChanges();
+    }
 }

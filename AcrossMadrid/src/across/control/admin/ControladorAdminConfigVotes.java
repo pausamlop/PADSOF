@@ -20,7 +20,7 @@ public class ControladorAdminConfigVotes implements ActionListener{
     private Application model;
 
     /**
-     * Constructor de la clase ControladorUserCrearProyecto
+     * Constructor de la clase ControladorAdminConfigVotes
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
@@ -32,7 +32,7 @@ public class ControladorAdminConfigVotes implements ActionListener{
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'usuarios' de la pantalla principal del Admin
+     * Accion que se realiza cuando se pulsa el boton de 'aplicar' de la pantalla de configuracion relacionado con el numero minimo de votos
      * 
      * @param e accion recibida
      */

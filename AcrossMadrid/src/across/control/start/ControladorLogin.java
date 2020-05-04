@@ -53,6 +53,13 @@ public class ControladorLogin implements ActionListener{
                 JOptionPane.showMessageDialog(frame, "Introduzca contraseña", "Aviso", JOptionPane.WARNING_MESSAGE);
             else if (model.getAdmin().login(password)){
                 login.emptyFields();
+                ArrayList<Project> allP = new ArrayList<>();
+                allP.addAll(model.getProjects());
+                allP.addAll(model.getRejectedProjects());
+                allP.addAll(model.getNonValidatedProjects());
+                this.frame.getInicioAdmin().updateTablaProyectos(allP);
+                this.frame.getAdminUsuarios().updateTable(model.getNonValidatedUsers(), model.getUsers());
+                model.setCurrentAdmin(true);
                 this.frame.showPanel("inicioAdmin");
 
                 int numNotif = Application.getApplication().getAdmin().getNotifications().size();

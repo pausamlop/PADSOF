@@ -9,7 +9,7 @@ import across.model.application.Application;
 
 
 /**
- * Clase PanelInicioAdmin de la interfaz
+ * Clase PanelAdminConfig de la interfaz
  *
  * @author Juan Carlos Villa juanc.villa@estudiante.uam.es
  * @author Laura de Paz laura.pazc@uam.es
@@ -37,7 +37,7 @@ public class PanelAdminConfig extends HomeAdmin{
     	JLabel configPanel = new JLabel("Configuracion de la aplicacion");
 
     	/**
-         * Consructor de la clase PanelAdminUsuarios
+         * Consructor de la clase PanelAdminConfig
         */
     	public PanelAdminConfig(){
     		
@@ -99,30 +99,62 @@ public class PanelAdminConfig extends HomeAdmin{
     		
     	}
         
+    	/**
+         * Metodo para establecer el controlador del boton "usuarios"
+         * 
+         * @param c controlador
+         */
     	public void setControlAdminUsuarios(ActionListener c){
             usuarios.addActionListener(c);
         }
     	
+    	/**
+         * Metodo para establecer el controlador del boton "proyectos"
+         * 
+         * @param c controlador
+         */
     	public void setControlAdminProyectos(ActionListener c){
             proyectos.addActionListener(c);
         }
     	
+    	/**
+         * Metodo para establecer el controlador del boton "buttonVotos"
+         * 
+         * @param c controlador
+         */
     	public void setControlAdminConfigVotes(ActionListener c){
             buttonVotos.addActionListener(c);
         }
     	
+    	/**
+         * Metodo para establecer el controlador del boton "buttonTiempo"
+         * 
+         * @param c controlador
+         */
     	public void setControlAdminConfigCaducidad(ActionListener c){
             buttonTiempo.addActionListener(c);
         }
     	
+    	/**
+    	 * Metodo para establecer a true el boton config
+    	 * 
+    	 */
     	public void setConfigButton() {
     		config.setSelected(true);
     	}
     	
+    	/**
+    	 * 
+    	 * @return votos recogidos en el textfield
+    	 */
     	public String getMinVotos() {
     		return votos.getText();
     	}
     	
+    	/**
+    	 * 
+    	 * @return fecha recogida en el textfield
+    	 */
     	public String getCaducidad() {
     		return tiempo.getText();
     	}

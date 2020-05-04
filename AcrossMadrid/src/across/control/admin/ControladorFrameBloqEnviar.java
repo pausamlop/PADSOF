@@ -2,6 +2,7 @@ package across.control.admin;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 import across.gui.MainFrame;
 import across.gui.admin.FrameAdminUsuariosBloq;
@@ -24,7 +25,7 @@ public class ControladorFrameBloqEnviar implements ActionListener{
     private int row,col;
 
     /**
-     * Constructor de la clase ControladorUserCrearProyecto
+     * Constructor de la clase ControladorFrameEnviar
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
@@ -38,7 +39,7 @@ public class ControladorFrameBloqEnviar implements ActionListener{
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'usuarios' de la pantalla principal del Admin
+     * Accion que se realiza cuando se pulsa el boton de 'enviar' del frame de bloquear muy usuario
      * 
      * @param e accion recibida
      */
@@ -49,12 +50,22 @@ public class ControladorFrameBloqEnviar implements ActionListener{
     	
     	userToBloq.block(mensaje);
     	
-    	this.frame.updateAdminUsuarios(new PanelAdminUsuarios());
+    	Map<String, Boolean> changesUsuarios = frame.getAdminUsuarios().getApplicationUpdate();
+		for(User aux: model.getNonValidatedUsers()) {
+			String uname = aux.getUsername();
+			
+			if(changesUsuarios.containsKey(uname)) {
+				if(changesUsuarios.get(uname)) {
+					aux.validate();
+				}
+			}
+		}
+		
+		frame.updateAdminUsuarios(new PanelAdminUsuarios());
+		this.frame.getAdminUsuarios().updateTable(model.getNonValidatedUsers(), model.getUsers());
+    	
     	
     	this.frame.showPanel("adminUsuarios");
-    	
-    	/*frame.getAdminUsuarios().getTabla().clearSelection();
-    	frame.getAdminUsuarios().updateTableCell(true,row, col);*/
     	
     	frameBloq.dispose();
     }

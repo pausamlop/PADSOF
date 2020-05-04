@@ -45,7 +45,6 @@ public class ControladorVotar implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         panel.getProject().vote(model.getCurrentUser());
-        frame.updateInicioAdmin(new PanelInicioAdmin());
         panel.update();
     }
 

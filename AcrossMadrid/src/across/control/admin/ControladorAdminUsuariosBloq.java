@@ -24,7 +24,7 @@ public class ControladorAdminUsuariosBloq implements ListSelectionListener{
     private Application model;
 
     /**
-     * Constructor de la clase ControladorUserCrearProyecto
+     * Constructor de la clase ControladorAdminUsuariosBloq
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
@@ -35,7 +35,7 @@ public class ControladorAdminUsuariosBloq implements ListSelectionListener{
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'usuarios' de la pantalla principal del Admin
+     * Accion que se realiza cuando se pulsa el boton de 'bloquear' de la tabla de la pantalla de Admin de usuarios
      * 
      * @param e accion recibida
      */

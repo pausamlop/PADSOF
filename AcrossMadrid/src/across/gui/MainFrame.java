@@ -314,16 +314,6 @@ public class MainFrame extends JFrame{
     	adminUsuarios.getTabla().clearSelection();
     	contentPane.add(adminUsuarios, "adminUsuarios");
     }
-    
-    public void updateInicioAdmin(PanelInicioAdmin panel) {
-    	contentPane.remove(inicioAdmin);
-    	inicioAdmin = panel;
-    	controladorAdmin(contMain);
-    	controladorHome(contMain);
-    	inicioAdmin.setProyectosButton();
-    	inicioAdmin.getTabla().clearSelection();
-    	contentPane.add(inicioAdmin, "inicioAdmin");
-    }
 
     /**
      * Establece los controlador de los diferentes paneles mediante el uso de metodos

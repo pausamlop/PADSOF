@@ -82,18 +82,36 @@ public class FrameAdminUsuariosBloq extends JDialog {
         this.add(scrollPane);
     }
     
+    /**
+     * Metodo para establecer el controlador del boton "enviar"
+     * 
+     * @param c controlador
+     */
     public void setControlFrameBloqEnviar(ActionListener c) {
     	enviar.addActionListener(c);
     }
     
+    /**
+     * Metodo para establecer el controlador del boton "cancelar"
+     * 
+     * @param c controlador
+     */
     public void setControlFrameBloqCancelar(ActionListener c) {
     	cancelar.addActionListener(c);
     }
     
+    /**
+     * 
+     * @return devuelve el usuarios a bloquear
+     */
     public User getUserToBloq() {
     	return userToBloq;
     }
     
+    /**
+     * 
+     * @return cadena de caracteres recogida en textfield
+     */
     public String getMensajeBloq() {
     	return mensaje.getText();
     }

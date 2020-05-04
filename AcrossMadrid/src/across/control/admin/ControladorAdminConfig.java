@@ -16,12 +16,11 @@ import across.model.application.Application;
  *
  */
 public class ControladorAdminConfig implements ActionListener{
-	private PanelInicioAdmin inicioAdmin;
     private MainFrame frame;
     private Application model;
 
     /**
-     * Constructor de la clase ControladorUserCrearProyecto
+     * Constructor de la clase ControladorAdminConfig
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
@@ -29,11 +28,10 @@ public class ControladorAdminConfig implements ActionListener{
     public ControladorAdminConfig (MainFrame frame, Application model){
         this.model = model;
         this.frame = frame;
-        this.inicioAdmin = frame.getInicioAdmin();
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'usuarios' de la pantalla principal del Admin
+     * Accion que se realiza cuando se pulsa el boton de 'configuracion' de la pantalla principal del Admin
      * 
      * @param e accion recibida
      */

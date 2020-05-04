@@ -21,7 +21,7 @@ public class ControladorAdminUsuarios implements ActionListener{
     private Application model;
 
     /**
-     * Constructor de la clase ControladorUserCrearProyecto
+     * Constructor de la clase ControladorAdminUsuarios
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)

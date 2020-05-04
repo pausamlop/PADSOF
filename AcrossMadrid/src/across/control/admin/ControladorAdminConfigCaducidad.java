@@ -21,7 +21,7 @@ public class ControladorAdminConfigCaducidad implements ActionListener{
     private Application model;
 
     /**
-     * Constructor de la clase ControladorUserCrearProyecto
+     * Constructor de la clase ControladorAdminConfigCaducidad
      * 
      * @param frame pantalla principal de la aplicacion
      * @param model aplicacion(funcionamiento)
@@ -33,7 +33,7 @@ public class ControladorAdminConfigCaducidad implements ActionListener{
     }
 
     /**
-     * Accion que se realiza cuando se pulsa el boton de 'usuarios' de la pantalla principal del Admin
+     * Accion que se realiza cuando se pulsa el boton de 'aplicar' de la pantalla de configuracion del admin de configuracion de proyectos
      * 
      * @param e accion recibida
      */
